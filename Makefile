@@ -13,7 +13,9 @@ all: build
 
 # For using Qt version 5.5.1 add MERLIN=1 to the make command
 PREFIX_PATH=
+RUN_EXPORTS=
 ifdef MERLIN
+	RUN_EXPORTS=@export LD_LIBRARY_PATH=/usr/local/share/Qt-5.5.1/5.5/gcc_64/lib; export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/local/share/Qt-5.5.1/5.5/gcc_64/plugins/platforms;
 	PREFIX_PATH=-D CMAKE_PREFIX_PATH='/usr/local/share/Qt-5.5.1/5.5/gcc_64' executable
 endif
 
@@ -33,8 +35,10 @@ build: configure
 	@cd $(BUILD_DIR) && make
 
 # Run the application
+# /usr/local/share/Qt-5.5.1/5.5/gcc_64/plugins/platforms
 run: build
-	@$(BUILD_DIR)/icp-projekt
+	$(RUN_EXPORTS) $(BUILD_DIR)/icp-projekt
+	# @$(BUILD_DIR)/icp-projekt
 
 # Clean the build directory
 clean:
