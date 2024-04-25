@@ -14,13 +14,19 @@ all: build
 # For using Qt version 5.5.1 add MERLIN=1 to the make command
 PREFIX_PATH=
 ifdef MERLIN
-PREFIX_PATH=-D CMAKE_PREFIX_PATH='/usr/local/share/Qt-5.5.1/5.5/gcc_64' executable
+	PREFIX_PATH=-D CMAKE_PREFIX_PATH='/usr/local/share/Qt-5.5.1/5.5/gcc_64' executable
+endif
+
+# Because macOS uses clang as the default compiler, we need to specify g++ as the compiler
+CXX_COMPILER=g++
+ifeq ($(shell uname),Darwin)
+	CXX_COMPILER=/usr/bin/g++
 endif
 
 # Configure the project
 configure:
 	@mkdir -p $(BUILD_DIR)
-	@cd $(BUILD_DIR) && cmake -D CMAKE_CXX_COMPILER=g++ $(PREFIX_PATH) $(PROJECT_DIR)
+	@cd $(BUILD_DIR) && cmake -D CMAKE_CXX_COMPILER=$(CXX_COMPILER) $(PREFIX_PATH) $(PROJECT_DIR)
 
 # Build the project
 build: configure
