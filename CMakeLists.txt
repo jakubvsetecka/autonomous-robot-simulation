@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(icp-projekt VERSION 0.1 LANGUAGES CXX)
 
+# set(CMAKE_PREFIX_PATH "/usr/local/share/Qt-5.5.1/5.5/gcc_64")
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -19,6 +20,9 @@ set(PROJECT_SOURCES
     mainwindow.ui
 )
 
+message(STATUS "Using Qt version: ${Qt${QT_VERSION_MAJOR}_VERSION}")
+
+# message(STATUS "Using Qt version ${QT_VERSION_MAJOR}")
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(icp-projekt
         MANUAL_FINALIZATION
