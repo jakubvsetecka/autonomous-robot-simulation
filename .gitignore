@@ -75,3 +75,9 @@ CMakeLists.txt.user*
 
 # CMake generated files
 build/
+
+# Devcontainers
+.devcontainer/
+
+# Vscodium
+.vscode/
