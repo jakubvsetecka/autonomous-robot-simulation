@@ -14,10 +14,13 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
     main.cpp
-    src/mainwindow.cpp  # Update this path
-    headers/mainwindow.h  # Update this path if headers are separately needed
+    src/mainwindow.cpp
+    src/simulation.cpp  # Make sure this is correctly added
+    headers/mainwindow.h
+    headers/simulation.h  # And other headers if necessary
     src/mainwindow.ui
 )
+
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)
 include_directories(${PROJECT_SOURCE_DIR}/src)
