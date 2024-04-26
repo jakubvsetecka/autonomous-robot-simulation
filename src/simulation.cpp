@@ -1,6 +1,8 @@
 #include "simulation.h"
 #include "./ui_mainwindow.h"
-#include <QJsonArray> // Add missing include directive
+#include "controlledrobot.h" // Include the ControlledRobot class
+#include <QJsonArray>        // Add missing include directive
+#include <QJsonValue>        // Add missing include directive
 
 Simulation::Simulation(QGraphicsScene *scene)
     : scene(scene) {
@@ -15,6 +17,11 @@ Simulation::~Simulation() {
 void Simulation::addObject(GameObject *object) {
     objects.append(object);
     scene->addItem(object);
+
+    // Use dynamic_cast to check if the object is a ControlledRobot
+    if (ControlledRobot *controlledRobot = dynamic_cast<ControlledRobot *>(object)) {
+        object->setFocus();
+    }
 }
 
 void Simulation::removeObject(GameObject *object) {

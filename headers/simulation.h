@@ -1,7 +1,7 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include "objects.h" // Include the definitions of your game objects
+#include "gameobject.h" // Include the definitions of your game objects
 #include <QFile>
 #include <QGraphicsItem>
 #include <QGraphicsScene>

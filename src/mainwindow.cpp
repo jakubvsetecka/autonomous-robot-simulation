@@ -2,7 +2,10 @@
 
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "objects.h"
+#include "autonomousrobot.h"
+#include "controlledrobot.h"
+#include "gameobject.h"
+#include "obstacle.h"
 #include "simulation.h"
 #include "ui_mainwindow.h"
 
