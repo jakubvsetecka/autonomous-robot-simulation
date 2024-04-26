@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QGraphicsRectItem>
 #include <QMainWindow>
 #include <QTimer>
-#include <QGraphicsRectItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -11,24 +11,22 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+  public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setupAnimation();
 
-private:
+  private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
 
-    QGraphicsRectItem *square; // Declare the square as a member variable
-
-    std::vector<int> square_velocity = {4, 4};
+    QPointF square_velocity;
 
     void initScene();
     void updateAnimation(); // Method to update the animation
-
+    void onAddObstacleClicked();
 };
 #endif // MAINWINDOW_H
