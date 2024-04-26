@@ -1,4 +1,5 @@
-// objects.h
+#ifndef OBJECTS_H
+#define OBJECTS_H
 
 #include <QGraphicsItem>
 #include <QJsonArray>
@@ -70,7 +71,9 @@ class GameObject : public QGraphicsItem {
 class Obstacle : public GameObject {
   public:
     Obstacle(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0)
-        : GameObject(parent, position, dimension, angle, 0) {}
+        : GameObject(parent, position, dimension, angle, 0) {
+        setRotation(angle);
+    }
 
     void update() override {
         // Obstacles do not move
@@ -116,3 +119,5 @@ class ControlledRobot : public Robot {
         setRotation(angleDir.angle);
     }
 };
+
+#endif // OBJECTS_Hz

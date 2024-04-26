@@ -11,7 +11,7 @@
 
 class Simulation {
   public:
-    Simulation();
+    Simulation(QGraphicsScene *scene);
     ~Simulation();
 
     void addObject(GameObject *object);    // Add objects to the simulation

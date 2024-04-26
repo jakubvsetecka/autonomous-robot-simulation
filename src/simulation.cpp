@@ -1,8 +1,9 @@
 #include "simulation.h"
+#include "./ui_mainwindow.h"
 #include <QJsonArray> // Add missing include directive
 
-Simulation::Simulation() {
-    scene = new QGraphicsScene();
+Simulation::Simulation(QGraphicsScene *scene)
+    : scene(scene) {
 }
 
 Simulation::~Simulation() {

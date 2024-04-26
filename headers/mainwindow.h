@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "simulation.h"
 #include <QGraphicsRectItem>
 #include <QMainWindow>
 #include <QTimer>
@@ -22,8 +23,7 @@ class MainWindow : public QMainWindow {
   private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-
-    QPointF square_velocity;
+    Simulation *simulation;
 
     void initScene();
     void updateAnimation(); // Method to update the animation
