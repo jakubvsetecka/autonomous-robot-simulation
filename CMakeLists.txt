@@ -15,14 +15,29 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+    src/mainwindow.cpp
+    src/simulation.cpp  # Make sure this is correctly added
+    headers/mainwindow.h
+    headers/simulation.h  # And other headers if necessary
+    src/mainwindow.ui
+    src/gameobject.cpp
+    headers/gameobject.h
+    src/obstacle.cpp
+    headers/obstacle.h
+    src/robot.cpp
+    headers/robot.h
+    src/robot.cpp
+    headers/robot.h
+    src/autonomousrobot.cpp
+    headers/autonomousrobot.h
+    src/controlledrobot.cpp
+    headers/controlledrobot.h
 )
 
-message(STATUS "Using Qt version: ${Qt${QT_VERSION_MAJOR}_VERSION}")
 
-# message(STATUS "Using Qt version ${QT_VERSION_MAJOR}")
+include_directories(${PROJECT_SOURCE_DIR}/headers)
+include_directories(${PROJECT_SOURCE_DIR}/src)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(icp-projekt
         MANUAL_FINALIZATION
