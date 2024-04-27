@@ -11,9 +11,28 @@ AutonomousRobot::AutonomousRobot(QGraphicsItem *parent, QPointF position, QPoint
     : Robot(parent, position, dimension, angle, velocity) {}
 
 void AutonomousRobot::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
+    switch (state) {
+    case -1: {
+        moveBy(angleDir.getX(), angleDir.getY());
+        break;
+    }
+    default:
+        if (rotateRight) {
+            angleDir.rotate(1);
+        } else {
+            angleDir.rotate(-1);
+        }
+        if (state > rotationAmount) {
+            state = -1;
+        } else {
+            state++;
+        }
+        setRotation(angleDir.angle);
+        break;
+    }
 }
 
 void AutonomousRobot::handleCollision() {
     qDebug() << "AutonomousRobot collided with another object";
+    state = 0;
 }

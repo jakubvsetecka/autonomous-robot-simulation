@@ -12,7 +12,7 @@
 
 class ControlledRobot : public Robot {
   public:
-    ControlledRobot(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    ControlledRobot(QGraphicsItem *parent = nullptr, QPointF pos = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
 
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;

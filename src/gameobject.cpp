@@ -9,14 +9,15 @@
 #include <QJsonValue>
 
 GameObject::GameObject(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
-    : QGraphicsItem(parent), position(position), angleDir(angle, velocity), dimension(dimension) {
+    : QGraphicsItem(parent), angleDir(angle, velocity), dimension(dimension) {
     setTransformOriginPoint(boundingRect().center());
+    setPos(position);
 }
 
 GameObject::~GameObject() {}
 
 QRectF GameObject::boundingRect() const {
-    return QRectF(position.x(), position.y(), dimension.x(), dimension.y());
+    return QRectF(x(), y(), dimension.x(), dimension.y());
 }
 
 void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -38,4 +39,10 @@ QJsonValue GameObject::toJson() const {
 GameObject *GameObject::fromJson(const QJsonObject &obj) {
     // Create object from JSON
     // Placeholder for JSON object creation code
+}
+
+void GameObject::enslaveToTime(float frameTTL) {
+    qreal dx = x() * frameTTL;
+    qreal dy = y() * frameTTL;
+    moveBy(dx, dy);
 }

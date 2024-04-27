@@ -20,11 +20,11 @@ class GameObject : public QGraphicsItem {
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     virtual void update();
+    void enslaveToTime(float frameTTL);
     virtual QJsonValue toJson() const;
     static GameObject *fromJson(const QJsonObject &obj);
 
   protected:
-    QPointF position;
     AngleDirection angleDir;
     QPointF dimension;
 };

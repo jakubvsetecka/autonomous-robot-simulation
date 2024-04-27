@@ -49,6 +49,7 @@ void Simulation::removeObject(Obstacle *object) {
 void Simulation::updateObjects() {
     for (Robot *obj : robots) {
         obj->update();
+        //obj->enslaveToTime(frameTTL);
     }
     checkCollisions();
 }

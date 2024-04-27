@@ -18,14 +18,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     simulation = new Simulation(scene);
 
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(50, 50), QPointF(50, 50), 0);
+    Obstacle *obstacle = new Obstacle(NULL, QPointF(200, 50), QPointF(50, 100), 0);
     simulation->addObject(obstacle);
 
     AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
     simulation->addObject(autonomousRobot);
 
-    ControlledRobot *controlledRobot = new ControlledRobot();
-    simulation->addObject(controlledRobot);
+    // ControlledRobot *controlledRobot = new ControlledRobot();
+    // simulation->addObject(controlledRobot);
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
