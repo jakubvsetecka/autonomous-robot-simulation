@@ -9,8 +9,9 @@
 
 #include <cmath>
 
-class AngleDirection {
-  public:
+class AngleDirection
+{
+public:
     double angle;     // Angle in degrees or radians
     double magnitude; // Magnitude of the vector
 
@@ -19,15 +20,25 @@ class AngleDirection {
         : angle(angle), magnitude(magnitude) {}
 
     // Convert to Cartesian coordinates
-    double getX() const {
+    double getX() const
+    {
         return magnitude * cos(angle); // Assuming angle is in radians
     }
 
-    double getY() const {
+    double getY() const
+    {
         return magnitude * sin(angle); // Assuming angle is in radians
     }
 
-    // Other methods as needed, such as updating angle or magnitude, etc.
+    void setMagnitude(double magnitude)
+    {
+        this->magnitude = magnitude;
+    }
+
+    void setAngle(double angle)
+    {
+        this->angle = angle;
+    }
 };
 
 #endif // ANGLEDIRECTION_H
