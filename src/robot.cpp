@@ -16,6 +16,6 @@ void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 }
 
 void Robot::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
+    moveByWrapper(angleDir.getX(), angleDir.getY());
     setRotation(angleDir.angle);
 }

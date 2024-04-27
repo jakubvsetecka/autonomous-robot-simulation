@@ -13,7 +13,7 @@ AutonomousRobot::AutonomousRobot(QGraphicsItem *parent, QPointF position, QPoint
 void AutonomousRobot::update() {
     switch (state) {
     case -1: {
-        moveBy(angleDir.getX(), angleDir.getY());
+        moveByWrapper(angleDir.getX(), angleDir.getY());
         break;
     }
     default:

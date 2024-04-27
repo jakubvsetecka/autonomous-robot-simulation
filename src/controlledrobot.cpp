@@ -36,7 +36,7 @@ void ControlledRobot::keyPressEvent(QKeyEvent *event) {
         }
         break;
     case Qt::Key_Up:
-        angleDir.magnitude = 10 / 6;
+        angleDir.magnitude = 100;
         break;
     case Qt::Key_Down:
         angleDir.magnitude = 0;
@@ -59,7 +59,7 @@ void ControlledRobot::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void ControlledRobot::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
+    moveByWrapper(angleDir.getX(), angleDir.getY());
     setRotation(angleDir.getAngle()); // Update the rotation
 }
 

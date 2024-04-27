@@ -27,7 +27,7 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 }
 
 void GameObject::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
+    moveByWrapper(angleDir.getX(), angleDir.getY());
     setRotation(angleDir.angle);
 }
 
@@ -42,7 +42,17 @@ GameObject *GameObject::fromJson(const QJsonObject &obj) {
 }
 
 void GameObject::enslaveToTime(float frameTTL) {
-    qreal dx = x() * frameTTL;
-    qreal dy = y() * frameTTL;
-    setPos(dx, dy);
+    // qreal dx = x() * frameTTL;
+    // qreal dy = y() * frameTTL;
+    // setPos(dx, dy);
+}
+
+void GameObject::moveByWrapper(double dx, double dy) {
+    qDebug() << "GameObject::moveByWrapper";
+    moveBy(dx * frameTTL, dy * frameTTL);
+}
+
+void GameObject::setRotationWrapper(double degrees) {
+    qDebug() << "GameObject::setRotationWrapper";
+    setRotation(degrees); // TODO
 }

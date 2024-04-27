@@ -23,10 +23,13 @@ class GameObject : public QGraphicsItem {
     void enslaveToTime(float frameTTL);
     virtual QJsonValue toJson() const;
     static GameObject *fromJson(const QJsonObject &obj);
+    void moveByWrapper(double dx, double dy);
+    void setRotationWrapper(double degrees);
 
   protected:
     AngleDirection angleDir;
     QPointF dimension;
+    qreal frameTTL = 1 / 60.0;
 };
 
 #endif // GAMEOBJECT_H
