@@ -6,6 +6,7 @@
 
 #include "robot.h"
 #include <iostream>
+#include <QDebug>
 
 Robot::Robot(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
     : GameObject(parent, position, dimension, angle, velocity) {}
@@ -17,7 +18,7 @@ void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->drawEllipse(boundingRect());
     qreal x_center = dimension.x() / 2;
     qreal y_center = dimension.y() / 2;
-    painter->drawLine(x_center, y_center, (angleDir.getX() * x_center) + x_center, (angleDir.getY() * y_center) + y_center);
+    painter->drawLine(dimension.x(), y_center, x_center, y_center);
 }
 
 void Robot::update()
