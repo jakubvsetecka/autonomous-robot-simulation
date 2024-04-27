@@ -1,5 +1,3 @@
-// mainwindow.cpp
-
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "autonomousrobot.h"
@@ -10,47 +8,52 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    : QMainWindow(parent), ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->resetTransform();
+    ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
 
-    simulation = new Simulation(scene);
+    // Set the alignment to ensure (0, 0) is at the top-left corner
+    ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(50, 50), QPointF(50, 50), 0);
-    simulation->addObject(obstacle);
-
-    AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
-    simulation->addObject(autonomousRobot);
-
-    ControlledRobot *controlledRobot = new ControlledRobot();
-    simulation->addObject(controlledRobot);
+    // Set the initial scene rectangle
+    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
     timer->start(16);
 
-    // Connect the button click signal to the appropriate slot
     connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
 }
 
-void MainWindow::onAddObstacleClicked() {
-    // Create a new obstacle
-    int posx = rand() % 1000 - 500;
-    int posy = rand() % 1000 - 500;
-    int size = rand() % 50;
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(posx, posy), QPointF(size, size), rand() % 360);
-    simulation->addObject(obstacle);
-    // Here you need to specify how to add this to your scene or simulation
-    // Example: simulation->addObject(obstacle); or scene->addItem(obstacle);
-    // Make sure you have access to your QGraphicsScene or Simulation class instance here
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    // Update the scene rect to match the new viewport size
+    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 }
 
-void MainWindow::updateAnimation() {
-    simulation->updateObjects();
+void MainWindow::onAddObstacleClicked()
+{
+    // Functionality to add obstacles goes here
 }
 
-MainWindow::~MainWindow() {
+void MainWindow::updateAnimation()
+{
+    scene->clear();
+    scene->addEllipse(0, 0, 5, 5, QPen(Qt::black), QBrush(Qt::red)); // Mark the origin
+    scene->addRect(x, 0, 100, 100);                                  // Rectangle moving horizontally
+    scene->addRect(0, 0, 100, 100);                                  // Static rectangle at the origin
+    scene->addRect(-x, 0, 100, 100);                                 // Rectangle moving left from the origin
+    x++;
+}
+
+MainWindow::~MainWindow()
+{
     delete ui;
 }
