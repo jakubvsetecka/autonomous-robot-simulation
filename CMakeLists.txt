@@ -19,6 +19,18 @@ set(PROJECT_SOURCES
     headers/mainwindow.h
     headers/simulation.h  # And other headers if necessary
     src/mainwindow.ui
+    src/gameobject.cpp
+    headers/gameobject.h
+    src/obstacle.cpp
+    headers/obstacle.h
+    src/robot.cpp
+    headers/robot.h
+    src/robot.cpp
+    headers/robot.h
+    src/autonomousrobot.cpp
+    headers/autonomousrobot.h
+    src/controlledrobot.cpp
+    headers/controlledrobot.h
 )
 
 

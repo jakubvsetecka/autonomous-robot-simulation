@@ -2,7 +2,7 @@
  * @file obstacle.h
  * @brief This file provides the definition of the Obstacle class.
  * @authors Jakub Všetečka, Tomáš Hobza
-*/
+ */
 
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
@@ -11,14 +11,9 @@
 
 class Obstacle : public GameObject {
   public:
-    Obstacle(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0)
-        : GameObject(parent, position, dimension, angle, 0) {
-        setRotation(angle);
-    }
+    Obstacle(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0);
 
-    void update() override {
-        // Obstacles do not move
-    }
+    void update() override;
 };
 
 #endif // OBSTACLE_H

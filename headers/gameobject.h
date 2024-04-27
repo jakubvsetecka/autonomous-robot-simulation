@@ -9,43 +9,19 @@
 
 #include "angledirection.h"
 #include <QGraphicsItem>
-#include <QJsonArray>
-#include <QJsonObject>
-#include <QJsonValue>
 #include <QPainter>
+#include <QPointF>
 
 class GameObject : public QGraphicsItem {
   public:
-    GameObject(QGraphicsItem *parent = nullptr, QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0)
-        : QGraphicsItem(parent), position(position), angleDir(angle, velocity), dimension(dimension) {
-        setTransformOriginPoint(boundingRect().center());
-    }
+    GameObject(QGraphicsItem *parent = nullptr, QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    virtual ~GameObject();
 
-    virtual ~GameObject() {}
-
-    QRectF boundingRect() const override {
-        return QRectF(position.x(), position.y(), dimension.x(), dimension.y());
-    }
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {
-        QBrush brush(Qt::CrossPattern);
-        painter->setBrush(brush);
-        painter->drawRect(boundingRect());
-    }
-
-    virtual void update() {
-        moveBy(angleDir.getX(), angleDir.getY());
-        setRotation(angleDir.angle);
-    }
-
-    virtual QJsonValue toJson() const {
-        // Convert object to JSON
-    }
-
-    static GameObject *fromJson(const QJsonObject &obj) {
-        // Create object from JSON
-
-    } // Static method returning a pointer
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    virtual void update();
+    virtual QJsonValue toJson() const;
+    static GameObject *fromJson(const QJsonObject &obj);
 
   protected:
     QPointF position;

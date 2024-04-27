@@ -11,13 +11,9 @@
 
 class AutonomousRobot : public Robot {
   public:
-    AutonomousRobot(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0)
-        : Robot(parent, position, dimension, angle, velocity) {}
+    AutonomousRobot(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
 
-    void update() override {
-        // Example behavior: move randomly within bounds
-        moveBy(angleDir.getX(), angleDir.getY());
-    }
+    void update() override;
 
   protected:
     double detectDistance = 50;
