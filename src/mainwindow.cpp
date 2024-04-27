@@ -51,6 +51,13 @@ void MainWindow::updateAnimation() {
     simulation->updateObjects();
 }
 
+void MainWindow::draw(position, angleDire, size) {
+    // Draw the object on the scene
+    QGraphicsRectItem *rect = new QGraphicsRectItem(position.x(), position.y(), size.x(), size.y());
+    rect->setRotation(angleDire);
+    scene->addItem(rect);
+}
+
 MainWindow::~MainWindow() {
     delete ui;
 }
