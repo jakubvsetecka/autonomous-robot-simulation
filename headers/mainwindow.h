@@ -7,26 +7,33 @@
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+  class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
-    Q_OBJECT
+class MainWindow : public QMainWindow
+{
+  Q_OBJECT
 
-  public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-    void setupAnimation();
+public:
+  MainWindow(QWidget *parent = nullptr);
+  ~MainWindow();
+  void setupAnimation();
 
-  private:
-    Ui::MainWindow *ui;
-    QGraphicsScene *scene;
-    Simulation *simulation;
+private:
+  Ui::MainWindow *ui;
+  QGraphicsScene *scene;
+  Simulation *simulation;
 
-    void initScene();
-    void updateAnimation(); // Method to update the animation
-    void onAddObstacleClicked();
+  void initScene();
+  void updateAnimation(); // Method to update the animation
+  void onAddObstacleClicked();
+
+protected:
+  void showEvent(QShowEvent *event) override;
+  void resizeEvent(QResizeEvent *event) override;
+  void drawGrid();
 };
 #endif // MAINWINDOW_H
