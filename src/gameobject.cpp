@@ -17,7 +17,7 @@ GameObject::GameObject(QGraphicsItem *parent, QPointF position, QPointF dimensio
 GameObject::~GameObject() {}
 
 QRectF GameObject::boundingRect() const {
-    return QRectF(x(), y(), dimension.x(), dimension.y());
+    return QRectF(0, 0, dimension.x(), dimension.y());
 }
 
 void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -42,7 +42,7 @@ GameObject *GameObject::fromJson(const QJsonObject &obj) {
 }
 
 void GameObject::enslaveToTime(float frameTTL) {
-    qreal dx = x() * frameTTL;
-    qreal dy = y() * frameTTL;
-    moveBy(dx, dy);
+    // qreal dx = x() * frameTTL;
+    // qreal dy = y() * frameTTL;
+    // moveBy(dx, dy);
 }

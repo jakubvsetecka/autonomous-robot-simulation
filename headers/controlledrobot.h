@@ -19,6 +19,7 @@ class ControlledRobot : public Robot {
     void keyPressEvent(QKeyEvent *event) override;
     void update() override;
     void handleCollision() override;
+    void updateTransformOrigin();
 };
 
 #endif // CONTROLLEDROBOT_H

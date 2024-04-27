@@ -21,31 +21,33 @@ void ControlledRobot::focusOutEvent(QFocusEvent *event) {
 }
 
 void ControlledRobot::keyPressEvent(QKeyEvent *event) {
+    updateTransformOrigin(); // Update origin based on possibly updated bounding rectangle
 
     switch (event->key()) {
     case Qt::Key_Left:
-        // Change angle or perform movement to the left
-        angleDir.angle -= 5 * M_PI / 180;
+        angleDir.rotate(5);
         break;
     case Qt::Key_Right:
-        // Change angle or perform movement to the right
-        angleDir.angle += 5 * M_PI / 180;
+        angleDir.rotate(-5);
         break;
     case Qt::Key_Up:
         angleDir.magnitude = 10;
-        moveBy(angleDir.getX(), angleDir.getY());
         break;
     case Qt::Key_Down:
         angleDir.magnitude = 0;
         break;
     default:
-        QGraphicsItem::keyPressEvent(event); // Ensure other key events are processed
+        QGraphicsItem::keyPressEvent(event);
         return;
     }
-    setRotation(angleDir.angle * 180 / M_PI); // Update the rotation
+    qDebug() << "Current Angle: " << angleDir.angle;
+    qDebug() << "Position: " << pos();
+    qDebug() << "Transformation Origin: " << transformOriginPoint();
 
-    setFocus();      // Ensure the item retains focus
-    event->accept(); // Mark the event as handled
+    setRotation(angleDir.angle);
+    moveBy(angleDir.getX(), angleDir.getY());
+    setFocus();
+    event->accept();
 }
 
 void ControlledRobot::update() {
@@ -54,4 +56,9 @@ void ControlledRobot::update() {
 
 void ControlledRobot::handleCollision() {
     qDebug() << "ControlledRobot collided with another object";
+}
+
+void ControlledRobot::updateTransformOrigin() {
+    QPointF center = boundingRect().center(); // Get the center of the bounding rectangle
+    setTransformOriginPoint(center);          // Set the transformation origin to this center
 }
