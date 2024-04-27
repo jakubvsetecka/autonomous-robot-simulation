@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     Obstacle *obstacle = new Obstacle(NULL, QPointF(50, 50), QPointF(50, 50), 0);
     simulation->addObject(obstacle);
 
-    AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 5.0, 0.1);
+    AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
     simulation->addObject(autonomousRobot);
 
     ControlledRobot *controlledRobot = new ControlledRobot();

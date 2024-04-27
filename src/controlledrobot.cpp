@@ -32,7 +32,7 @@ void ControlledRobot::keyPressEvent(QKeyEvent *event) {
         angleDir.angle += 5 * M_PI / 180;
         break;
     case Qt::Key_Up:
-        angleDir.magnitude = 1;
+        angleDir.magnitude = 10;
         moveBy(angleDir.getX(), angleDir.getY());
         break;
     case Qt::Key_Down:
@@ -50,4 +50,8 @@ void ControlledRobot::keyPressEvent(QKeyEvent *event) {
 
 void ControlledRobot::update() {
     // moveBy(angleDir.getX(), angleDir.getY());
+}
+
+void ControlledRobot::handleCollision() {
+    qDebug() << "ControlledRobot collided with another object";
 }

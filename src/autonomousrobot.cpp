@@ -5,10 +5,15 @@
  */
 
 #include "autonomousrobot.h"
+#include <QDebug>
 
 AutonomousRobot::AutonomousRobot(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
     : Robot(parent, position, dimension, angle, velocity) {}
 
 void AutonomousRobot::update() {
     moveBy(angleDir.getX(), angleDir.getY());
+}
+
+void AutonomousRobot::handleCollision() {
+    qDebug() << "AutonomousRobot collided with another object";
 }

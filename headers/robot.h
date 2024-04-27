@@ -15,6 +15,8 @@ class Robot : public GameObject {
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void update() override;
+
+    virtual void handleCollision() = 0;
 };
 
 #endif // ROBOT_H
