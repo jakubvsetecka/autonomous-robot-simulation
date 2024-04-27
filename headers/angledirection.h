@@ -30,7 +30,7 @@ class AngleDirection {
     }
 
     // Returns the angle in degrees
-    double getAngle(double angle) {
+    double getAngle() {
         return this->angle * 180.0 / M_PI;
     }
 

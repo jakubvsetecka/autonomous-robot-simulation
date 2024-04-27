@@ -17,22 +17,17 @@ void AutonomousRobot::update() {
         break;
     }
     default:
-        if (rotateRight) {
-            angleDir.rotate(1);
-        } else {
-            angleDir.rotate(-1);
-        }
-        if (state > rotationAmount) {
-            state = -1;
-        } else {
-            state++;
-        }
-        setRotation(angleDir.angle);
+        angleDir.rotate(1 ? rotateRight : -1);
+        state = state >= rotationAmount ? -1 : state++;
+
+        setRotation(angleDir.getAngle());
         break;
     }
 }
 
 void AutonomousRobot::handleCollision() {
     qDebug() << "AutonomousRobot collided with another object";
-    state = 0;
+    if (state == -1) {
+        state = 0;
+    }
 }
