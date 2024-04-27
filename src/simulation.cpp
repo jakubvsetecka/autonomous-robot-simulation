@@ -8,12 +8,9 @@
 #include <QJsonValue> // Add missing include directive
 #include <iostream>
 
-Simulation::Simulation(QGraphicsScene *scene)
-    : scene(scene) {
-}
+Simulation::Simulation() {}
 
 Simulation::~Simulation() {
-    delete scene;
     qDeleteAll(robots);
     qDeleteAll(obstacles);
     robots.clear();
@@ -21,34 +18,31 @@ Simulation::~Simulation() {
 }
 
 void Simulation::addObject(Robot *object) {
-    robots.append(object);
-    scene->addItem(object);
+    robots.push_back(object);
 
     // Use dynamic_cast to check if the object is a ControlledRobot
     if (ControlledRobot *controlledRobot = dynamic_cast<ControlledRobot *>(object)) {
-        object->setFocus();
+        // object->setFocus();
     }
 }
 void Simulation::addObject(Obstacle *object) {
-    obstacles.append(object);
-    scene->addItem(object);
+    obstacles.push_back(object);
 }
 
 void Simulation::removeObject(Robot *object) {
-    robots.removeOne(object);
-    scene->removeItem(object);
+    robots.remove(object);
     delete object;
 }
 
 void Simulation::removeObject(Obstacle *object) {
-    obstacles.removeOne(object);
-    scene->removeItem(object);
+    obstacles.remove(object);
     delete object;
 }
 
 void Simulation::updateObjects() {
     for (Robot *obj : robots) {
         obj->update();
+        obj->enslaveInTime(frameTTL);
     }
     checkCollisions();
 }
@@ -81,11 +75,11 @@ QJsonObject Simulation::serialize() const {
     QJsonArray itemsArray;
 
     for (const GameObject *obj : obstacles) {
-        itemsArray.append(obj->toJson()); // Ensure GameObject has a toJson method
+        itemsArray.push_back(obj->toJson()); // Ensure GameObject has a toJson method
     }
 
     for (const GameObject *obj : robots) {
-        itemsArray.append(obj->toJson()); // Ensure GameObject has a toJson method
+        itemsArray.push_back(obj->toJson()); // Ensure GameObject has a toJson method
     }
 
     root["items"] = itemsArray;

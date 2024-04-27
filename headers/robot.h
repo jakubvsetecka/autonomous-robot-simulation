@@ -11,14 +11,13 @@
 
 class Robot : public GameObject {
   public:
-    Robot(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    Robot(std::pair<float, float> position = std::pair<float, float>(0, 0), float dimension = 25.0, double angle = 0.0, double velocity = 0.0, double detectDistance = 50);
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void update() override;
-
     virtual void handleCollision() = 0;
+
   private:
-    double detectDistance = 50;
+    double detectDistance;
 };
 
 #endif // ROBOT_H

@@ -8,15 +8,11 @@
 #define CONTROLLEDROBOT_H
 
 #include "robot.h"
-#include <QKeyEvent>
 
 class ControlledRobot : public Robot {
   public:
-    ControlledRobot(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    ControlledRobot(std::pair<float, float> position = std::pair<float, float>(0, 0), float dimension = 25.0, double angle = 0.0, double velocity = 0.0);
 
-    void focusInEvent(QFocusEvent *event) override;
-    void focusOutEvent(QFocusEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
     void update() override;
     void handleCollision() override;
 };

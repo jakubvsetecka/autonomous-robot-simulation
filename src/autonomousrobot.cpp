@@ -7,11 +7,28 @@
 #include "autonomousrobot.h"
 #include <QDebug>
 
-AutonomousRobot::AutonomousRobot(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
-    : Robot(parent, position, dimension, angle, velocity) {}
+AutonomousRobot::AutonomousRobot(std::pair<float, float> position, float dimension, double angle, double velocity)
+    : Robot(position, dimension, angle, velocity) {}
 
 void AutonomousRobot::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
+    switch (state) {
+    case -1:
+        position.first += angleDir.magnitude * angleDir.getX();
+        position.second += angleDir.magnitude * angleDir.getY();
+        break;
+    default:
+        if (rotateRight) {
+            angleDir.rotate(1);
+        } else {
+            angleDir.rotate(-1);
+        }
+        if (state > rotationAmount) {
+            state = -1;
+        } else {
+            state++;
+        }
+        break;
+    }
 }
 
 void AutonomousRobot::handleCollision() {

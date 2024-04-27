@@ -8,26 +8,14 @@
 #include <QBrush>
 #include <QJsonValue>
 
-GameObject::GameObject(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
-    : QGraphicsItem(parent), position(position), angleDir(angle, velocity), dimension(dimension) {
-    setTransformOriginPoint(boundingRect().center());
+GameObject::GameObject(pair<float, float> position, float dimension, double angle, double velocity)
+    : position(position), angleDir(angle, velocity), dimension(dimension) {
 }
 
 GameObject::~GameObject() {}
 
-QRectF GameObject::boundingRect() const {
-    return QRectF(position.x(), position.y(), dimension.x(), dimension.y());
-}
-
-void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    QBrush brush(Qt::CrossPattern);
-    painter->setBrush(brush);
-    painter->drawRect(boundingRect());
-}
-
 void GameObject::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
-    setRotation(angleDir.angle);
+    // Placeholder for update code
 }
 
 QJsonValue GameObject::toJson() const {
@@ -38,4 +26,16 @@ QJsonValue GameObject::toJson() const {
 GameObject *GameObject::fromJson(const QJsonObject &obj) {
     // Create object from JSON
     // Placeholder for JSON object creation code
+}
+
+bool GameObject::collidesWithItem(GameObject *item) {
+    // Placeholder for collision detection code
+    // TODO
+    return false;
+}
+
+void GameObject::enslaveInTime(float frameTTL) {
+    // TODO: Optimize the shit out of this
+    position.first /= frameTTL;
+    position.second /= frameTTL;
 }

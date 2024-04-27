@@ -16,12 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
-    simulation = new Simulation(scene);
+    simulation = new Simulation();
 
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(50, 50), QPointF(50, 50), 0);
+    Obstacle *obstacle = new Obstacle(std::pair<float, float>(50, 50));
     simulation->addObject(obstacle);
 
-    AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
+    AutonomousRobot *autonomousRobot = new AutonomousRobot(std::pair<float, float>(40, 40), 20, 0, 5);
     simulation->addObject(autonomousRobot);
 
     ControlledRobot *controlledRobot = new ControlledRobot();
@@ -40,7 +40,7 @@ void MainWindow::onAddObstacleClicked() {
     int posx = rand() % 1000 - 500;
     int posy = rand() % 1000 - 500;
     int size = rand() % 50;
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(posx, posy), QPointF(size, size), rand() % 360);
+    Obstacle *obstacle = new Obstacle(std::pair<float, float>(posx, posy), size, rand() % 360);
     simulation->addObject(obstacle);
     // Here you need to specify how to add this to your scene or simulation
     // Example: simulation->addObject(obstacle); or scene->addItem(obstacle);
@@ -49,13 +49,6 @@ void MainWindow::onAddObstacleClicked() {
 
 void MainWindow::updateAnimation() {
     simulation->updateObjects();
-}
-
-void MainWindow::draw(position, angleDire, size) {
-    // Draw the object on the scene
-    QGraphicsRectItem *rect = new QGraphicsRectItem(position.x(), position.y(), size.x(), size.y());
-    rect->setRotation(angleDire);
-    scene->addItem(rect);
 }
 
 MainWindow::~MainWindow() {

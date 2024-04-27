@@ -6,16 +6,11 @@
 
 #include "robot.h"
 
-Robot::Robot(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
-    : GameObject(parent, position, dimension, angle, velocity) {}
-
-void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    QBrush brush(Qt::CrossPattern);
-    painter->setBrush(brush);
-    painter->drawEllipse(boundingRect());
+Robot::Robot(std::pair<float, float> position, float dimension, double angle, double velocity, double detectDistance)
+    : GameObject(position, dimension, angle, velocity), detectDistance(detectDistance) {
+    hitboxType = CIRCLE;
 }
 
 void Robot::update() {
-    moveBy(angleDir.getX(), angleDir.getY());
-    setRotation(angleDir.angle);
+    // TODO: Implement the update method
 }

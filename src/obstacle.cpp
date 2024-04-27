@@ -6,10 +6,8 @@
 
 #include "obstacle.h"
 
-Obstacle::Obstacle(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle)
-    : GameObject(parent, position, dimension, angle, 0) {
-    setRotation(angle);
-}
+Obstacle::Obstacle(std::pair<float, float> position, float dimension, double angle)
+    : GameObject(position, dimension, angle, 0) {}
 
 void Obstacle::update() {
 }

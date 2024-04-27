@@ -8,26 +8,30 @@
 #define GAMEOBJECT_H
 
 #include "angledirection.h"
+#include <QJsonObject>
 
-class enum ObjectType {
-    ROBOT,
-    OBSTACLE
-};
+using namespace std;
 
 class GameObject {
   public:
-    GameObject(QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    GameObject(pair<float, float> position = pair<float, float>(-25, -25), float dimension = 25.0, double angle = 0.0, double velocity = 0.0);
     virtual ~GameObject();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     virtual void update();
+    void enslaveInTime(float frameTTL);
     virtual QJsonValue toJson() const;
     static GameObject *fromJson(const QJsonObject &obj);
 
+    bool collidesWithItem(GameObject *item);
+
   protected:
-    std::pair<float, float> position;
+    enum HitboxType { CIRCLE,
+                      RECTANGLE } t_hitbox;
+
+    pair<float, float> position;
     AngleDirection angleDir;
     float dimension;
+    HitboxType hitboxType = RECTANGLE;
 };
 
 #endif // GAMEOBJECT_H

@@ -11,7 +11,7 @@
 
 class Obstacle : public GameObject {
   public:
-    Obstacle(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0);
+    Obstacle(std::pair<float, float> position = std::pair<float, float>(0, 0), float dimension = 25.0, double angle = 0.0);
 
     void update() override;
 };

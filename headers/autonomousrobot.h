@@ -11,13 +11,14 @@
 
 class AutonomousRobot : public Robot {
   public:
-    AutonomousRobot(QGraphicsItem *parent = nullptr, QPointF position = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    AutonomousRobot(std::pair<float, float> position = std::pair<float, float>(0, 0), float dimension = 25.0, double angle = 0.0, double velocity = 0.0);
 
     void update() override;
     void handleCollision() override;
 
   protected:
-    double rotaionAmount = 1;
+    int rotationAmount = 1;
+    int state = -1;
     bool rotateRight = true;
 };
 

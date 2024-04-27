@@ -13,7 +13,7 @@
 
 class Simulation {
   public:
-    Simulation(QGraphicsScene *scene);
+    Simulation();
     ~Simulation();
 
     void addObject(Robot *object);       // Add objects to the simulation
@@ -26,9 +26,9 @@ class Simulation {
     void checkCollisions();              // Check for collisions between objects
 
   private:
-    QGraphicsScene *scene;
-    QList<Robot *> robots;       // List to hold all objects
-    QList<Obstacle *> obstacles; // List to hold all objects
+    std::list<Robot *> robots;       // List to hold all objects
+    std::list<Obstacle *> obstacles; // List to hold all objects
+    float frameTTL = 1/60;                // Speed of the simulation
 
     QJsonObject serialize() const;             // Serialize the scene to a JSON object
     bool deserialize(const QJsonObject &json); // Deserialize the scene from a JSON object
