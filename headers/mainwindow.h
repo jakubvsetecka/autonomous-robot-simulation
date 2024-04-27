@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include "simulation.h"
+#include "autonomousrobot.h"
 #include <QGraphicsRectItem>
 #include <QMainWindow>
 #include <QTimer>
+#include "robutek.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -21,6 +23,8 @@ public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
   void setupAnimation();
+
+  Robutek *robot;
 
 private:
   Ui::MainWindow *ui;

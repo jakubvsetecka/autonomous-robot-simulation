@@ -23,6 +23,7 @@ public:
   virtual void update();
   virtual QJsonValue toJson() const;
   static GameObject *fromJson(const QJsonObject &obj);
+  void enslaveToTime(float frameTTL);
   AngleDirection angleDir;
 
 protected:

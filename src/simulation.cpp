@@ -57,8 +57,8 @@ void Simulation::updateObjects()
 {
     for (Robot *obj : robots)
     {
-        obj->update();
-        //obj->enslaveToTime(frameTTL);
+        // obj->update();
+        // obj->enslaveToTime(frameTTL);
     }
     checkCollisions();
 }
@@ -123,24 +123,42 @@ bool Simulation::deserialize(const QJsonObject &json)
 
 void Simulation::checkCollisions()
 {
-    for (Robot *robot : robots)
+    for (auto item : scene->items())
     {
-        std::cout << "scena: " << scene->width() << " " << scene->height() << std::endl;
-        std::cout << "robot: " << robot->x() << " " << robot->y() << std::endl;
-        if (robot->x() < 0 || robot->x() > scene->width() || robot->y() < 0 || robot->y() > scene->height())
+        if (item->data(0) != "gridLine")
         {
-            std::cout << "kurva" << std::endl;
-            robot->handleCollision();
-            robot->angleDir.setMagnitude(0);
-        }
+            std::cout << "scena: " << scene->width() << " " << scene->height() << std::endl;
+            std::cout << "item: " << item->x() << " " << item->y() << std::endl;
 
-        for (Obstacle *obstacle : obstacles)
-        {
-
-            if (robot->collidesWithItem(obstacle))
+            if (item->x() < 0 || item->x() > scene->width() || item->y() < 0 || item->y() > scene->height())
             {
-                robot->handleCollision();
+                std::cout << "kurva" << std::endl;
+            }
+            else
+            {
+                item->setPos(100, 100);
             }
         }
     }
+
+    // for (Robot *robot : robots)
+    // {
+    //     std::cout << "scena: " << scene->width() << " " << scene->height() << std::endl;
+    //     std::cout << "robot: " << robot->x() << " " << robot->y() << std::endl;
+    //     if (robot->x() < 0 || robot->x() > scene->width() || robot->y() < 0 || robot->y() > scene->height())
+    //     {
+    //         std::cout << "kurva" << std::endl;
+    //         robot->handleCollision();
+    //         robot->angleDir.setMagnitude(0);
+    //     }
+
+    //     for (Obstacle *obstacle : obstacles)
+    //     {
+
+    //         if (robot->collidesWithItem(obstacle))
+    //         {
+    //             robot->handleCollision();
+    //         }
+    //     }
+    // }
 }

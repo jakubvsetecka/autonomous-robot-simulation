@@ -29,11 +29,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     simulation = new Simulation(scene);
 
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(200, 50), QPointF(50, 100), 0);
-    simulation->addObject(obstacle);
+    robot = new Robutek();
+    robot->setRect(0, 0, 50, 50);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(Qt::blue);
+    robot->setBrush(brush);
+    scene->addItem(robot);
 
-    AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
-    simulation->addObject(autonomousRobot);
+    // Obstacle *obstacle = new Obstacle(NULL, QPointF(200, 50), QPointF(50, 100), 0);
+    // simulation->addObject(obstacle);
+
+    // AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
+    // simulation->addObject(autonomousRobot);
 
     // ControlledRobot *controlledRobot = new ControlledRobot();
     // simulation->addObject(controlledRobot);
@@ -50,7 +58,6 @@ void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
     scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-    // scene->addRect(0, 0, scene->width(), scene->height(), QPen(Qt::black), QBrush(Qt::white));
     drawGrid(); // Draw the grid after setting the scene rect
 }
 
@@ -97,20 +104,23 @@ void MainWindow::drawGrid()
 
 void MainWindow::onAddObstacleClicked()
 {
-    // Create a new obstacle
-    int posx = rand() % 1000 - 500;
-    int posy = rand() % 1000 - 500;
-    int size = rand() % 50;
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(posx, posy), QPointF(size, size), rand() % 360);
-    simulation->addObject(obstacle);
-    // Here you need to specify how to add this to your scene or simulation
-    // Example: simulation->addObject(obstacle); or scene->addItem(obstacle);
-    // Make sure you have access to your QGraphicsScene or Simulation class instance here
+    // // Create a new obstacle
+    // int posx = rand() % 1000 - 500;
+    // int posy = rand() % 1000 - 500;
+    // int size = rand() % 50;
+    // Obstacle *obstacle = new Obstacle(NULL, QPointF(posx, posy), QPointF(size, size), rand() % 360);
+    // simulation->addObject(obstacle);
+    // // Here you need to specify how to add this to your scene or simulation
+    // // Example: simulation->addObject(obstacle); or scene->addItem(obstacle);
+    // // Make sure you have access to your QGraphicsScene or Simulation class instance here
 }
 
 void MainWindow::updateAnimation()
 {
-    simulation->updateObjects();
+    // simulation->updateObjects();
+    robot->moveBy(robot->angleDir.getX(), robot->angleDir.getY());
+    robot->rotate(0.2);
+    std::cout << "robot: " << robot->x() << " " << robot->y() << std::endl;
 }
 
 MainWindow::~MainWindow()
