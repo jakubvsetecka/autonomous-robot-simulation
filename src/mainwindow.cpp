@@ -8,13 +8,24 @@
 #include "obstacle.h"
 #include "simulation.h"
 #include "ui_mainwindow.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    : QMainWindow(parent), ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->resetTransform();
+    ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
+
+    // Set the alignment to ensure (0, 0) is at the top-left corner
+    ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
+    // Set the initial scene rectangle
+    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 
     simulation = new Simulation(scene);
 
@@ -24,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
     simulation->addObject(autonomousRobot);
 
-    ControlledRobot *controlledRobot = new ControlledRobot();
-    simulation->addObject(controlledRobot);
+    // ControlledRobot *controlledRobot = new ControlledRobot();
+    // simulation->addObject(controlledRobot);
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
@@ -35,7 +46,57 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
 }
 
-void MainWindow::onAddObstacleClicked() {
+void MainWindow::showEvent(QShowEvent *event)
+{
+    QMainWindow::showEvent(event);
+    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    // scene->addRect(0, 0, scene->width(), scene->height(), QPen(Qt::black), QBrush(Qt::white));
+    drawGrid(); // Draw the grid after setting the scene rect
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    // Update the scene rect to match the new viewport size
+    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    drawGrid();
+}
+
+void MainWindow::drawGrid()
+{
+    const int gridSpacing = 100;        // Grid spacing in pixels
+    QPen pen(Qt::gray, 0, Qt::DotLine); // Pen for the grid lines
+
+    // Clear previous grid lines if they exist
+    foreach (QGraphicsItem *item, scene->items())
+    {
+        if (item->data(0) == "gridLine")
+        {
+            scene->removeItem(item);
+            delete item;
+        }
+    }
+
+    // Get the current size of the scene
+    QRectF rect = scene->sceneRect();
+
+    // Draw vertical lines
+    for (double x = rect.left(); x <= rect.right(); x += gridSpacing)
+    {
+        QGraphicsLineItem *line = scene->addLine(x, rect.top(), x, rect.bottom(), pen);
+        line->setData(0, "gridLine");
+    }
+
+    // Draw horizontal lines
+    for (double y = rect.top(); y <= rect.bottom(); y += gridSpacing)
+    {
+        QGraphicsLineItem *line = scene->addLine(rect.left(), y, rect.right(), y, pen);
+        line->setData(0, "gridLine");
+    }
+}
+
+void MainWindow::onAddObstacleClicked()
+{
     // Create a new obstacle
     int posx = rand() % 1000 - 500;
     int posy = rand() % 1000 - 500;
@@ -47,10 +108,12 @@ void MainWindow::onAddObstacleClicked() {
     // Make sure you have access to your QGraphicsScene or Simulation class instance here
 }
 
-void MainWindow::updateAnimation() {
+void MainWindow::updateAnimation()
+{
     simulation->updateObjects();
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
     delete ui;
 }

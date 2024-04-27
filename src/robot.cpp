@@ -9,13 +9,15 @@
 Robot::Robot(QGraphicsItem *parent, QPointF position, QPointF dimension, double angle, double velocity)
     : GameObject(parent, position, dimension, angle, velocity) {}
 
-void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
     QBrush brush(Qt::CrossPattern);
     painter->setBrush(brush);
     painter->drawEllipse(boundingRect());
 }
 
-void Robot::update() {
+void Robot::update()
+{
     moveBy(angleDir.getX(), angleDir.getY());
     setRotation(angleDir.angle);
 }
