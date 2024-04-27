@@ -12,6 +12,7 @@ GameObject::GameObject(QGraphicsItem *parent, QPointF position, QPointF dimensio
     : QGraphicsItem(parent), angleDir(angle, velocity), dimension(dimension)
 {
     setTransformOriginPoint(boundingRect().center());
+    setPos(position);
 }
 
 GameObject::~GameObject() {}
@@ -44,4 +45,11 @@ GameObject *GameObject::fromJson(const QJsonObject &obj)
 {
     // Create object from JSON
     // Placeholder for JSON object creation code
+}
+
+void GameObject::enslaveToTime(float frameTTL)
+{
+    qreal dx = x() * frameTTL;
+    qreal dy = y() * frameTTL;
+    moveBy(dx, dy);
 }

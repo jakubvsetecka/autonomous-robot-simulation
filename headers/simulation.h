@@ -29,6 +29,7 @@ class Simulation {
     QGraphicsScene *scene;
     QList<Robot *> robots;       // List to hold all objects
     QList<Obstacle *> obstacles; // List to hold all objects
+    float frameTTL = 1/60;        // Time to live for each frame
 
     QJsonObject serialize() const;             // Serialize the scene to a JSON object
     bool deserialize(const QJsonObject &json); // Deserialize the scene from a JSON object

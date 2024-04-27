@@ -17,7 +17,32 @@ public:
 
     // Constructor
     AngleDirection(double angle = 0.0, double magnitude = 0.0)
-        : angle(angle), magnitude(magnitude) {}
+        : magnitude(magnitude)
+    {
+        setAngle(angle);
+    }
+
+    // Setters and getters
+    void setAngle(double angle)
+    {
+        this->angle = angle * M_PI / 180.0;
+    }
+
+    void setMagnitude(double magnitude)
+    {
+        this->magnitude = magnitude;
+    }
+
+    // Returns the angle in degrees
+    double getAngle(double angle)
+    {
+        return this->angle * 180.0 / M_PI;
+    }
+
+    double getMagnitude(double magnitude)
+    {
+        return this->magnitude;
+    }
 
     // Convert to Cartesian coordinates
     double getX() const
@@ -30,14 +55,10 @@ public:
         return magnitude * sin(angle); // Assuming angle is in radians
     }
 
-    void setMagnitude(double magnitude)
+    // Rotate the vector by a given angle in degrees
+    void rotate(double angle)
     {
-        this->magnitude = magnitude;
-    }
-
-    void setAngle(double angle)
-    {
-        this->angle = angle;
+        this->angle += angle * M_PI / 180.0; // Convert angle to radians
     }
 };
 
