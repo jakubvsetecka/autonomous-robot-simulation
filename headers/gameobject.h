@@ -8,25 +8,26 @@
 #define GAMEOBJECT_H
 
 #include "angledirection.h"
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QPointF>
 
-class GameObject : public QGraphicsItem {
+class enum ObjectType {
+    ROBOT,
+    OBSTACLE
+};
+
+class GameObject {
   public:
-    GameObject(QGraphicsItem *parent = nullptr, QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+    GameObject(QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
     virtual ~GameObject();
 
-    QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     virtual void update();
     virtual QJsonValue toJson() const;
     static GameObject *fromJson(const QJsonObject &obj);
 
   protected:
-    QPointF position;
+    std::pair<float, float> position;
     AngleDirection angleDir;
-    QPointF dimension;
+    float dimension;
 };
 
 #endif // GAMEOBJECT_H

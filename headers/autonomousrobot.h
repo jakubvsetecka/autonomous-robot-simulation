@@ -17,7 +17,6 @@ class AutonomousRobot : public Robot {
     void handleCollision() override;
 
   protected:
-    double detectDistance = 50;
     double rotaionAmount = 1;
     bool rotateRight = true;
 };

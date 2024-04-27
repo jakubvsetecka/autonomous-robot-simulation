@@ -17,6 +17,8 @@ class Robot : public GameObject {
     void update() override;
 
     virtual void handleCollision() = 0;
+  private:
+    double detectDistance = 50;
 };
 
 #endif // ROBOT_H
