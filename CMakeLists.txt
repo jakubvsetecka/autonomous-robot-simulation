@@ -22,8 +22,13 @@ set(PROJECT_SOURCES
     headers/simulationengine.hpp
     src/simulationengine.cpp
 
-    headers/robutek.hpp
-    headers/samorobutek.hpp
+    headers/robot.hpp
+    src/robot.cpp
+
+    headers/autorobot.hpp
+    src/autorobot.cpp
+
+    headers/obstacle.hpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

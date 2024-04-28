@@ -7,8 +7,8 @@
 #include <QDebug>
 #include <QKeyEvent>
 #include "simulationengine.hpp"
-#include "robutek.hpp"
-#include "samorobutek.hpp"
+#include "robot.hpp"
+#include "autorobot.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

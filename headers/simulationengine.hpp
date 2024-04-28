@@ -2,7 +2,8 @@
 #define SIMULATIONENGINE_H
 
 #include <QGraphicsScene>
-#include "robutek.hpp"
+#include "robot.hpp"
+#include "autorobot.hpp"
 
 class SimulationEngine : public QGraphicsScene
 {
@@ -18,6 +19,22 @@ public:
 
         // Set the static time constant
         SimulationEngine::timeConstant = getFrameTime() * simulationSpeed;
+
+        // Testing obsacle
+        QGraphicsRectItem *rectangl = addRect(100, 200, 100, 100, QPen(Qt::blue));
+        rectangl->setBrush(QBrush(Qt::blue));
+        rectangl->setTransformOriginPoint(rectangl->rect().width() / 2, rectangl->rect().height() / 2);
+        rectangl->setRotation(45);
+
+        // Create a robot and set it as the controlled robot
+        Robot *robutek = new Robot();
+        robutek->setPos(100, 100);
+        setControlledRobot(robutek);
+
+        // Add an autonomous robot
+        AutoRobot *samorobutek = new AutoRobot();
+        samorobutek->setPos(150, 150);
+        addItem(samorobutek);
     }
 
     ~SimulationEngine() {}
@@ -38,8 +55,8 @@ public:
      */
     qreal getSimulationSpeed() { return simulationSpeed; }
 
-    Robutek *getControlledRobot() { return controlledRobot; }
-    void setControlledRobot(Robutek *robot)
+    Robot *getControlledRobot() { return controlledRobot; }
+    void setControlledRobot(Robot *robot)
     {
         controlledRobot = robot;
         addItem(controlledRobot);
@@ -51,7 +68,7 @@ private:
     /** The speed of the simulation engine. */
     qreal simulationSpeed = 0.1;
 
-    Robutek *controlledRobot = nullptr;
+    Robot *controlledRobot = nullptr;
 };
 
 #endif // SIMULATIONENGINE_H

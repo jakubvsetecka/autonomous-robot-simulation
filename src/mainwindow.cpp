@@ -27,22 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Set the initial scene rectangle
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 
-    // Testing obsacle
-    QGraphicsRectItem *rectangl = simulationEngine->addRect(100, 200, 100, 100, QPen(Qt::blue));
-    rectangl->setBrush(QBrush(Qt::blue));
-    rectangl->setTransformOriginPoint(rectangl->rect().width() / 2, rectangl->rect().height() / 2);
-    rectangl->setRotation(45);
-
-    // Create a robot and set it as the controlled robot
-    Robutek *robutek = new Robutek();
-    robutek->setPos(100, 100);
-    simulationEngine->setControlledRobot(robutek);
-
-    // Add an autonomous robot
-    Samorobutek *samorobutek = new Samorobutek();
-    samorobutek->setPos(150, 150);
-    simulationEngine->addItem(samorobutek);
-
     // Setup the animation loop
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
@@ -82,11 +66,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Left:
         // Rotate left
-        simulationEngine->getControlledRobot()->startRotating(Robutek::RotationDirection::Left);
+        simulationEngine->getControlledRobot()->startRotating(Robot::RotationDirection::Left);
         break;
     case Qt::Key_Right:
         // Rotate right
-        simulationEngine->getControlledRobot()->startRotating(Robutek::RotationDirection::Right);
+        simulationEngine->getControlledRobot()->startRotating(Robot::RotationDirection::Right);
         break;
     default:
         QMainWindow::keyPressEvent(event); // Pass the unhandled keys to the base class
@@ -129,7 +113,7 @@ void MainWindow::updateAnimation()
 {
     for (QGraphicsItem *item : simulationEngine->items())
     {
-        Robutek *robutek = dynamic_cast<Robutek *>(item);
+        Robot *robutek = dynamic_cast<Robot *>(item);
         if (robutek != nullptr)
         {
             robutek->move();
