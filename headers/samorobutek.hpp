@@ -10,6 +10,9 @@ public:
     {
         this->collisionLookAhead = collisionLookAhead;
 
+        setRect(0, 0, 40, 40);
+        setTransformOriginPoint(rect().width() / 2, rect().height() / 2);
+
         // Set the color of the ellipse to red
         setPen(QPen(Qt::red, 1));
 

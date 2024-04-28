@@ -1,11 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "simulation.h"
 #include <QGraphicsRectItem>
 #include <QMainWindow>
 #include <QTimer>
 #include <QDebug>
+#include <QKeyEvent>
 #include "simulationengine.hpp"
 #include "robutek.hpp"
 #include "samorobutek.hpp"
@@ -29,7 +29,6 @@ public:
 private:
   Ui::MainWindow *ui;
   SimulationEngine *simulationEngine;
-  Simulation *simulation;
 
   void initScene();
   void updateAnimation(); // Method to update the animation

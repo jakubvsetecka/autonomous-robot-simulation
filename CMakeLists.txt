@@ -16,24 +16,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 set(PROJECT_SOURCES
     main.cpp
     src/mainwindow.cpp
-    src/simulation.cpp # Make sure this is correctly added
     headers/mainwindow.h
-    headers/simulation.h # And other headers if necessary
     src/mainwindow.ui
-    src/gameobject.cpp
-    headers/gameobject.h
-    src/obstacle.cpp
-    headers/obstacle.h
-    src/robot.cpp
-    headers/robot.h
-    src/robot.cpp
-    headers/robot.h
-    src/autonomousrobot.cpp
-    headers/autonomousrobot.h
-    src/controlledrobot.cpp
-    headers/controlledrobot.h
+
     headers/simulationengine.hpp
     src/simulationengine.cpp
+
     headers/robutek.hpp
     headers/samorobutek.hpp
 )
