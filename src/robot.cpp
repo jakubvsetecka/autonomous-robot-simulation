@@ -142,9 +142,6 @@ void Robot::focusInEvent(QFocusEvent *event)
 
     // Update the robot's appearance or state when it gains focus
     update(); // Request a redraw to show it's focused
-
-    // Perform any additional actions when focus is gained
-    qDebug() << "Robot has gained focus!";
 }
 
 // Override the focusOutEvent in the Robot class
@@ -157,9 +154,6 @@ void Robot::focusOutEvent(QFocusEvent *event)
 
     // Set the brush color to default when the robot is not being controlled
     setBrush(QBrush(Qt::transparent));
-
-    // Perform any additional actions when focus is lost
-    qDebug() << "Robot has lost focus!";
 }
 
 void Robot::keyPressEvent(QKeyEvent *event)
