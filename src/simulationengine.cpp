@@ -57,3 +57,13 @@ void SimulationEngine::addObstacle() {
     Obstacle *obstacle = new Obstacle();
     addItem(obstacle);
 }
+
+void SimulationEngine::addAutoRobot() {
+    AutoRobot *autoRobot = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1);
+    addItem(autoRobot);
+}
+
+void SimulationEngine::addControlledRobot() {
+    Robot *robot = new Robot();
+    setControlledRobot(robot);
+}

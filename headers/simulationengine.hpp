@@ -32,8 +32,12 @@ class SimulationEngine : public QGraphicsScene {
 
     /**
      * @brief Add obstacle to the scene.
-    */
+     */
     void addObstacle();
+
+    void addAutoRobot();
+
+    void addControlledRobot();
 
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);

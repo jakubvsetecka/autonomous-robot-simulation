@@ -30,6 +30,8 @@ set(PROJECT_SOURCES
 
     headers/obstacle.hpp
     src/obstacle.cpp
+
+    headers/expbuttonwidget.hpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

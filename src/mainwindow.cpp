@@ -31,6 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
     timer->start(simulationEngine->getFrameTime());
 
+    expandableWidget = ui->expWidget;
+    connect(expandableWidget->button1, &QPushButton::clicked, this, &MainWindow::onAddAutoRobotClicked);
+    connect(expandableWidget->button2, &QPushButton::clicked, this, &MainWindow::onAddControlledRobotClicked);
+
     // Connect the button click signal to the appropriate slot
     connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
 }
@@ -97,6 +101,22 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
 void MainWindow::onAddObstacleClicked() {
     simulationEngine->addObstacle();
+}
+
+void MainWindow::onAddAutoRobotClicked() {
+    simulationEngine->addAutoRobot();
+}
+
+void MainWindow::onAddControlledRobotClicked() {
+    simulationEngine->addControlledRobot();
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    // Assuming 'expandableWidget' is a member of MainWindow
+    if (!expandableWidget->geometry().contains(event->pos())) {
+        expandableWidget->collapse();
+    }
+    QMainWindow::mousePressEvent(event);
 }
 
 void MainWindow::updateAnimation() {
