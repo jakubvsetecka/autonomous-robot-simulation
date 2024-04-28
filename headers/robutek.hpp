@@ -6,6 +6,7 @@
 #include <QtMath>
 #include <QDebug>
 #include <QGraphicsScene>
+#include <QPointF>
 
 class Robutek : public QGraphicsEllipseItem
 {
@@ -69,44 +70,84 @@ public:
     void startRotating(RotationDirection direction) { isRotating = direction; }
     void stopRotating() { isRotating = RotationDirection::None; }
 
-    void move()
+    QPointF getDirectionVector()
+    {
+        qreal angle = rotation();
+        qreal dx = qCos(qDegreesToRadians(angle));
+        qreal dy = qSin(qDegreesToRadians(angle));
+
+        return QPointF(dx, dy);
+    }
+
+    virtual bool willCollide(QPointF moveVector)
+    {
+        if (scene() != nullptr)
+        {
+            qreal radius = rect().width() / 2;   // Radius of the robot
+            QPointF newPos = pos() + moveVector; // New position center after the intended move
+
+            // Ensure new position stays within the scene boundaries, accounting for the robot's radius
+            QRectF sceneRect = scene()->sceneRect().adjusted(radius, radius, -radius, -radius);
+            if (!sceneRect.contains(newPos))
+            {
+                return true; // Collision with scene boundaries
+            }
+
+            // Check for collisions with other items in the scene
+            QList<QGraphicsItem *> potentialCollisions = scene()->items(QRectF(newPos.x() - radius, newPos.y() - radius, 2 * radius, 2 * radius));
+            for (QGraphicsItem *item : potentialCollisions)
+            {
+                if (item != this)
+                {
+                    QRectF itemRect = item->sceneBoundingRect();
+                    qreal closestX = qMax(itemRect.left(), qMin(newPos.x(), itemRect.right()));
+                    qreal closestY = qMax(itemRect.top(), qMin(newPos.y(), itemRect.bottom()));
+                    qreal distanceX = newPos.x() - closestX;
+                    qreal distanceY = newPos.y() - closestY;
+
+                    // Calculate distance from closest point on the item's bounding rectangle to the new center position of the robot
+                    if (distanceX * distanceX + distanceY * distanceY < radius * radius)
+                    {
+                        return true; // Collision detected
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Move the robot based on its current direction and speed. Returns true if the robot moved, false if it didn't (e.g. if it hit a boundary).
+     *
+     * @return true
+     * @return false
+     */
+    virtual bool move()
     {
         if (isRotating != RotationDirection::None)
         {
             setRotation(rotation() + rotation_speed * isRotating); // Rotate the robot
 
-            return; // Don't move if rotating
+            return true; // Don't move if rotating
         }
 
         if (isMoving)
         {
+            QPointF moveVector = getDirectionVector() * move_speed;
 
-            qreal angle = rotation(); // Use rotation as the direction
-            qreal dx = move_speed * qCos(qDegreesToRadians(angle));
-            qreal dy = move_speed * qSin(qDegreesToRadians(angle));
-
-            // Check scene boundaries
-            if (scene() != nullptr)
+            if (willCollide(moveVector))
             {
-                // Get the scene rectangle with the robot's size taken into account (center-based positioning, so the margin is half the size of the robot)
-                QRectF sceneRect = scene()->sceneRect().adjusted(rect().width() / 2, rect().height() / 2, -rect().width() / 2, -rect().height() / 2);
-                if (!sceneRect.contains(pos() + QPointF(dx, dy)))
-                {
-                    // If the new position is outside the scene, don't move
-                    return;
-                }
+                return false;
             }
 
-            moveBy(dx, dy);
+            moveBy(moveVector.x(), moveVector.y());
         }
+
+        return true;
     }
 
-    void update()
-    {
-        move();
-    }
-
-private:
+protected:
     qreal move_speed = 5;     // The speed of the robot
     qreal rotation_speed = 5; // The speed of the rotation of the robot
 

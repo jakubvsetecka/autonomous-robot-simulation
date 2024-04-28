@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "simulationengine.hpp"
 #include "robutek.hpp"
+#include "samorobutek.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -37,7 +38,6 @@ private:
 protected:
   void showEvent(QShowEvent *event) override;
   void resizeEvent(QResizeEvent *event) override;
-  void drawGrid();
   void keyPressEvent(QKeyEvent *event) override;
   void keyReleaseEvent(QKeyEvent *event) override;
 };

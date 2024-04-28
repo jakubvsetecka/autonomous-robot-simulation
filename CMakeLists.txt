@@ -34,6 +34,8 @@ set(PROJECT_SOURCES
     headers/controlledrobot.h
     headers/simulationengine.hpp
     src/simulationengine.cpp
+    headers/robutek.hpp
+    headers/samorobutek.hpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

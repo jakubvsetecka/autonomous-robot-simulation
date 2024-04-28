@@ -28,9 +28,26 @@ MainWindow::MainWindow(QWidget *parent)
     // Set the initial scene rectangle
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 
+    QGraphicsRectItem *rectangl = simulationEngine->addRect(100, 200, 100, 100, QPen(Qt::blue));
+    rectangl->setBrush(QBrush(Qt::blue));
+    rectangl->setTransformOriginPoint(rectangl->rect().width() / 2, rectangl->rect().height() / 2);
+    rectangl->setRotation(45);
+
+    // rectangl = simulationEngine->addRect(400, 100, 100, 100, QPen(Qt::blue));
+    // rectangl->setRotation(45);
+    // rectangl->setBrush(QBrush(Qt::blue));
+
+    // rectangl = simulationEngine->addRect(300, 200, 100, 100, QPen(Qt::blue));
+    // rectangl->setRotation(45);
+    // rectangl->setBrush(QBrush(Qt::blue));
+
     Robutek *robutek = new Robutek();
     robutek->setPos(100, 100);
     simulationEngine->setControlledRobot(robutek);
+
+    Samorobutek *samorobutek = new Samorobutek();
+    samorobutek->setPos(150, 150);
+    simulationEngine->addItem(samorobutek);
 
     // simulation = new Simulation(scene);
 
@@ -55,7 +72,6 @@ void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-    drawGrid(); // Draw the grid after setting the scene rect
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -63,44 +79,16 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QMainWindow::resizeEvent(event);
     // Update the scene rect to match the new viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-    drawGrid();
-}
-
-void MainWindow::drawGrid()
-{
-    const int gridSpacing = 100;        // Grid spacing in pixels
-    QPen pen(Qt::gray, 0, Qt::DotLine); // Pen for the grid lines
-
-    // Clear previous grid lines if they exist
-    foreach (QGraphicsItem *item, simulationEngine->items())
-    {
-        if (item->data(0) == "gridLine")
-        {
-            simulationEngine->removeItem(item);
-            delete item;
-        }
-    }
-
-    // Get the current size of the scene
-    QRectF rect = simulationEngine->sceneRect();
-
-    // Draw vertical lines
-    for (double x = rect.left(); x <= rect.right(); x += gridSpacing)
-    {
-        QGraphicsLineItem *line = simulationEngine->addLine(x, rect.top(), x, rect.bottom(), pen);
-        line->setData(0, "gridLine");
-    }
-
-    // Draw horizontal lines
-    for (double y = rect.top(); y <= rect.bottom(); y += gridSpacing)
-    {
-        QGraphicsLineItem *line = simulationEngine->addLine(rect.left(), y, rect.right(), y, pen);
-        line->setData(0, "gridLine");
-    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    if (simulationEngine->getControlledRobot() == nullptr)
+    {
+        QMainWindow::keyPressEvent(event); // Pass the unhandled keys to the base class
+        return;
+    }
+
     switch (event->key())
     {
     case Qt::Key_Up:
@@ -121,6 +109,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
+    if (simulationEngine->getControlledRobot() == nullptr)
+    {
+        QMainWindow::keyReleaseEvent(event); // Pass the unhandled keys to the base class
+        return;
+    }
+
     switch (event->key())
     {
     case Qt::Key_Up:
@@ -152,7 +146,21 @@ void MainWindow::onAddObstacleClicked()
 
 void MainWindow::updateAnimation()
 {
-    simulationEngine->getControlledRobot()->update();
+    Robutek *controlledRobot = simulationEngine->getControlledRobot();
+    if (controlledRobot != nullptr)
+    {
+        controlledRobot->move();
+    }
+
+    for (QGraphicsItem *item : simulationEngine->items())
+    {
+        Robutek *robutek = dynamic_cast<Robutek *>(item);
+        if (robutek != nullptr && robutek != controlledRobot)
+        {
+            robutek->move();
+        }
+    }
+
     // simulation->updateObjects();
     // simulationEngine->getControlledRobot()->move(SimulationEngine::timeConstant);
     // simulationEngine->getControlledRobot()->setRotation(simulationEngine->getControlledRobot()->rotation() + 2);
