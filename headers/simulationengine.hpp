@@ -1,13 +1,12 @@
 #ifndef SIMULATIONENGINE_H
 #define SIMULATIONENGINE_H
 
-#include <QGraphicsScene>
-#include "robot.hpp"
 #include "autorobot.hpp"
+#include "robot.hpp"
+#include <QGraphicsScene>
 
-class SimulationEngine : public QGraphicsScene
-{
-public:
+class SimulationEngine : public QGraphicsScene {
+  public:
     /** A static time constant for the simulation engine. */
     static qreal timeConstant;
 
@@ -31,10 +30,19 @@ public:
      */
     qreal getSimulationSpeed();
 
+    /**
+     * @brief Add obstacle to the scene.
+     */
+    void addObstacle();
+
+    void addAutoRobot();
+
+    void addControlledRobot();
+
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
 
-private:
+  private:
     /** The frames per second of the simulation engine. */
     int fps = 60;
     /** The speed of the simulation engine. */
