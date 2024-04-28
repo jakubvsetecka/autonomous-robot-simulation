@@ -2,6 +2,8 @@
 
 AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed) : Robot(parent)
 {
+    setFlag(QGraphicsItem::ItemIsFocusable, true);
+
     this->collisionLookAhead = collisionLookAhead;
     this->rotationDirection = rotationDirection;
     setMoveSpeed(moveSpeed);
@@ -23,11 +25,11 @@ void AutoRobot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 {
     Robot::paint(painter, option, widget);
 
-    // Dashed line
+    // // Draw the boundingRect
     QPen pen = painter->pen();
-    pen.setStyle(Qt::DashLine);
-    painter->setPen(pen);
-    painter->drawRect(rect());
+    // pen.setStyle(Qt::DashLine);
+    // painter->setPen(pen);
+    // painter->drawRect(rect());
 
     // Draw the collision look ahead line
     pen.setStyle(Qt::SolidLine);

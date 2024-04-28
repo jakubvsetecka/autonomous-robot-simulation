@@ -5,8 +5,9 @@
 #include "robot.hpp"
 #include <QGraphicsScene>
 
-class SimulationEngine : public QGraphicsScene {
-  public:
+class SimulationEngine : public QGraphicsScene
+{
+public:
     /** A static time constant for the simulation engine. */
     static qreal timeConstant;
 
@@ -42,7 +43,7 @@ class SimulationEngine : public QGraphicsScene {
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
 
-  private:
+private:
     /** The frames per second of the simulation engine. */
     int fps = 60;
     /** The speed of the simulation engine. */

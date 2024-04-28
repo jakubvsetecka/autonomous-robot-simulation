@@ -21,10 +21,10 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed
     robutek->setPos(100, 100);
     setControlledRobot(robutek);
 
-    // Add an autonomous robot
-    AutoRobot *samorobutek = new AutoRobot(nullptr, 30, Robot::RotationDirection::Right, 7, 1);
-    samorobutek->setPos(150, 150);
-    addItem(samorobutek);
+    // // Add an autonomous robot
+    // AutoRobot *samorobutek = new AutoRobot(nullptr, 30, Robot::RotationDirection::Right, 7, 30);
+    // samorobutek->setPos(150, 150);
+    // addItem(samorobutek);
 }
 
 SimulationEngine::~SimulationEngine() {}

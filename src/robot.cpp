@@ -2,6 +2,8 @@
 
 Robot::Robot(QGraphicsItem *parent) : QGraphicsEllipseItem(parent)
 {
+    setFlag(QGraphicsItem::ItemIsFocusable, true);
+
     // Set the size of the ellipse
     setRect(0, 0, 25, 25);
 
@@ -11,12 +13,11 @@ Robot::Robot(QGraphicsItem *parent) : QGraphicsEllipseItem(parent)
 
 void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    // Use the current brush for painting
+    painter->setBrush(brush());
+
     // Call the base class paint to draw the ellipse
     QGraphicsEllipseItem::paint(painter, option, widget);
-
-    // Define the line's style
-    QPen pen(Qt::black, 1); // Set the color and width of the line
-    painter->setPen(pen);
 
     // Draw a line through the center of the ellipse
     qreal radius = getRadius();
@@ -130,4 +131,75 @@ bool Robot::move()
     }
 
     return true;
+}
+
+void Robot::focusInEvent(QFocusEvent *event)
+{
+    QGraphicsEllipseItem::focusInEvent(event); // Call the base class method
+
+    // Set the brush color to green when the robot is being controlled
+    setBrush(QBrush(Qt::lightGray));
+
+    // Update the robot's appearance or state when it gains focus
+    update(); // Request a redraw to show it's focused
+
+    // Perform any additional actions when focus is gained
+    qDebug() << "Robot has gained focus!";
+}
+
+// Override the focusOutEvent in the Robot class
+void Robot::focusOutEvent(QFocusEvent *event)
+{
+    QGraphicsEllipseItem::focusOutEvent(event); // Call the base class method
+
+    // Update the robot's appearance or state when it loses focus
+    update(); // Request a redraw to show it's no longer focused
+
+    // Set the brush color to default when the robot is not being controlled
+    setBrush(QBrush(Qt::transparent));
+
+    // Perform any additional actions when focus is lost
+    qDebug() << "Robot has lost focus!";
+}
+
+void Robot::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_Up:
+        // Move forward
+        startMoving();
+        break;
+    case Qt::Key_Left:
+        // Rotate left
+        startRotating(Robot::RotationDirection::Left);
+        break;
+    case Qt::Key_Right:
+        // Rotate right
+        startRotating(Robot::RotationDirection::Right);
+        break;
+    default:
+        break;
+    }
+}
+
+void Robot::keyReleaseEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_Up:
+        // Stop moving
+        stopMoving();
+        break;
+    case Qt::Key_Left:
+        // Stop rotating
+        stopRotating();
+        break;
+    case Qt::Key_Right:
+        // Stop rotating
+        stopRotating();
+        break;
+    default:
+        break;
+    }
 }

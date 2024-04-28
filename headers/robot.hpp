@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QPointF>
+#include <QFocusEvent>
 
 /**
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
@@ -115,6 +116,12 @@ public:
      * @return false
      */
     virtual bool move();
+
+private:
+    void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
 protected:
     /** @brief The speed of the robot */
