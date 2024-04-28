@@ -9,3 +9,7 @@ Obstacle::Obstacle(QGraphicsItem *parent)
 }
 
 Obstacle::~Obstacle() {}
+
+void Obstacle::setPos(qreal x, qreal y) {
+    QGraphicsRectItem::setPos(x, y);
+}

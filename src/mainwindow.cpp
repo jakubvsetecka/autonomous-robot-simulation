@@ -32,11 +32,11 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(simulationEngine->getFrameTime());
 
     expandableWidget = ui->expWidget;
-    connect(expandableWidget->button1, &QPushButton::clicked, this, &MainWindow::onAddAutoRobotClicked);
-    connect(expandableWidget->button2, &QPushButton::clicked, this, &MainWindow::onAddControlledRobotClicked);
+    connect(expandableWidget->button1, &QPushButton::pressed, this, &MainWindow::onAddAutoRobotClicked);
+    connect(expandableWidget->button2, &QPushButton::pressed, this, &MainWindow::onAddControlledRobotClicked);
 
     // Connect the button click signal to the appropriate slot
-    connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
+    connect(ui->addObstacleButton, &QPushButton::pressed, this, &MainWindow::onAddObstacleClicked);
 }
 
 void MainWindow::showEvent(QShowEvent *event) {
@@ -112,11 +112,29 @@ void MainWindow::onAddControlledRobotClicked() {
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
-    // Assuming 'expandableWidget' is a member of MainWindow
+    // Handle widget
+    qDebug() << "Mouse Press Event";
     if (!expandableWidget->geometry().contains(event->pos())) {
         expandableWidget->collapse();
     }
     QMainWindow::mousePressEvent(event);
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
+    QPointF scenePos = ui->graphicsView->mapToScene(localPos);
+    qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
+
+    simulationEngine->followCursor(scenePos);
+    // Call the base class implementation if you're not fully handling the event yourself
+    QMainWindow::mouseMoveEvent(event);
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+    qDebug() << "Mouse Release Event";
+    simulationEngine->dragDeezNuts = nullptr;
+    QMainWindow::mouseReleaseEvent(event);
+    // ... your code ...
 }
 
 void MainWindow::updateAnimation() {

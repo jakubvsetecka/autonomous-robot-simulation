@@ -7,11 +7,12 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QPointF>
+#include "gameobject.hpp"
 
 /**
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
  */
-class Robot : public QGraphicsEllipseItem
+class Robot : public QGraphicsEllipseItem, public GameObject
 {
 public:
     /**

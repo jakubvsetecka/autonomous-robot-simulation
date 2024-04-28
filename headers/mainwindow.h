@@ -3,6 +3,7 @@
 
 #include "autorobot.hpp"
 #include "expbuttonwidget.hpp"
+#include "gameobject.hpp"
 #include "obstacle.hpp"
 #include "robot.hpp"
 #include "simulationengine.hpp"
@@ -43,6 +44,8 @@ class MainWindow : public QMainWindow {
     void onAddObstacleClicked();
     void onAddAutoRobotClicked();
     void onAddControlledRobotClicked();
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
     ExpandableButtonWidget *expandableWidget;
 };

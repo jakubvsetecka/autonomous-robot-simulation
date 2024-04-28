@@ -7,6 +7,8 @@
 
 class SimulationEngine : public QGraphicsScene {
   public:
+    GameObject *dragDeezNuts = nullptr;
+
     /** A static time constant for the simulation engine. */
     static qreal timeConstant;
 
@@ -41,6 +43,7 @@ class SimulationEngine : public QGraphicsScene {
 
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
+    void followCursor(QPointF pos);
 
   private:
     /** The frames per second of the simulation engine. */
