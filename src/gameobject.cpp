@@ -48,11 +48,9 @@ void GameObject::enslaveToTime(float frameTTL) {
 }
 
 void GameObject::moveByWrapper(double dx, double dy) {
-    qDebug() << "GameObject::moveByWrapper";
     moveBy(dx * frameTTL, dy * frameTTL);
 }
 
 void GameObject::setRotationWrapper(double degrees) {
-    qDebug() << "GameObject::setRotationWrapper";
     setRotation(degrees); // TODO
 }
