@@ -33,13 +33,13 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed
     samorobutek->setPos(150, 150);
     addItem(samorobutek);
 
-    samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Left, 6, 1);
+    samorobutek = new AutoRobot(nullptr, 50, Robot::RotationDirection::Left, 6, 1);
     samorobutek->setPos(250, 250);
     addItem(samorobutek);
 
     for (int i = 0; i < 5; i++)
     {
-        samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 5, 1);
+        samorobutek = new AutoRobot(nullptr, 50, Robot::RotationDirection::Right, 5, 1);
         samorobutek->setPos(300 + i * 50, 300 + i * 50);
         addItem(samorobutek);
     }

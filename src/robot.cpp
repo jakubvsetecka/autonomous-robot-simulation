@@ -19,9 +19,8 @@ void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->setPen(pen);
 
     // Draw a line through the center of the ellipse
-    qreal centerX = getRadius();
-    qreal centerY = getRadius();
-    painter->drawLine(centerX, centerY, getRadius() * 2, centerY);
+    qreal radius = getRadius();
+    painter->drawLine(radius, radius, getRadius() * 2, radius);
 }
 
 // Override setPos to adjust to center-based positioning
@@ -36,10 +35,16 @@ void Robot::setPos(qreal x, qreal y)
     setPos(QPointF(x, y));
 }
 
+QRectF Robot::boundingRect() const
+{
+    const qreal radius = getRadius();
+    return QRectF(0, 0, 2 * radius, 2 * radius);
+}
+
 // Override pos to adjust to center-based positioning
 QPointF Robot::pos() { return QGraphicsItem::pos() + QPointF(getRadius(), getRadius()); }
 
-qreal Robot::getRadius() { return rect().height() / 2; }
+qreal Robot::getRadius() const { return rect().height() / 2; }
 
 void Robot::setMoveSpeed(qreal speed) { this->move_speed = speed; }
 qreal Robot::getMoveSpeed() { return move_speed; }
@@ -62,10 +67,12 @@ QPointF Robot::getDirectionVector()
     return QPointF(dx, dy);
 }
 
-bool Robot::willCollide(QPointF moveVector)
+bool Robot::willCollide(QPointF directionVector, qreal magnitude)
 {
     if (scene() != nullptr)
     {
+        QPointF moveVector = directionVector * magnitude; // Vector representing the intended move
+
         qreal radius = getRadius();          // Radius of the robot
         QPointF newPos = pos() + moveVector; // New position center after the intended move
 
@@ -111,9 +118,10 @@ bool Robot::move()
 
     if (isMoving)
     {
-        QPointF moveVector = getDirectionVector() * move_speed;
+        QPointF directionVector = getDirectionVector();
+        QPointF moveVector = directionVector * move_speed;
 
-        if (willCollide(moveVector))
+        if (willCollide(directionVector, move_speed))
         {
             return false;
         }

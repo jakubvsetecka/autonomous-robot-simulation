@@ -27,7 +27,7 @@ public:
     Robot(QGraphicsItem *parent = nullptr);
 
     /** Override the paint method to draw a line showing the direction of the robot */
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     /** Override setPos to adjust to center-based positioning */
     void setPos(const QPointF &pos);
@@ -35,10 +35,13 @@ public:
     /** Overload setPos to accept x and y coordinates */
     void setPos(qreal x, qreal y);
 
+    /* Override the boundingRect method to adjust the bounding rectangle */
+    virtual QRectF boundingRect() const override;
+
     /** Override pos to adjust to center-based positioning */
     QPointF pos();
 
-    qreal getRadius();
+    qreal getRadius() const;
 
     /**
      * @brief Set the move speed of the robot.
@@ -103,7 +106,7 @@ public:
      * @param moveVector The vector by which the robot will move
      * @return `true` - if the robot will collide; `false` - if the robot will not collide
      */
-    virtual bool willCollide(QPointF moveVector);
+    virtual bool willCollide(QPointF directionVector, qreal magnitude);
 
     /**
      * @brief Move the robot based on its current direction and speed. Returns true if the robot moved, false if it didn't (e.g. if it hit a boundary).
