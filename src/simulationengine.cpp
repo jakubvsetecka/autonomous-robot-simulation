@@ -15,33 +15,27 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed
     SimulationEngine::timeConstant = getFrameTime() * simulationSpeed;
 
     // Testing obsacle
-    QGraphicsRectItem *rectangl = addRect(100, 200, 100, 100, QPen(Qt::blue));
-    rectangl->setBrush(QBrush(Qt::blue));
-    rectangl->setTransformOriginPoint(rectangl->rect().width() / 2, rectangl->rect().height() / 2);
-    rectangl->setRotation(45);
+    // QGraphicsRectItem *rectangl = addRect(100, 200, 100, 100, QPen(Qt::blue));
+    // rectangl->setBrush(QBrush(Qt::blue));
+    // rectangl->setTransformOriginPoint(rectangl->rect().width() / 2, rectangl->rect().height() / 2);
+    // rectangl->setRotation(45);
 
-    rectangl = addRect(350, 200, 100, 100, QPen(Qt::blue));
-    rectangl->setBrush(QBrush(Qt::blue));
+    // rectangl = addRect(350, 200, 100, 100, QPen(Qt::blue));
+    // rectangl->setBrush(QBrush(Qt::blue));
 
     // Create a robot and set it as the controlled robot
     Robot *robutek = new Robot();
     robutek->setPos(100, 100);
     setControlledRobot(robutek);
 
-    // Add an autonomous robot
-    AutoRobot *samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1);
-    samorobutek->setPos(150, 150);
-    addItem(samorobutek);
-
-    samorobutek = new AutoRobot(nullptr, 50, Robot::RotationDirection::Left, 6, 1);
-    samorobutek->setPos(250, 250);
-    addItem(samorobutek);
-
     for (int i = 0; i < 5; i++)
     {
-        samorobutek = new AutoRobot(nullptr, 50, Robot::RotationDirection::Right, 5, 1);
-        samorobutek->setPos(300 + i * 50, 300 + i * 50);
-        addItem(samorobutek);
+        for (int j = 0; j < 5; j++)
+        {
+            AutoRobot *samorobutek = new AutoRobot(nullptr, 50, Robot::RotationDirection::Right, 5, 5);
+            samorobutek->setPos(300 + i * 50, 300 + j * 50);
+            addItem(samorobutek);
+        }
     }
 }
 
