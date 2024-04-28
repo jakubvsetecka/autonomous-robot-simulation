@@ -1,8 +1,11 @@
 #include "autorobot.hpp"
 
-AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead) : Robot(parent)
+AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed) : Robot(parent)
 {
     this->collisionLookAhead = collisionLookAhead;
+    this->rotationDirection = rotationDirection;
+    setMoveSpeed(moveSpeed);
+    setRotationSpeed(rotationSpeed);
 
     setRect(0, 0, 40, 40);
     setTransformOriginPoint(rect().width() / 2, rect().height() / 2);
@@ -23,7 +26,7 @@ bool AutoRobot::move()
     bool hasNotCollided = Robot::move();
     if (!hasNotCollided)
     {
-        doRotationStep(Robot::RotationDirection::Right);
+        doRotationStep(rotationDirection);
     }
 
     return hasNotCollided;
