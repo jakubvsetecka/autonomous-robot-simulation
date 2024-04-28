@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setFocusPolicy(Qt::StrongFocus); // Set the focus policy to accept key events
+    setFocus();                      // Set the focus to the main window
 
     simulationEngine = new SimulationEngine(this);
     ui->graphicsView->setScene(simulationEngine);
@@ -97,6 +99,44 @@ void MainWindow::drawGrid()
     }
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_Up:
+        simulationEngine->getControlledRobot()->setMoveSpeed(5);
+        break;
+    case Qt::Key_Left:
+        // Rotate left
+        simulationEngine->getControlledRobot()->setRotationSpeed(-5);
+        break;
+    case Qt::Key_Right:
+        // Rotate right
+        simulationEngine->getControlledRobot()->setRotationSpeed(5);
+        break;
+    default:
+        QMainWindow::keyPressEvent(event); // Pass the unhandled keys to the base class
+    }
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_Up:
+        simulationEngine->getControlledRobot()->setMoveSpeed(0);
+        break;
+    case Qt::Key_Left:
+        simulationEngine->getControlledRobot()->setRotationSpeed(0);
+        break;
+    case Qt::Key_Right:
+        simulationEngine->getControlledRobot()->setRotationSpeed(0);
+        break;
+    default:
+        QMainWindow::keyReleaseEvent(event); // Pass the unhandled keys to the base class
+    }
+}
+
 void MainWindow::onAddObstacleClicked()
 {
     // Create a new obstacle
@@ -112,9 +152,10 @@ void MainWindow::onAddObstacleClicked()
 
 void MainWindow::updateAnimation()
 {
+    simulationEngine->getControlledRobot()->update();
     // simulation->updateObjects();
-    simulationEngine->getControlledRobot()->move(SimulationEngine::timeConstant);
-    simulationEngine->getControlledRobot()->setRotation(simulationEngine->getControlledRobot()->rotation() + 2);
+    // simulationEngine->getControlledRobot()->move(SimulationEngine::timeConstant);
+    // simulationEngine->getControlledRobot()->setRotation(simulationEngine->getControlledRobot()->rotation() + 2);
 }
 
 MainWindow::~MainWindow()

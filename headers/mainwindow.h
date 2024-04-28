@@ -5,6 +5,7 @@
 #include <QGraphicsRectItem>
 #include <QMainWindow>
 #include <QTimer>
+#include <QDebug>
 #include "simulationengine.hpp"
 #include "robutek.hpp"
 
@@ -37,5 +38,7 @@ protected:
   void showEvent(QShowEvent *event) override;
   void resizeEvent(QResizeEvent *event) override;
   void drawGrid();
+  void keyPressEvent(QKeyEvent *event) override;
+  void keyReleaseEvent(QKeyEvent *event) override;
 };
 #endif // MAINWINDOW_H
