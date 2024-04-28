@@ -21,6 +21,9 @@ public:
 
     bool move() override;
 
+    void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
+
 protected:
     qreal collisionLookAhead = 0;
     Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right;

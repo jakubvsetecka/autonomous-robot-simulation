@@ -60,3 +60,6 @@ bool AutoRobot::move()
 
     return hasNotCollided;
 }
+
+void AutoRobot::focusInEvent(QFocusEvent *event) {}
+void AutoRobot::focusOutEvent(QFocusEvent *event) {}
