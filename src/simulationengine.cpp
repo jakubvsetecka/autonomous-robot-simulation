@@ -16,21 +16,15 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed
     // Set the static time constant
     SimulationEngine::timeConstant = getFrameTime() * simulationSpeed;
 
-    // // Create a robot and set it as the controlled robot
-    // Robot *robutek = new Robot();
-    // robutek->setPos(100, 100);
-    // setControlledRobot(robutek);
+    // Create a robot and set it as the controlled robot
+    Robot *robutek = new Robot();
+    robutek->setPos(100, 100);
+    setControlledRobot(robutek);
 
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     for (int j = 0; j < 10; j++)
-    //     {
     // Add an autonomous robot
-    AutoRobot *autoRobot = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1);
-    autoRobot->setPos(1 * 50, 1 * 50);
-    addItem(autoRobot);
-    //     }
-    // }
+    AutoRobot *samorobutek = new AutoRobot(nullptr, 30, Robot::RotationDirection::Right, 7, 30);
+    samorobutek->setPos(150, 150);
+    addItem(samorobutek);
 }
 
 SimulationEngine::~SimulationEngine() {}

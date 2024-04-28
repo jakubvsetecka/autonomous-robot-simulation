@@ -3,6 +3,8 @@
 
 #include "robot.hpp"
 
+#define SMOOTH_ROTATION_SPEED 5
+
 class AutoRobot : public Robot
 {
 public:
@@ -23,6 +25,7 @@ public:
 
 protected:
     qreal collisionLookAhead = 0;
+    qreal targetAngle = 0;
     Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right;
 };
 

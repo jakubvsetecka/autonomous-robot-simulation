@@ -25,13 +25,8 @@ void AutoRobot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 {
     Robot::paint(painter, option, widget);
 
-    // // Draw the boundingRect
-    QPen pen = painter->pen();
-    // pen.setStyle(Qt::DashLine);
-    // painter->setPen(pen);
-    // painter->drawRect(rect());
-
     // Draw the collision look ahead line
+    QPen pen = painter->pen();
     pen.setStyle(Qt::SolidLine);
     painter->setPen(pen);
     painter->drawLine(getRadius(), getRadius(), getRadius() * 2 + collisionLookAhead, getRadius());
@@ -48,10 +43,22 @@ bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude)
     return Robot::willCollide(directionVector, magnitude) || Robot::willCollide(directionVector, magnitude + collisionLookAhead);
 }
 
-void AutoRobot::doRotationStep(RotationDirection direction) { setRotation(rotation() + rotation_speed * direction); }
+void AutoRobot::doRotationStep(RotationDirection direction)
+{
+    targetAngle += rotation_speed * direction;
+}
 
 bool AutoRobot::move()
 {
+    bool reachedTargetAngleClockwise = rotation() >= targetAngle && rotationDirection == Robot::RotationDirection::Right;
+    bool reachedTargetAngleCounterClockwise = rotation() <= targetAngle && rotationDirection == Robot::RotationDirection::Left;
+
+    if (!reachedTargetAngleClockwise && !reachedTargetAngleCounterClockwise)
+    {
+        setRotation(rotation() + SMOOTH_ROTATION_SPEED * rotationDirection);
+        return true;
+    }
+
     bool hasNotCollided = Robot::move();
     if (!hasNotCollided)
     {
