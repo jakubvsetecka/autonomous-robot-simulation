@@ -15,13 +15,6 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed
     // Set the static time constant
     SimulationEngine::timeConstant = getFrameTime() * simulationSpeed;
 
-    // Testing obsacle
-    Obstacle *oznuk = new Obstacle();
-    oznuk->setBrush(QBrush(Qt::blue));
-    oznuk->setTransformOriginPoint(oznuk->rect().center());
-    oznuk->setRotation(45);
-    addItem(oznuk);
-
     // Create a robot and set it as the controlled robot
     Robot *robutek = new Robot();
     robutek->setPos(100, 100);
