@@ -104,15 +104,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_Up:
-        simulationEngine->getControlledRobot()->setMoveSpeed(5);
+        simulationEngine->getControlledRobot()->startMoving();
         break;
     case Qt::Key_Left:
         // Rotate left
-        simulationEngine->getControlledRobot()->setRotationSpeed(-5);
+        simulationEngine->getControlledRobot()->startRotating(Robutek::RotationDirection::Left);
         break;
     case Qt::Key_Right:
         // Rotate right
-        simulationEngine->getControlledRobot()->setRotationSpeed(5);
+        simulationEngine->getControlledRobot()->startRotating(Robutek::RotationDirection::Right);
         break;
     default:
         QMainWindow::keyPressEvent(event); // Pass the unhandled keys to the base class
@@ -124,13 +124,13 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_Up:
-        simulationEngine->getControlledRobot()->setMoveSpeed(0);
+        simulationEngine->getControlledRobot()->stopMoving();
         break;
     case Qt::Key_Left:
-        simulationEngine->getControlledRobot()->setRotationSpeed(0);
+        simulationEngine->getControlledRobot()->stopRotating();
         break;
     case Qt::Key_Right:
-        simulationEngine->getControlledRobot()->setRotationSpeed(0);
+        simulationEngine->getControlledRobot()->stopRotating();
         break;
     default:
         QMainWindow::keyReleaseEvent(event); // Pass the unhandled keys to the base class

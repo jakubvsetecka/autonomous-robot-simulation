@@ -10,6 +10,13 @@
 class Robutek : public QGraphicsEllipseItem
 {
 public:
+    enum RotationDirection
+    {
+        Left = -1,
+        None = 0,
+        Right = 1
+    };
+
     Robutek(QGraphicsItem *parent = nullptr) : QGraphicsEllipseItem(parent)
     {
         // Set the size of the ellipse
@@ -56,27 +63,42 @@ public:
     void setRotationSpeed(qreal speed) { this->rotation_speed = speed; }
     qreal getRotationSpeed() { return rotation_speed; }
 
+    void startMoving() { isMoving = true; }
+    void stopMoving() { isMoving = false; }
+
+    void startRotating(RotationDirection direction) { isRotating = direction; }
+    void stopRotating() { isRotating = RotationDirection::None; }
+
     void move()
     {
-        setRotation(rotation() + rotation_speed); // Rotate the robot
-
-        qreal angle = rotation(); // Use rotation as the direction
-        qreal dx = move_speed * qCos(qDegreesToRadians(angle));
-        qreal dy = move_speed * qSin(qDegreesToRadians(angle));
-
-        // Check scene boundaries
-        if (scene() != nullptr)
+        if (isRotating != RotationDirection::None)
         {
-            // Get the scene rectangle with the robot's size taken into account (center-based positioning, so the margin is half the size of the robot)
-            QRectF sceneRect = scene()->sceneRect().adjusted(rect().width() / 2, rect().height() / 2, -rect().width() / 2, -rect().height() / 2);
-            if (!sceneRect.contains(pos() + QPointF(dx, dy)))
-            {
-                // If the new position is outside the scene, don't move
-                return;
-            }
+            setRotation(rotation() + rotation_speed * isRotating); // Rotate the robot
+
+            return; // Don't move if rotating
         }
 
-        moveBy(dx, dy);
+        if (isMoving)
+        {
+
+            qreal angle = rotation(); // Use rotation as the direction
+            qreal dx = move_speed * qCos(qDegreesToRadians(angle));
+            qreal dy = move_speed * qSin(qDegreesToRadians(angle));
+
+            // Check scene boundaries
+            if (scene() != nullptr)
+            {
+                // Get the scene rectangle with the robot's size taken into account (center-based positioning, so the margin is half the size of the robot)
+                QRectF sceneRect = scene()->sceneRect().adjusted(rect().width() / 2, rect().height() / 2, -rect().width() / 2, -rect().height() / 2);
+                if (!sceneRect.contains(pos() + QPointF(dx, dy)))
+                {
+                    // If the new position is outside the scene, don't move
+                    return;
+                }
+            }
+
+            moveBy(dx, dy);
+        }
     }
 
     void update()
@@ -85,8 +107,11 @@ public:
     }
 
 private:
-    qreal move_speed = 0;     // The speed of the robot
-    qreal rotation_speed = 0; // The speed of the rotation of the robot
+    qreal move_speed = 5;     // The speed of the robot
+    qreal rotation_speed = 5; // The speed of the rotation of the robot
+
+    bool isMoving = false;                                  // Flag to indicate if the robot is moving
+    RotationDirection isRotating = RotationDirection::None; // Flag to indicate the direction of rotation
 };
 
 #endif // ROBUTEK_HPP
