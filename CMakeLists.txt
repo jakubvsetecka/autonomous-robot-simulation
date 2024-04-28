@@ -29,6 +29,7 @@ set(PROJECT_SOURCES
     src/autorobot.cpp
 
     headers/obstacle.hpp
+    src/obstacle.cpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

@@ -4,8 +4,7 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
-{
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus); // Set the focus policy to accept key events
     setFocus();                      // Set the focus to the main window
@@ -36,30 +35,25 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
 }
 
-void MainWindow::showEvent(QShowEvent *event)
-{
+void MainWindow::showEvent(QShowEvent *event) {
     QMainWindow::showEvent(event);
     // Update the scene rect to match the viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
+void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
     // Update the scene rect to match the new viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    if (simulationEngine->getControlledRobot() == nullptr)
-    {
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (simulationEngine->getControlledRobot() == nullptr) {
         QMainWindow::keyPressEvent(event); // Pass the unhandled keys to the base class
         return;
     }
 
-    switch (event->key())
-    {
+    switch (event->key()) {
     case Qt::Key_Up:
         // Move forward
         simulationEngine->getControlledRobot()->startMoving();
@@ -77,16 +71,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void MainWindow::keyReleaseEvent(QKeyEvent *event)
-{
-    if (simulationEngine->getControlledRobot() == nullptr)
-    {
+void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+    if (simulationEngine->getControlledRobot() == nullptr) {
         QMainWindow::keyReleaseEvent(event); // Pass the unhandled keys to the base class
         return;
     }
 
-    switch (event->key())
-    {
+    switch (event->key()) {
     case Qt::Key_Up:
         // Stop moving
         simulationEngine->getControlledRobot()->stopMoving();
@@ -104,24 +95,19 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void MainWindow::onAddObstacleClicked()
-{
-    // TODO: add obstacle to the scene
+void MainWindow::onAddObstacleClicked() {
+    // TODO
 }
 
-void MainWindow::updateAnimation()
-{
-    for (QGraphicsItem *item : simulationEngine->items())
-    {
+void MainWindow::updateAnimation() {
+    for (QGraphicsItem *item : simulationEngine->items()) {
         Robot *robutek = dynamic_cast<Robot *>(item);
-        if (robutek != nullptr)
-        {
+        if (robutek != nullptr) {
             robutek->move();
         }
     }
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
