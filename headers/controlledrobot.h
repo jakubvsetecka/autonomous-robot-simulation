@@ -10,17 +10,17 @@
 #include "robot.h"
 #include <QKeyEvent>
 
-class ControlledRobot : public Robot {
-  public:
-    ControlledRobot(QGraphicsItem *parent = nullptr, QPointF pos = QPointF(0, 0), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+class ControlledRobot : public Robot
+{
+public:
+  ControlledRobot(QGraphicsItem *parent = nullptr, QPointF pos = QPointF(50, 50), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
 
-    void focusInEvent(QFocusEvent *event) override;
-    void focusOutEvent(QFocusEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
-    void update() override;
-    void handleCollision() override;
-    void updateTransformOrigin();
+  void focusInEvent(QFocusEvent *event) override;
+  void focusOutEvent(QFocusEvent *event) override;
+  void keyPressEvent(QKeyEvent *event) override;
+  void keyReleaseEvent(QKeyEvent *event) override;
+  void update() override;
+  void updateTransformOrigin();
 };
 
 #endif // CONTROLLEDROBOT_H

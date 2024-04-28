@@ -14,11 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
-
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
+    simulationEngine = new SimulationEngine(this);
+    ui->graphicsView->setScene(simulationEngine);
     ui->graphicsView->resetTransform();
     ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
     ui->graphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
@@ -27,22 +24,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     // Set the initial scene rectangle
-    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 
-    simulation = new Simulation(scene);
+    Robutek *robutek = new Robutek();
+    robutek->setPos(100, 100);
+    simulationEngine->setControlledRobot(robutek);
 
-    Obstacle *obstacle = new Obstacle(NULL, QPointF(200, 50), QPointF(50, 100), 0);
-    simulation->addObject(obstacle);
+    // simulation = new Simulation(scene);
 
-    AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
-    simulation->addObject(autonomousRobot);
+    // Obstacle *obstacle = new Obstacle(NULL, QPointF(200, 50), QPointF(50, 100), 0);
+    // simulation->addObject(obstacle);
 
-    ControlledRobot *controlledRobot = new ControlledRobot();
-    simulation->addObject(controlledRobot);
+    // // AutonomousRobot *autonomousRobot = new AutonomousRobot(NULL, QPointF(50, 50), QPointF(50, 50), 0, 1);
+    // // simulation->addObject(autonomousRobot);
+
+    // ControlledRobot *controlledRobot = new ControlledRobot();
+    // simulation->addObject(controlledRobot);
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
-    timer->start(16);
+    timer->start(simulationEngine->getFrameTime());
 
     // Connect the button click signal to the appropriate slot
     connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
@@ -51,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
-    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
     drawGrid(); // Draw the grid after setting the scene rect
 }
 
@@ -59,7 +60,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
     // Update the scene rect to match the new viewport size
-    scene->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
     drawGrid();
 }
 
@@ -69,29 +70,29 @@ void MainWindow::drawGrid()
     QPen pen(Qt::gray, 0, Qt::DotLine); // Pen for the grid lines
 
     // Clear previous grid lines if they exist
-    foreach (QGraphicsItem *item, scene->items())
+    foreach (QGraphicsItem *item, simulationEngine->items())
     {
         if (item->data(0) == "gridLine")
         {
-            scene->removeItem(item);
+            simulationEngine->removeItem(item);
             delete item;
         }
     }
 
     // Get the current size of the scene
-    QRectF rect = scene->sceneRect();
+    QRectF rect = simulationEngine->sceneRect();
 
     // Draw vertical lines
     for (double x = rect.left(); x <= rect.right(); x += gridSpacing)
     {
-        QGraphicsLineItem *line = scene->addLine(x, rect.top(), x, rect.bottom(), pen);
+        QGraphicsLineItem *line = simulationEngine->addLine(x, rect.top(), x, rect.bottom(), pen);
         line->setData(0, "gridLine");
     }
 
     // Draw horizontal lines
     for (double y = rect.top(); y <= rect.bottom(); y += gridSpacing)
     {
-        QGraphicsLineItem *line = scene->addLine(rect.left(), y, rect.right(), y, pen);
+        QGraphicsLineItem *line = simulationEngine->addLine(rect.left(), y, rect.right(), y, pen);
         line->setData(0, "gridLine");
     }
 }
@@ -111,7 +112,9 @@ void MainWindow::onAddObstacleClicked()
 
 void MainWindow::updateAnimation()
 {
-    simulation->updateObjects();
+    // simulation->updateObjects();
+    simulationEngine->getControlledRobot()->move(SimulationEngine::timeConstant);
+    simulationEngine->getControlledRobot()->setRotation(simulationEngine->getControlledRobot()->rotation() + 2);
 }
 
 MainWindow::~MainWindow()

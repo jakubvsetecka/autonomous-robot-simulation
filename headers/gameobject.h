@@ -12,21 +12,21 @@
 #include <QPainter>
 #include <QPointF>
 
-class GameObject : public QGraphicsItem {
-  public:
-    GameObject(QGraphicsItem *parent = nullptr, QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
-    virtual ~GameObject();
+class GameObject : public QGraphicsItem
+{
+public:
+  GameObject(QGraphicsItem *parent = nullptr, QPointF position = QPointF(-25, -25), QPointF dimension = QPointF(25, 25), double angle = 0.0, double velocity = 0.0);
+  virtual ~GameObject();
 
-    QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-    virtual void update();
-    void enslaveToTime(float frameTTL);
-    virtual QJsonValue toJson() const;
-    static GameObject *fromJson(const QJsonObject &obj);
+  QRectF boundingRect() const override;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+  virtual void update();
+  void enslaveToTime(float frameTTL);
+  virtual QJsonValue toJson() const;
+  static GameObject *fromJson(const QJsonObject &obj);
 
-  protected:
-    AngleDirection angleDir;
-    QPointF dimension;
+  AngleDirection angleDir;
+  QPointF dimension;
 };
 
 #endif // GAMEOBJECT_H

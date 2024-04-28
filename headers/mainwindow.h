@@ -5,6 +5,8 @@
 #include <QGraphicsRectItem>
 #include <QMainWindow>
 #include <QTimer>
+#include "simulationengine.hpp"
+#include "robutek.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -24,7 +26,7 @@ public:
 
 private:
   Ui::MainWindow *ui;
-  QGraphicsScene *scene;
+  SimulationEngine *simulationEngine;
   Simulation *simulation;
 
   void initScene();
