@@ -52,3 +52,8 @@ void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
     addItem(controlledRobot);
 }
+
+void SimulationEngine::addObstacle() {
+    Obstacle *obstacle = new Obstacle();
+    addItem(obstacle);
+}

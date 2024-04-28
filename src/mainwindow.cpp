@@ -96,7 +96,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void MainWindow::onAddObstacleClicked() {
-    // TODO
+    simulationEngine->addObstacle();
 }
 
 void MainWindow::updateAnimation() {
