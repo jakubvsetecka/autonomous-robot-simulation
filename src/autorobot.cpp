@@ -2,7 +2,7 @@
 
 AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed) : Robot(parent)
 {
-    setFlag(QGraphicsItem::ItemIsFocusable, true);
+    setFlag(QGraphicsItem::ItemIsFocusable, false);
 
     this->collisionLookAhead = collisionLookAhead;
     this->rotationDirection = rotationDirection;
@@ -60,6 +60,3 @@ bool AutoRobot::move()
 
     return hasNotCollided;
 }
-
-void AutoRobot::focusInEvent(QFocusEvent *event) {}
-void AutoRobot::focusOutEvent(QFocusEvent *event) {}

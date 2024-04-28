@@ -120,8 +120,8 @@ public:
 protected:
     virtual void focusInEvent(QFocusEvent *event) override;
     virtual void focusOutEvent(QFocusEvent *event) override;
-    virtual void keyPressEvent(QKeyEvent *event) override;
-    virtual void keyReleaseEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
     /** @brief The speed of the robot */
     qreal move_speed = 5;
