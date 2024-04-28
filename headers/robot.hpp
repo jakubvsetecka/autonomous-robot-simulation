@@ -38,6 +38,8 @@ public:
     /** Override pos to adjust to center-based positioning */
     QPointF pos();
 
+    qreal getRadius();
+
     /**
      * @brief Set the move speed of the robot.
      *

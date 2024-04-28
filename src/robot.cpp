@@ -6,7 +6,7 @@ Robot::Robot(QGraphicsItem *parent) : QGraphicsEllipseItem(parent)
     setRect(0, 0, 25, 25);
 
     // set the origin of the ellipse to the center
-    setTransformOriginPoint(rect().width() / 2, rect().height() / 2);
+    setTransformOriginPoint(getRadius(), getRadius());
 }
 
 void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -19,15 +19,15 @@ void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->setPen(pen);
 
     // Draw a line through the center of the ellipse
-    qreal centerX = rect().width() / 2;
-    qreal centerY = rect().height() / 2;
-    painter->drawLine(centerX, centerY, rect().width(), centerY);
+    qreal centerX = getRadius();
+    qreal centerY = getRadius();
+    painter->drawLine(centerX, centerY, getRadius() * 2, centerY);
 }
 
 // Override setPos to adjust to center-based positioning
 void Robot::setPos(const QPointF &pos)
 {
-    QGraphicsItem::setPos(pos - QPointF(rect().width() / 2, rect().height() / 2));
+    QGraphicsItem::setPos(pos - QPointF(getRadius(), getRadius()));
 }
 
 // Overload setPos to accept x and y coordinates
@@ -37,7 +37,9 @@ void Robot::setPos(qreal x, qreal y)
 }
 
 // Override pos to adjust to center-based positioning
-QPointF Robot::pos() { return QGraphicsItem::pos() + QPointF(rect().width() / 2, rect().height() / 2); }
+QPointF Robot::pos() { return QGraphicsItem::pos() + QPointF(getRadius(), getRadius()); }
+
+qreal Robot::getRadius() { return rect().height() / 2; }
 
 void Robot::setMoveSpeed(qreal speed) { this->move_speed = speed; }
 qreal Robot::getMoveSpeed() { return move_speed; }
@@ -64,7 +66,7 @@ bool Robot::willCollide(QPointF moveVector)
 {
     if (scene() != nullptr)
     {
-        qreal radius = rect().width() / 2;   // Radius of the robot
+        qreal radius = getRadius();          // Radius of the robot
         QPointF newPos = pos() + moveVector; // New position center after the intended move
 
         // Ensure new position stays within the scene boundaries, accounting for the robot's radius

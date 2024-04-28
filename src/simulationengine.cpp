@@ -8,6 +8,9 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed
     this->fps = fps;
     this->simulationSpeed = simulationSpeed;
 
+    // Set the background color
+    setBackgroundBrush(QBrush(Qt::white));
+
     // Set the static time constant
     SimulationEngine::timeConstant = getFrameTime() * simulationSpeed;
 
