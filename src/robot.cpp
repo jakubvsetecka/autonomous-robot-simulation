@@ -90,8 +90,7 @@ bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnti
         QList<QGraphicsItem *> potentialCollisions = scene()->items(QRectF(newPos.x() - radius, newPos.y() - radius, 2 * radius, 2 * radius));
         for (QGraphicsItem *item : potentialCollisions)
         {
-            // ignore lines
-            if (item != this && item->type() != QGraphicsLineItem::Type)
+            if (item != this)
             {
                 // Calculate the closest point on the item's bounding rectangle to the new center position of the robot
                 QRectF itemRect = item->sceneBoundingRect();
@@ -103,22 +102,6 @@ bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnti
                 // Calculate distance from closest point on the item's bounding rectangle to the new center position of the robot
                 if (distanceX * distanceX + distanceY * distanceY < radius * radius)
                 {
-
-                    if (allowAnticollision)
-                    {
-
-                        qreal currentDistanceX = pos().x() - closestX;
-                        qreal currentDistanceY = pos().y() - closestY;
-                        if (currentDistanceX * currentDistanceX + currentDistanceY * currentDistanceY < radius * radius - 5)
-                        {
-                            qDebug() << "Collision detected on current position";
-                            // Calculate the vector between the center of the robot and the center of the item
-                            qreal dx = (pos().x() - itemRect.center().x());
-                            qreal dy = (pos().y() - itemRect.center().y());
-                            moveBy(dx / 100, dy / 100);
-                        }
-                    }
-
                     return true; // Collision detected
                 }
             }

@@ -40,12 +40,12 @@ QRectF AutoRobot::boundingRect() const
 
 bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision)
 {
-    return Robot::willCollide(directionVector, magnitude, allowAnticollision) || Robot::willCollide(directionVector, magnitude + collisionLookAhead, false);
+    return Robot::willCollide(directionVector, magnitude, allowAnticollision) || (collisionLookAhead > 0 && Robot::willCollide(directionVector, magnitude + collisionLookAhead, false));
 }
 
 void AutoRobot::doRotationStep(RotationDirection direction)
 {
-    targetAngle += rotation_speed * direction * (*timeConstant);
+    targetAngle += rotation_speed * direction;
 }
 
 bool AutoRobot::move()
@@ -55,9 +55,11 @@ bool AutoRobot::move()
 
     if (!reachedTargetAngleClockwise && !reachedTargetAngleCounterClockwise)
     {
-        setRotation(rotation() + SMOOTH_ROTATION_SPEED * rotationDirection);
+        setRotation(rotation() + SMOOTH_ROTATION_SPEED * rotationDirection * (*timeConstant));
         return true;
     }
+
+    // stopRotating();
 
     bool hasNotCollided = Robot::move();
     if (!hasNotCollided)

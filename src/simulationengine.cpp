@@ -16,20 +16,24 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
     robutek->setPos(12.5, 12.5);
     setControlledRobot(robutek);
 
+    Obstacle *obstacle = new Obstacle();
+    obstacle->setPos(500, 500);
+    addItem(obstacle);
+
     AutoRobot *samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 1, 1, &timeConstant);
     samorobutek->setPos(110, 100);
     addItem(samorobutek);
 
-    AutoRobot *druhy_samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 1, 1, &timeConstant);
-    druhy_samorobutek->setPos(100, 100);
-    addItem(druhy_samorobutek);
+    // AutoRobot *druhy_samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 1, 1, &timeConstant);
+    // druhy_samorobutek->setPos(100, 100);
+    // addItem(druhy_samorobutek);
 
     // // Add an autonomous robot
-    // for (int i = 0; i < 1; i++)
+    // for (int i = 0; i < 30; i++)
     // {
-    //     for (int j = 0; j < 1; j++)
+    //     for (int j = 0; j < 30; j++)
     //     {
-    //         AutoRobot *samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1, &timeConstant);
+    //         AutoRobot *samorobutek = new AutoRobot(nullptr, 20, Robot::RotationDirection::Right, 1, 5, &timeConstant);
     //         samorobutek->setPos(150 + i * 10, 150 + j * 10);
     //         addItem(samorobutek);
     //     }

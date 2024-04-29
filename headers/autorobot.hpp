@@ -3,7 +3,7 @@
 
 #include "robot.hpp"
 
-#define SMOOTH_ROTATION_SPEED 1
+#define SMOOTH_ROTATION_SPEED 0.25
 
 class AutoRobot : public Robot
 {
