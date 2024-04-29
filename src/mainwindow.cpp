@@ -45,9 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event); // Call the base class implementation
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-    // if (overlay) {
-    //     overlay->setGeometry(centralWidget()->geometry());
-    // }
+    overlay->setGeometry(0, 0, width(), height());
 }
 
 void MainWindow::showEvent(QShowEvent *event) {
@@ -127,17 +125,14 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
 void MainWindow::mouseMoveEvent(QMouseEvent *event) {
     QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
     QPointF scenePos = ui->graphicsView->mapToScene(localPos);
-    qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
+    // qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
 
-    // Call the base class implementation if you're not fully handling the event yourself
     QMainWindow::mouseMoveEvent(event);
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
     // qDebug() << "Mouse Release Event";
-    //  simulationEngine->dragDeezNuts = nullptr;
     QMainWindow::mouseReleaseEvent(event);
-    // ... your code ...
 }
 
 void MainWindow::updateAnimation() {

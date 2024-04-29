@@ -48,29 +48,3 @@ void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
     addItem(controlledRobot);
 }
-
-void SimulationEngine::addObstacle() {
-    Obstacle *obstacle = new Obstacle();
-    dragDeezNuts = obstacle;
-    addItem(obstacle);
-}
-
-void SimulationEngine::addAutoRobot() {
-    AutoRobot *autoRobot = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1);
-    dragDeezNuts = autoRobot;
-    addItem(autoRobot);
-}
-
-void SimulationEngine::addControlledRobot() {
-    Robot *robot = new Robot();
-    dragDeezNuts = robot;
-    setControlledRobot(robot);
-}
-
-void SimulationEngine::followCursor(QPointF pos) {
-    if (dragDeezNuts == nullptr) {
-        return;
-    }
-
-    dragDeezNuts->setPos(pos.x(), pos.y());
-}
