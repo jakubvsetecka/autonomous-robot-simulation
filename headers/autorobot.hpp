@@ -17,7 +17,7 @@ public:
     /* Override the boundingRect method to adjust the bounding rectangle */
     QRectF boundingRect() const override;
 
-    bool willCollide(QPointF directionVector, qreal magnitude) override;
+    bool willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision) override;
 
     void doRotationStep(RotationDirection direction);
 

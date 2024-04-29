@@ -9,7 +9,7 @@ AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::Rot
     setMoveSpeed(moveSpeed);
     setRotationSpeed(rotationSpeed);
 
-    setRect(0, 0, 10, 10);
+    setRect(0, 0, 50, 50);
     setTransformOriginPoint(getRadius(), getRadius());
 
     // Set the color of the ellipse to red
@@ -38,9 +38,9 @@ QRectF AutoRobot::boundingRect() const
     return QRectF(0, 0, 2 * radius + collisionLookAhead, 2 * radius);
 }
 
-bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude)
+bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision)
 {
-    return Robot::willCollide(directionVector, magnitude) || Robot::willCollide(directionVector, magnitude + collisionLookAhead);
+    return Robot::willCollide(directionVector, magnitude, allowAnticollision) || Robot::willCollide(directionVector, magnitude + collisionLookAhead, false);
 }
 
 void AutoRobot::doRotationStep(RotationDirection direction)

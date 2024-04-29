@@ -105,9 +105,10 @@ public:
      * @brief Check if the robot will collide with any other item in the scene or the scene boundaries if it moves by the given vector.
      *
      * @param moveVector The vector by which the robot will move
+     * @param allowAnticollision Flag to indicate if anticollision is allowed
      * @return `true` - if the robot will collide; `false` - if the robot will not collide
      */
-    virtual bool willCollide(QPointF directionVector, qreal magnitude);
+    virtual bool willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision = false);
 
     /**
      * @brief Move the robot based on its current direction and speed. Returns true if the robot moved, false if it didn't (e.g. if it hit a boundary).
