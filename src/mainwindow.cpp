@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(simulationEngine->getFrameTime());
 
     // Create the overlay widget
-    overlay = new OverlayWidget(this, simulationEngine);
+    overlay = new OverlayWidget(this, simulationEngine, ui->graphicsView);
     overlay->setGeometry(rect());
     ui->expWidget->autoButton->overlay = overlay;
     ui->expWidget->controlButton->overlay = overlay;
@@ -109,11 +109,9 @@ void MainWindow::onAddObstacleClicked() {
 }
 
 void MainWindow::onAddAutoRobotClicked() {
-    simulationEngine->addAutoRobot();
 }
 
 void MainWindow::onAddControlledRobotClicked() {
-    simulationEngine->addControlledRobot();
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
@@ -131,11 +129,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
     QPointF scenePos = ui->graphicsView->mapToScene(localPos);
     qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
 
-    simulationEngine->followCursor(scenePos);
-
-    if (overlay->activeObject) {
-        overlay->lastMousePos = event->pos();
-    }
     // Call the base class implementation if you're not fully handling the event yourself
     QMainWindow::mouseMoveEvent(event);
 }

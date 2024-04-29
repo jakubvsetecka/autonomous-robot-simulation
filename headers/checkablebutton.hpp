@@ -21,7 +21,6 @@ class CheckableButton : public QPushButton {
 
     explicit CheckableButton(const QString &text, QWidget *parent = nullptr, ObjectType type = ObjectType::OBST)
         : QPushButton(text, parent), objType(type) {
-        // setAutoExclusive(false);
         setCheckable(true);
         setMouseTracking(true); // Enable mouse tracking
     }
@@ -30,10 +29,14 @@ class CheckableButton : public QPushButton {
     bool isPressed = false;
     ObjectType objType;
 
+    QPoint getWidgetPos(QPoint localPos) {
+        QPoint pos = mapToGlobal(localPos);
+        return overlay->mapFromGlobal(pos);
+    }
+
     void mousePressEvent(QMouseEvent *event) override {
         if (!isChecked()) {
             setChecked(true);
-            qDebug() << "Mouse Press Event in CheckableButton";
 
             switch (objType) {
             case AUTO: {
@@ -54,24 +57,22 @@ class CheckableButton : public QPushButton {
                 throw "Unknow object";
                 break;
             }
+            overlay->lastMousePos = getWidgetPos(event->pos());
         }
         QPushButton::mousePressEvent(event);
     }
 
     void mouseMoveEvent(QMouseEvent *event) override {
         if (isChecked()) {
-            qDebug() << "Mouse Move Event in CheckableButton";
-            overlay->lastMousePos = event->pos();
+            overlay->lastMousePos = getWidgetPos(event->pos());
         }
         QPushButton::mouseMoveEvent(event);
     }
 
     void mouseReleaseEvent(QMouseEvent *event) override {
         QPushButton::mouseReleaseEvent(event);
-        qDebug() << "Mouse Release Event in CheckableButton";
         setChecked(false);
         overlay->anchorObject();
-        overlay->lastMousePos = QPoint(0, 0);
     }
 };
 

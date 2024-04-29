@@ -5,6 +5,7 @@
 #include "obstacle.hpp"
 #include "simulationengine.hpp"
 #include <QDebug>
+#include <QGraphicsView>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -12,8 +13,8 @@
 
 class OverlayWidget : public QWidget {
   public:
-    explicit OverlayWidget(QWidget *parent = nullptr, SimulationEngine *simEng = nullptr)
-        : QWidget(parent), simEng(simEng) {
+    explicit OverlayWidget(QWidget *parent = nullptr, SimulationEngine *simEng = nullptr, QGraphicsView *graphView = nullptr)
+        : QWidget(parent), simEng(simEng), graphView(graphView) {
         setAttribute(Qt::WA_TransparentForMouseEvents);
         setAttribute(Qt::WA_NoSystemBackground);
         option = QStyleOptionGraphicsItem();
@@ -29,8 +30,9 @@ class OverlayWidget : public QWidget {
         if (activeObject) {
             auto object = dynamic_cast<QGraphicsItem *>(activeObject);
             if (object) {
-                object->setPos(lastMousePos);
-                qDebug() << "Adding Item";
+                QPoint localPos = graphView->mapFromParent(lastMousePos);
+                QPointF scenePos = graphView->mapToScene(localPos);
+                object->setPos(scenePos);
                 simEng->addItem(object);
             }
             activeObject = nullptr;
@@ -39,6 +41,7 @@ class OverlayWidget : public QWidget {
 
   protected:
     SimulationEngine *simEng;
+    QGraphicsView *graphView;
 
     void paintEvent(QPaintEvent *event) override {
         Q_UNUSED(event);
