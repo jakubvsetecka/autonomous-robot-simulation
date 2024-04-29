@@ -124,9 +124,9 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
     /** @brief The speed of the robot */
-    qreal move_speed = 5;
+    qreal move_speed = 1;
     /** @brief The speed of the rotation of the robot */
-    qreal rotation_speed = 5;
+    qreal rotation_speed = 1;
 
     /** @brief Flag to indicate if the robot is moving */
     bool isMoving = false;

@@ -10,8 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
     setFocusPolicy(Qt::StrongFocus); // Set the focus policy to accept key events
     setFocus();                      // Set the focus to the main window
 
+    // int fps = 60, qreal simulationSpeed = 1.0 / 16.0
+
+    const int FPS = 60;
+    const qreal SIMULATION_SPEED = 4.0 / 16.0;
+
     // Initialize the simulation engine
-    simulationEngine = new SimulationEngine(this);
+    simulationEngine = new SimulationEngine(this, FPS, SIMULATION_SPEED);
+    ui->horizontalSlider->setValue(SIMULATION_SPEED * 100);
 
     // Set the scene to the simulation engine
     ui->graphicsView->setScene(simulationEngine);
@@ -98,5 +104,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
+    qDebug() << "Simulation speed: " << value;
     simulationEngine->setSimulationSpeed(value / 100.0);
 }
