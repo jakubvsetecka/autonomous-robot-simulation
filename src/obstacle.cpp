@@ -13,3 +13,11 @@ Obstacle::~Obstacle() {}
 void Obstacle::setPos(qreal x, qreal y) {
     QGraphicsRectItem::setPos(x, y);
 }
+
+void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    QGraphicsRectItem::paint(painter, option, widget);
+}
+
+QPointF Obstacle::getPos() {
+    QGraphicsRectItem::pos();
+}

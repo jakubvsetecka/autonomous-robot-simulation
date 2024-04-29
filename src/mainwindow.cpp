@@ -1,6 +1,7 @@
 // mainwindow.cpp
 
 #include "mainwindow.h"
+#include "obstacle.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -31,23 +32,27 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
     timer->start(simulationEngine->getFrameTime());
 
-    expandableWidget = ui->expWidget;
-    connect(expandableWidget->button1, &QPushButton::pressed, this, &MainWindow::onAddAutoRobotClicked);
-    connect(expandableWidget->button2, &QPushButton::pressed, this, &MainWindow::onAddControlledRobotClicked);
+    // Create the overlay widget
+    overlay = new OverlayWidget(this, simulationEngine);
+    overlay->setGeometry(rect());
+    ui->expWidget->autoButton->overlay = overlay;
+    ui->expWidget->controlButton->overlay = overlay;
+    ui->expWidget->obstacleButton->overlay = overlay;
 
-    // Connect the button click signal to the appropriate slot
-    connect(ui->addObstacleButton, &QPushButton::pressed, this, &MainWindow::onAddObstacleClicked);
+    expandableWidget = ui->expWidget;
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event); // Call the base class implementation
+    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    // if (overlay) {
+    //     overlay->setGeometry(centralWidget()->geometry());
+    // }
 }
 
 void MainWindow::showEvent(QShowEvent *event) {
     QMainWindow::showEvent(event);
     // Update the scene rect to match the viewport size
-    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-}
-
-void MainWindow::resizeEvent(QResizeEvent *event) {
-    QMainWindow::resizeEvent(event);
-    // Update the scene rect to match the new viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 }
 
@@ -100,7 +105,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void MainWindow::onAddObstacleClicked() {
-    simulationEngine->addObstacle();
+    qDebug() << "Add Obstacle Clicked";
 }
 
 void MainWindow::onAddAutoRobotClicked() {
@@ -116,8 +121,9 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
     qDebug() << "Mouse Press Event";
     if (!expandableWidget->geometry().contains(event->pos())) {
         expandableWidget->collapse();
+    } else {
+        QMainWindow::mousePressEvent(event);
     }
-    QMainWindow::mousePressEvent(event);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event) {
@@ -126,13 +132,17 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
     qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
 
     simulationEngine->followCursor(scenePos);
+
+    if (overlay->activeObject) {
+        overlay->lastMousePos = event->pos();
+    }
     // Call the base class implementation if you're not fully handling the event yourself
     QMainWindow::mouseMoveEvent(event);
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
-    qDebug() << "Mouse Release Event";
-    simulationEngine->dragDeezNuts = nullptr;
+    // qDebug() << "Mouse Release Event";
+    //  simulationEngine->dragDeezNuts = nullptr;
     QMainWindow::mouseReleaseEvent(event);
     // ... your code ...
 }

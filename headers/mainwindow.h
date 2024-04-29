@@ -2,13 +2,16 @@
 #define MAINWINDOW_H
 
 #include "autorobot.hpp"
+#include "checkablebutton.hpp"
 #include "expbuttonwidget.hpp"
 #include "gameobject.hpp"
 #include "obstacle.hpp"
+#include "overlaywidget.hpp"
 #include "robot.hpp"
 #include "simulationengine.hpp"
 #include <QDebug>
 #include <QGraphicsRectItem>
+
 #include <QKeyEvent>
 #include <QMainWindow>
 #include <QMouseEvent>
@@ -37,7 +40,6 @@ class MainWindow : public QMainWindow {
 
   protected:
     void showEvent(QShowEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
     void mousePressEvent(QMouseEvent *event);
@@ -46,7 +48,9 @@ class MainWindow : public QMainWindow {
     void onAddControlledRobotClicked();
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
 
     ExpandableButtonWidget *expandableWidget;
+    OverlayWidget *overlay;
 };
 #endif // MAINWINDOW_H

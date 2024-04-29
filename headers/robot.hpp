@@ -117,6 +117,8 @@ public:
      */
     virtual bool move();
 
+    QPointF getPos() override;
+
 protected:
     /** @brief The speed of the robot */
     qreal move_speed = 5;
