@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>944</width>
+    <height>665</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,13 +27,6 @@
         </property>
         <property name="text">
          <string>ICP project</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="addObstacleButton">
-        <property name="text">
-         <string>Add Obstacle</string>
         </property>
        </widget>
       </item>
@@ -72,7 +65,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>944</width>
      <height>20</height>
     </rect>
    </property>
