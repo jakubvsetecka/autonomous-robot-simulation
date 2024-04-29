@@ -32,8 +32,13 @@ class OverlayWidget : public QWidget {
             if (object) {
                 QPoint localPos = graphView->mapFromParent(lastMousePos);
                 QPointF scenePos = graphView->mapToScene(localPos);
-                object->setPos(scenePos);
-                simEng->addItem(object);
+
+                if (simEng->isInsideScene(scenePos)) {
+                    object->setPos(scenePos);
+                    simEng->addItem(object);
+                } else {
+                    delete object;
+                }
             }
             activeObject = nullptr;
         }

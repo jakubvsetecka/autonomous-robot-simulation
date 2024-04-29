@@ -75,3 +75,8 @@ void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
     addItem(controlledRobot);
 }
+
+bool SimulationEngine::isInsideScene(const QPointF &point) const {
+    QRectF sceneRect = this->sceneRect();
+    return sceneRect.contains(point);
+}

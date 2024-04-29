@@ -54,6 +54,8 @@ class SimulationEngine : public QGraphicsScene {
      */
     qreal *getTimeConstant();
 
+    bool isInsideScene(const QPointF &point) const;
+
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
 
