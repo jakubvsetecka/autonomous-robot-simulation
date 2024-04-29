@@ -95,3 +95,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    simulationEngine->setSimulationSpeed(value / 100.0);
+}

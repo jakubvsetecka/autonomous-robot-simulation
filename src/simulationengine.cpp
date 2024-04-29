@@ -12,20 +12,20 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
     setBackgroundBrush(QBrush(Qt::white));
 
     // Create a robot and set it as the controlled robot
-    Robot *robutek = new Robot(nullptr, timeConstant);
-    robutek->setPos(100, 100);
+    Robot *robutek = new Robot(nullptr, &timeConstant);
+    robutek->setPos(12.5, 12.5);
     setControlledRobot(robutek);
 
-    // Add an autonomous robot
-    for (int i = 0; i < 1; i++)
-    {
-        for (int j = 0; j < 1; j++)
-        {
-            AutoRobot *samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1, timeConstant);
-            samorobutek->setPos(150 + i * 10, 150 + j * 10);
-            addItem(samorobutek);
-        }
-    }
+    // // Add an autonomous robot
+    // for (int i = 0; i < 1; i++)
+    // {
+    //     for (int j = 0; j < 1; j++)
+    //     {
+    //         AutoRobot *samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1, &timeConstant);
+    //         samorobutek->setPos(150 + i * 10, 150 + j * 10);
+    //         addItem(samorobutek);
+    //     }
+    // }
 }
 
 SimulationEngine::~SimulationEngine() {}
@@ -59,8 +59,7 @@ void SimulationEngine::setSimulationSpeed(qreal speed)
 
 void SimulationEngine::updateTimeConstant()
 {
-    timeConstant = new qreal(1000 / getFPS());
-    *timeConstant *= simulationSpeed;
+    timeConstant = 1000 / getFPS() * simulationSpeed;
 }
 
 Robot *SimulationEngine::getControlledRobot()

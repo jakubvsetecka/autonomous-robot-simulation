@@ -8,7 +8,7 @@
 class SimulationEngine : public QGraphicsScene
 {
 public:
-    SimulationEngine(QObject *parent = nullptr, int fps = 60, qreal simulationSpeed = 1.0 / 16.0);
+    SimulationEngine(QObject *parent = nullptr, int fps = 10, qreal simulationSpeed = 2.0 / 16.0);
 
     ~SimulationEngine();
 
@@ -31,6 +31,7 @@ public:
     void setFPS(int fps);
 
     /**
+     *
      * @brief Get the simulation speed.
      */
     qreal getSimulationSpeed();
@@ -72,7 +73,7 @@ private:
     /** The speed of the simulation engine. */
     qreal simulationSpeed = 1;
 
-    qreal *timeConstant = nullptr;
+    qreal timeConstant = 1;
 
     Robot *controlledRobot = nullptr;
 };

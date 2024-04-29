@@ -45,5 +45,7 @@ protected:
   void onAddControlledRobotClicked();
 
   ExpandableButtonWidget *expandableWidget;
+  private slots:
+  void on_horizontalSlider_valueChanged(int value);
 };
 #endif // MAINWINDOW_H
