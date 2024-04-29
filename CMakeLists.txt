@@ -32,6 +32,10 @@ set(PROJECT_SOURCES
     src/obstacle.cpp
 
     headers/expbuttonwidget.hpp
+
+    headers/overlaywidget.hpp
+
+    headers/checkablebutton.hpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

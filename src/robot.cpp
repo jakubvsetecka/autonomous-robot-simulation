@@ -1,7 +1,7 @@
 #include "robot.hpp"
 
-Robot::Robot(QGraphicsItem *parent, qreal *timeConstant) : QGraphicsEllipseItem(parent)
-{
+Robot::Robot(QGraphicsItem *parent, qreal *timeConstant)
+    : QGraphicsEllipseItem(parent) {
     this->timeConstant = timeConstant;
 
     setFlag(QGraphicsItem::ItemIsFocusable, true);
@@ -13,11 +13,7 @@ Robot::Robot(QGraphicsItem *parent, qreal *timeConstant) : QGraphicsEllipseItem(
     setTransformOriginPoint(getRadius(), getRadius());
 }
 
-void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    // Use the current brush for painting
-    painter->setBrush(brush());
-
+void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     // Call the base class paint to draw the ellipse
     QGraphicsEllipseItem::paint(painter, option, widget);
 
@@ -27,42 +23,58 @@ void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 }
 
 // Override setPos to adjust to center-based positioning
-void Robot::setPos(const QPointF &pos)
-{
+void Robot::setPos(const QPointF &pos) {
     QGraphicsItem::setPos(pos - QPointF(getRadius(), getRadius()));
 }
 
 // Overload setPos to accept x and y coordinates
-void Robot::setPos(qreal x, qreal y)
-{
+void Robot::setPos(qreal x, qreal y) {
     setPos(QPointF(x, y));
 }
 
-QRectF Robot::boundingRect() const
-{
+QRectF Robot::boundingRect() const {
     const qreal radius = getRadius();
     return QRectF(0, 0, 2 * radius, 2 * radius);
 }
 
 // Override pos to adjust to center-based positioning
-QPointF Robot::pos() { return QGraphicsItem::pos() + QPointF(getRadius(), getRadius()); }
+QPointF Robot::pos() {
+    return QGraphicsItem::pos() + QPointF(getRadius(), getRadius());
+}
 
-qreal Robot::getRadius() const { return rect().height() / 2; }
+qreal Robot::getRadius() const {
+    return rect().height() / 2;
+}
 
-void Robot::setMoveSpeed(qreal speed) { this->move_speed = speed; }
-qreal Robot::getMoveSpeed() { return move_speed; }
+void Robot::setMoveSpeed(qreal speed) {
+    this->move_speed = speed;
+}
+qreal Robot::getMoveSpeed() {
+    return move_speed;
+}
 
-void Robot::setRotationSpeed(qreal speed) { this->rotation_speed = speed; }
-qreal Robot::getRotationSpeed() { return rotation_speed; }
+void Robot::setRotationSpeed(qreal speed) {
+    this->rotation_speed = speed;
+}
+qreal Robot::getRotationSpeed() {
+    return rotation_speed;
+}
 
-void Robot::startMoving() { isMoving = true; }
-void Robot::stopMoving() { isMoving = false; }
+void Robot::startMoving() {
+    isMoving = true;
+}
+void Robot::stopMoving() {
+    isMoving = false;
+}
 
-void Robot::startRotating(RotationDirection direction) { isRotating = direction; }
-void Robot::stopRotating() { isRotating = RotationDirection::None; }
+void Robot::startRotating(RotationDirection direction) {
+    isRotating = direction;
+}
+void Robot::stopRotating() {
+    isRotating = RotationDirection::None;
+}
 
-QPointF Robot::getDirectionVector()
-{
+QPointF Robot::getDirectionVector() {
     qreal angle = rotation();
     qreal dx = qCos(qDegreesToRadians(angle));
     qreal dy = qSin(qDegreesToRadians(angle));
@@ -70,10 +82,8 @@ QPointF Robot::getDirectionVector()
     return QPointF(dx, dy);
 }
 
-bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision)
-{
-    if (scene() != nullptr)
-    {
+bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision) {
+    if (scene() != nullptr) {
         QPointF moveVector = directionVector * magnitude; // Vector representing the intended move
 
         qreal radius = getRadius();          // Radius of the robot
@@ -81,17 +91,14 @@ bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnti
 
         // Ensure new position stays within the scene boundaries, accounting for the robot's radius
         QRectF sceneRect = scene()->sceneRect().adjusted(radius, radius, -radius, -radius);
-        if (!sceneRect.contains(newPos))
-        {
+        if (!sceneRect.contains(newPos)) {
             return true; // Collision with scene boundaries
         }
 
         // Check for collisions with other items in the scene
         QList<QGraphicsItem *> potentialCollisions = scene()->items(QRectF(newPos.x() - radius, newPos.y() - radius, 2 * radius, 2 * radius));
-        for (QGraphicsItem *item : potentialCollisions)
-        {
-            if (item != this)
-            {
+        for (QGraphicsItem *item : potentialCollisions) {
+            if (item != this) {
                 // Calculate the closest point on the item's bounding rectangle to the new center position of the robot
                 QRectF itemRect = item->sceneBoundingRect();
                 qreal closestX = qMax(itemRect.left(), qMin(newPos.x(), itemRect.right()));
@@ -100,8 +107,7 @@ bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnti
                 qreal distanceY = newPos.y() - closestY;
 
                 // Calculate distance from closest point on the item's bounding rectangle to the new center position of the robot
-                if (distanceX * distanceX + distanceY * distanceY < radius * radius)
-                {
+                if (distanceX * distanceX + distanceY * distanceY < radius * radius) {
                     return true; // Collision detected
                 }
             }
@@ -111,24 +117,20 @@ bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnti
     return false;
 }
 
-bool Robot::move()
-{
-    if (isRotating != RotationDirection::None)
-    {
+bool Robot::move() {
+    if (isRotating != RotationDirection::None) {
         setRotation(rotation() + rotation_speed * (*timeConstant) * isRotating); // Rotate the robot
 
         return true; // Don't move if rotating
     }
 
-    if (isMoving)
-    {
+    if (isMoving) {
         qreal time = timeConstant == nullptr ? 1 : *timeConstant;
 
         QPointF directionVector = getDirectionVector();
         QPointF moveVector = directionVector * move_speed * time;
 
-        if (willCollide(directionVector, move_speed * time, true))
-        {
+        if (willCollide(directionVector, move_speed * time, true)) {
             return false;
         }
 
@@ -138,8 +140,7 @@ bool Robot::move()
     return true;
 }
 
-void Robot::focusInEvent(QFocusEvent *event)
-{
+void Robot::focusInEvent(QFocusEvent *event) {
     QGraphicsEllipseItem::focusInEvent(event); // Call the base class method
 
     // Set the brush color to green when the robot is being controlled
@@ -150,8 +151,7 @@ void Robot::focusInEvent(QFocusEvent *event)
 }
 
 // Override the focusOutEvent in the Robot class
-void Robot::focusOutEvent(QFocusEvent *event)
-{
+void Robot::focusOutEvent(QFocusEvent *event) {
     QGraphicsEllipseItem::focusOutEvent(event); // Call the base class method
 
     // Update the robot's appearance or state when it loses focus
@@ -161,10 +161,8 @@ void Robot::focusOutEvent(QFocusEvent *event)
     setBrush(QBrush(Qt::transparent));
 }
 
-void Robot::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key())
-    {
+void Robot::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
     case Qt::Key_Up:
         // Move forward
         startMoving();
@@ -182,10 +180,8 @@ void Robot::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void Robot::keyReleaseEvent(QKeyEvent *event)
-{
-    switch (event->key())
-    {
+void Robot::keyReleaseEvent(QKeyEvent *event) {
+    switch (event->key()) {
     case Qt::Key_Up:
         // Stop moving
         stopMoving();
@@ -201,4 +197,8 @@ void Robot::keyReleaseEvent(QKeyEvent *event)
     default:
         break;
     }
+}
+
+QPointF Robot::getPos() {
+    return pos();
 }

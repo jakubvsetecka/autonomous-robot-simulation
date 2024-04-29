@@ -1,11 +1,11 @@
 // mainwindow.cpp
 
 #include "mainwindow.h"
+#include "obstacle.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
-{
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus); // Set the focus policy to accept key events
     setFocus();                      // Set the focus to the main window
@@ -38,72 +38,63 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::updateAnimation);
     timer->start(simulationEngine->getFrameTime());
 
-    expandableWidget = ui->expWidget;
-    connect(expandableWidget->button1, &QPushButton::clicked, this, &MainWindow::onAddAutoRobotClicked);
-    connect(expandableWidget->button2, &QPushButton::clicked, this, &MainWindow::onAddControlledRobotClicked);
+    // Create the overlay widget
+    overlay = new OverlayWidget(this, simulationEngine, ui->graphicsView);
+    overlay->setGeometry(rect());
+    ui->expWidget->autoButton->overlay = overlay;
+    ui->expWidget->controlButton->overlay = overlay;
+    ui->expWidget->obstacleButton->overlay = overlay;
 
-    // Connect the button click signal to the appropriate slot
-    connect(ui->addObstacleButton, &QPushButton::clicked, this, &MainWindow::onAddObstacleClicked);
+    expandableWidget = ui->expWidget;
 }
 
-void MainWindow::showEvent(QShowEvent *event)
-{
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event); // Call the base class implementation
+    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    overlay->setGeometry(0, 0, width(), height());
+}
+
+void MainWindow::showEvent(QShowEvent *event) {
     QMainWindow::showEvent(event);
     // Update the scene rect to match the viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
-    QMainWindow::resizeEvent(event);
-    // Update the scene rect to match the new viewport size
-    simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-}
-
-void MainWindow::onAddObstacleClicked()
-{
-    simulationEngine->addObstacle();
-}
-
-void MainWindow::onAddAutoRobotClicked()
-{
-    simulationEngine->addAutoRobot();
-}
-
-void MainWindow::onAddControlledRobotClicked()
-{
-    simulationEngine->addControlledRobot();
-}
-
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    // Assuming 'expandableWidget' is a member of MainWindow
-    if (!expandableWidget->geometry().contains(event->pos()))
-    {
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    if (!expandableWidget->geometry().contains(event->pos())) {
         expandableWidget->collapse();
+    } else {
+        QMainWindow::mousePressEvent(event);
     }
-    QMainWindow::mousePressEvent(event);
 }
 
-void MainWindow::updateAnimation()
-{
-    for (QGraphicsItem *item : simulationEngine->items())
-    {
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
+    QPointF scenePos = ui->graphicsView->mapToScene(localPos);
+    // qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
+
+    QMainWindow::mouseMoveEvent(event);
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+    // qDebug() << "Mouse Release Event";
+    QMainWindow::mouseReleaseEvent(event);
+}
+
+void MainWindow::updateAnimation() {
+    for (QGraphicsItem *item : simulationEngine->items()) {
         Robot *robutek = dynamic_cast<Robot *>(item);
-        if (robutek != nullptr)
-        {
+        if (robutek != nullptr) {
             robutek->move();
         }
     }
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_horizontalSlider_valueChanged(int value)
-{
+void MainWindow::on_horizontalSlider_valueChanged(int value) {
     qDebug() << "Simulation speed: " << value;
     simulationEngine->setSimulationSpeed(value / 100.0);
 }

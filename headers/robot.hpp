@@ -1,25 +1,24 @@
 #ifndef ROBOT_HPP
 #define ROBOT_HPP
 
-#include <QGraphicsEllipseItem>
-#include <QPainter>
-#include <QtMath>
+#include "gameobject.hpp"
 #include <QDebug>
-#include <QGraphicsScene>
-#include <QPointF>
 #include <QFocusEvent>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <QPointF>
+#include <QtMath>
 
 /**
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
  */
-class Robot : public QGraphicsEllipseItem
-{
-public:
+class Robot : public QGraphicsEllipseItem, public GameObject {
+  public:
     /**
      * @brief Enum to represent the direction of rotation of the robot.
      */
-    enum RotationDirection
-    {
+    enum RotationDirection {
         Left = -1, // Counter-clockwise
         None = 0,  // No rotation
         Right = 1  // Clockwise
@@ -118,7 +117,9 @@ public:
      */
     virtual bool move();
 
-protected:
+    QPointF getPos() override;
+
+  protected:
     virtual void focusInEvent(QFocusEvent *event) override;
     virtual void focusOutEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;

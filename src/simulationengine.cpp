@@ -2,8 +2,7 @@
 #include "obstacle.hpp"
 
 SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpeed)
-    : QGraphicsScene(parent)
-{
+    : QGraphicsScene(parent) {
     // Set the frame rate and simulation speed
     setFPS(fps);
     setSimulationSpeed(simulationSpeed);
@@ -42,63 +41,37 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
 
 SimulationEngine::~SimulationEngine() {}
 
-int SimulationEngine::getFPS()
-{
+int SimulationEngine::getFPS() {
     return fps;
 }
 
-void SimulationEngine::setFPS(int fps)
-{
+void SimulationEngine::setFPS(int fps) {
     this->fps = fps;
     updateTimeConstant();
 }
 
-int SimulationEngine::getFrameTime()
-{
+int SimulationEngine::getFrameTime() {
     return 1000 / fps;
 }
 
-qreal SimulationEngine::getSimulationSpeed()
-{
+qreal SimulationEngine::getSimulationSpeed() {
     return simulationSpeed;
 }
 
-void SimulationEngine::setSimulationSpeed(qreal speed)
-{
+void SimulationEngine::setSimulationSpeed(qreal speed) {
     simulationSpeed = speed;
     updateTimeConstant();
 }
 
-void SimulationEngine::updateTimeConstant()
-{
+void SimulationEngine::updateTimeConstant() {
     timeConstant = 1000 / getFPS() * simulationSpeed;
 }
 
-Robot *SimulationEngine::getControlledRobot()
-{
+Robot *SimulationEngine::getControlledRobot() {
     return controlledRobot;
 }
 
-void SimulationEngine::setControlledRobot(Robot *robot)
-{
+void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
     addItem(controlledRobot);
-}
-
-void SimulationEngine::addObstacle()
-{
-    Obstacle *obstacle = new Obstacle();
-    addItem(obstacle);
-}
-
-void SimulationEngine::addAutoRobot()
-{
-    AutoRobot *autoRobot = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1);
-    addItem(autoRobot);
-}
-
-void SimulationEngine::addControlledRobot()
-{
-    Robot *robot = new Robot();
-    setControlledRobot(robot);
 }

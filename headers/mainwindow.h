@@ -2,50 +2,53 @@
 #define MAINWINDOW_H
 
 #include "autorobot.hpp"
+#include "checkablebutton.hpp"
 #include "expbuttonwidget.hpp"
+#include "gameobject.hpp"
 #include "obstacle.hpp"
+#include "overlaywidget.hpp"
 #include "robot.hpp"
 #include "simulationengine.hpp"
 #include <QDebug>
 #include <QGraphicsRectItem>
+
 #include <QKeyEvent>
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
-namespace Ui
-{
-  class MainWindow;
+namespace Ui {
+class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-  Q_OBJECT
+class MainWindow : public QMainWindow {
+    Q_OBJECT
 
-public:
-  MainWindow(QWidget *parent = nullptr);
-  ~MainWindow();
-  void setupAnimation();
+  public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+    void setupAnimation();
 
-private:
-  Ui::MainWindow *ui;
-  SimulationEngine *simulationEngine;
+  private:
+    Ui::MainWindow *ui;
+    SimulationEngine *simulationEngine;
 
-  void initScene();
-  void updateAnimation(); // Method to update the animation
+    void initScene();
+    void updateAnimation(); // Method to update the animation
 
-protected:
-  void showEvent(QShowEvent *event) override;
-  void resizeEvent(QResizeEvent *event) override;
-  void mousePressEvent(QMouseEvent *event) override;
-  void onAddObstacleClicked();
-  void onAddAutoRobotClicked();
-  void onAddControlledRobotClicked();
+  protected:
+    void showEvent(QShowEvent *event) override;
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
 
-  ExpandableButtonWidget *expandableWidget;
+    ExpandableButtonWidget *expandableWidget;
+    OverlayWidget *overlay;
+
   private slots:
-  void on_horizontalSlider_valueChanged(int value);
+    void on_horizontalSlider_valueChanged(int value);
 };
 #endif // MAINWINDOW_H

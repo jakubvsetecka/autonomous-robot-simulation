@@ -2,6 +2,8 @@
 #define EXPANDABLEBUTTONWIDGET_HPP
 
 // ExpandableButtonWidget.h
+#include "checkablebutton.hpp"
+#include "overlaywidget.hpp"
 #include <QApplication>
 #include <QDebug>
 #include <QEvent>
@@ -14,28 +16,31 @@ class ExpandableButtonWidget : public QWidget {
     Q_OBJECT
 
   public:
+    CheckableButton *obstacleButton;
     QPushButton *mainButton;
-    QPushButton *button1;
-    QPushButton *button2;
+    CheckableButton *autoButton;
+    CheckableButton *controlButton;
 
     explicit ExpandableButtonWidget(QWidget *parent = nullptr)
         : QWidget(parent) {
         QVBoxLayout *layout = new QVBoxLayout(this);
+        obstacleButton = new CheckableButton("Add Obstacle", this, CheckableButton::ObjectType::OBST);
         mainButton = new QPushButton("Add Robot", this);
-        button1 = new QPushButton("Auto", this);
-        button2 = new QPushButton("Controlled", this);
+        autoButton = new CheckableButton("Auto", this, CheckableButton::ObjectType::AUTO);
+        controlButton = new CheckableButton("Controlled", this, CheckableButton::ObjectType::CONT);
 
-        button1->hide(); // Initially hidden
-        button2->hide(); // Initially hidden
+        autoButton->hide();    // Initially hidden
+        controlButton->hide(); // Initially hidden
 
+        layout->addWidget(obstacleButton);
         layout->addWidget(mainButton);
-        layout->addWidget(button1);
-        layout->addWidget(button2);
+        layout->addWidget(autoButton);
+        layout->addWidget(controlButton);
 
         connect(mainButton, &QPushButton::clicked, [this]() {
-            bool isVisible = button1->isVisible();
-            button1->setVisible(!isVisible);
-            button2->setVisible(!isVisible);
+            bool isVisible = autoButton->isVisible();
+            autoButton->setVisible(!isVisible);
+            controlButton->setVisible(!isVisible);
             mainButton->setVisible(isVisible);
         });
 

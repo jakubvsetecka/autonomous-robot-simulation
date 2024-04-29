@@ -5,9 +5,8 @@
 #include "robot.hpp"
 #include <QGraphicsScene>
 
-class SimulationEngine : public QGraphicsScene
-{
-public:
+class SimulationEngine : public QGraphicsScene {
+  public:
     SimulationEngine(QObject *parent = nullptr, int fps = 60, qreal simulationSpeed = 1.0 / 16.0);
 
     ~SimulationEngine();
@@ -55,19 +54,10 @@ public:
      */
     qreal *getTimeConstant();
 
-    /**
-     * @brief Add obstacle to the scene.
-     */
-    void addObstacle();
-
-    void addAutoRobot();
-
-    void addControlledRobot();
-
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
 
-private:
+  private:
     /** The frames per second of the simulation engine. */
     int fps = 60;
     /** The speed of the simulation engine. */
