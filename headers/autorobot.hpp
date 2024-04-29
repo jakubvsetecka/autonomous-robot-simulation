@@ -8,7 +8,7 @@
 class AutoRobot : public Robot
 {
 public:
-    AutoRobot(QGraphicsItem *parent = nullptr, qreal collisionLookAhead = 10, Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right, qreal moveSpeed = 1, qreal rotationSpeed = 1);
+    AutoRobot(QGraphicsItem *parent = nullptr, qreal collisionLookAhead = 10, Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right, qreal moveSpeed = 1, qreal rotationSpeed = 1, qreal *timeConstant = nullptr);
     ~AutoRobot();
 
     /** Override the paint method to draw a line showing the direction of the robot */

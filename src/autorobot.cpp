@@ -1,6 +1,6 @@
 #include "autorobot.hpp"
 
-AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed) : Robot(parent)
+AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed, qreal *timeConstant) : Robot(parent, timeConstant)
 {
     setFlag(QGraphicsItem::ItemIsFocusable, false);
 
@@ -9,7 +9,7 @@ AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::Rot
     setMoveSpeed(moveSpeed);
     setRotationSpeed(rotationSpeed);
 
-    setRect(0, 0, 40, 40);
+    setRect(0, 0, 10, 10);
     setTransformOriginPoint(getRadius(), getRadius());
 
     // Set the color of the ellipse to red
@@ -45,7 +45,7 @@ bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude)
 
 void AutoRobot::doRotationStep(RotationDirection direction)
 {
-    targetAngle += rotation_speed * direction;
+    targetAngle += rotation_speed * direction * (*timeConstant);
 }
 
 bool AutoRobot::move()

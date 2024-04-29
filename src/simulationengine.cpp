@@ -1,30 +1,31 @@
 #include "simulationengine.hpp"
 #include "obstacle.hpp"
 
-qreal SimulationEngine::timeConstant = 0.5;
-
-SimulationEngine::SimulationEngine(QObject *parent, int fps, int simulationSpeed)
+SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpeed)
     : QGraphicsScene(parent)
 {
     // Set the frame rate and simulation speed
-    this->fps = fps;
-    this->simulationSpeed = simulationSpeed;
+    setFPS(fps);
+    setSimulationSpeed(simulationSpeed);
 
     // Set the background color
     setBackgroundBrush(QBrush(Qt::white));
 
-    // Set the static time constant
-    SimulationEngine::timeConstant = getFrameTime() * simulationSpeed;
-
     // Create a robot and set it as the controlled robot
-    Robot *robutek = new Robot();
+    Robot *robutek = new Robot(nullptr, timeConstant);
     robutek->setPos(100, 100);
     setControlledRobot(robutek);
 
     // Add an autonomous robot
-    AutoRobot *samorobutek = new AutoRobot(nullptr, 30, Robot::RotationDirection::Right, 7, 30);
-    samorobutek->setPos(150, 150);
-    addItem(samorobutek);
+    for (int i = 0; i < 1; i++)
+    {
+        for (int j = 0; j < 1; j++)
+        {
+            AutoRobot *samorobutek = new AutoRobot(nullptr, 10, Robot::RotationDirection::Right, 7, 1, timeConstant);
+            samorobutek->setPos(150 + i * 10, 150 + j * 10);
+            addItem(samorobutek);
+        }
+    }
 }
 
 SimulationEngine::~SimulationEngine() {}
@@ -32,6 +33,12 @@ SimulationEngine::~SimulationEngine() {}
 int SimulationEngine::getFPS()
 {
     return fps;
+}
+
+void SimulationEngine::setFPS(int fps)
+{
+    this->fps = fps;
+    updateTimeConstant();
 }
 
 int SimulationEngine::getFrameTime()
@@ -42,6 +49,18 @@ int SimulationEngine::getFrameTime()
 qreal SimulationEngine::getSimulationSpeed()
 {
     return simulationSpeed;
+}
+
+void SimulationEngine::setSimulationSpeed(qreal speed)
+{
+    simulationSpeed = speed;
+    updateTimeConstant();
+}
+
+void SimulationEngine::updateTimeConstant()
+{
+    timeConstant = new qreal(1000 / getFPS());
+    *timeConstant *= simulationSpeed;
 }
 
 Robot *SimulationEngine::getControlledRobot()

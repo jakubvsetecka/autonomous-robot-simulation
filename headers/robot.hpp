@@ -25,7 +25,7 @@ public:
         Right = 1  // Clockwise
     };
 
-    Robot(QGraphicsItem *parent = nullptr);
+    Robot(QGraphicsItem *parent = nullptr, qreal *timeConstant = nullptr);
 
     /** Override the paint method to draw a line showing the direction of the robot */
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -132,6 +132,8 @@ protected:
     bool isMoving = false;
     /** @brief Flag to indicate the direction of rotation */
     RotationDirection isRotating = RotationDirection::None;
+
+    qreal *timeConstant = nullptr;
 };
 
 #endif // ROBOT_HPP

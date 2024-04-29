@@ -1,7 +1,9 @@
 #include "robot.hpp"
 
-Robot::Robot(QGraphicsItem *parent) : QGraphicsEllipseItem(parent)
+Robot::Robot(QGraphicsItem *parent, qreal *timeConstant) : QGraphicsEllipseItem(parent)
 {
+    this->timeConstant = timeConstant;
+
     setFlag(QGraphicsItem::ItemIsFocusable, true);
 
     // Set the size of the ellipse
@@ -112,17 +114,19 @@ bool Robot::move()
 {
     if (isRotating != RotationDirection::None)
     {
-        setRotation(rotation() + rotation_speed * isRotating); // Rotate the robot
+        setRotation(rotation() + rotation_speed * (*timeConstant) * isRotating); // Rotate the robot
 
         return true; // Don't move if rotating
     }
 
     if (isMoving)
     {
-        QPointF directionVector = getDirectionVector();
-        QPointF moveVector = directionVector * move_speed;
+        qreal time = timeConstant == nullptr ? 1 : *timeConstant;
 
-        if (willCollide(directionVector, move_speed))
+        QPointF directionVector = getDirectionVector();
+        QPointF moveVector = directionVector * move_speed * time;
+
+        if (willCollide(directionVector, move_speed * time))
         {
             return false;
         }
