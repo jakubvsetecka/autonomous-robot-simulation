@@ -7,6 +7,8 @@
 
 class AutoRobot : public Robot {
   public:
+    enum { Type = QGraphicsItem::UserType + 2 };
+
     AutoRobot(QGraphicsItem *parent = nullptr, qreal size = 50, qreal collisionLookAhead = 10, Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right, qreal moveSpeed = 1, qreal rotationSpeed = 1, qreal *timeConstant = nullptr);
     ~AutoRobot();
 
@@ -21,6 +23,8 @@ class AutoRobot : public Robot {
     void doRotationStep(RotationDirection direction);
 
     bool move() override;
+
+    int type() const override { return Type; }
 
     QJsonObject toJSON() override;
 

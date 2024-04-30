@@ -48,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent)
     expandableWidget = ui->expWidget;
 
     ui->graphicsView->viewport()->installEventFilter(this);
+
+    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveSimulation);
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event) {
@@ -113,4 +115,24 @@ MainWindow::~MainWindow() {
 void MainWindow::on_horizontalSlider_valueChanged(int value) {
     qDebug() << "Simulation speed: " << value;
     simulationEngine->setSimulationSpeed(value / 100.0);
+}
+
+void MainWindow::loadSimulation() {
+    // simulationEngine->loadSimulation();
+}
+
+void MainWindow::saveSimulation() {
+    PopupSaveWindow popupWindow(this);
+
+    float speed = simulationEngine->getSimulationSpeed();
+    simulationEngine->setSimulationSpeed(0.0);
+
+    if (popupWindow.exec() == QDialog::Accepted) {
+        // User accepted the dialog (e.g., clicked "Save")
+        qDebug() << "Saving simulation...";
+        simulationEngine->saveSimulation(popupWindow.getEnteredText());
+    } else {
+        // Restore the simulation speed
+        simulationEngine->setSimulationSpeed(speed);
+    }
 }

@@ -79,6 +79,7 @@ Robot *SimulationEngine::getControlledRobot() {
 
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
+#include <qdir.h>
 
 void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
@@ -90,14 +91,24 @@ bool SimulationEngine::isInsideScene(const QPointF &point) const {
     return sceneRect.contains(point);
 }
 
-bool SimulationEngine::saveSimulation() {
-    QFile saveFile("save.json");
+bool SimulationEngine::saveSimulation(const QString &filename) {
+    // Create the "simulations" folder if it doesn't exist
+    QDir simulationsDir("simulations");
+    if (!simulationsDir.exists()) {
+        if (!simulationsDir.mkpath(".")) {
+            qWarning("Failed to create simulations folder.");
+            return false;
+        }
+    }
 
+    // Open or create the save file inside the "simulations" folder
+    QFile saveFile(simulationsDir.filePath(filename + ".json"));
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
         return false;
     }
 
+    // Write the JSON data to the file
     QJsonObject gameObject = toJson();
     saveFile.write(QJsonDocument(gameObject).toJson());
 

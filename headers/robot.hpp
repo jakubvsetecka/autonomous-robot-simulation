@@ -26,6 +26,8 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
         Right = 1  // Clockwise
     };
 
+    enum { Type = QGraphicsItem::UserType + 1 };
+
     Robot(QGraphicsItem *parent = nullptr, qreal *timeConstant = nullptr);
 
     /** Override the paint method to draw a line showing the direction of the robot */
@@ -118,6 +120,8 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
      * @return false
      */
     virtual bool move();
+
+    int type() const override { return Type; }
 
     QPointF getPos() override;
     virtual QJsonObject toJSON() override;

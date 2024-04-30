@@ -1,18 +1,28 @@
 #ifndef POPUPSAVEWINDOW_H
 #define POPUPSAVEWINDOW_H
 
-#include <QMainWindow>
-#include <QObject>
-#include <QWidget>
+#include <QDebug>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QVBoxLayout>
 
-class PopupSaveWindow : public QWidget
-{
+class PopupSaveWindow : public QDialog {
     Q_OBJECT
-public:
+
+  public:
     explicit PopupSaveWindow(QWidget *parent = nullptr);
+    ~PopupSaveWindow();
 
-signals:
+    QString getEnteredText() { return enteredText; }
 
+  private:
+    QString enteredText;
+    QLineEdit *lineEdit;
+
+  private slots:
+    void onOkClicked();
 };
 
 #endif // POPUPSAVEWINDOW_H

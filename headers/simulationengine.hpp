@@ -62,7 +62,7 @@ class SimulationEngine : public QGraphicsScene {
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
 
-    bool saveSimulation();
+    bool saveSimulation(const QString &filename = "simulation");
     bool loadSimulation();
 
     void read(const QJsonObject &json);

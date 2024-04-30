@@ -6,6 +6,7 @@
 #include "expbuttonwidget.hpp"
 #include "gameobject.hpp"
 #include "obstacle.hpp"
+#include "popupsavewindow.h"
 #include "overlaywidget.hpp"
 #include "robot.hpp"
 #include "simulationengine.hpp"
