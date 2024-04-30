@@ -47,6 +47,7 @@ class OverlayWidget : public QWidget {
   protected:
     SimulationEngine *simEng;
     QGraphicsView *graphView;
+    QStyleOptionGraphicsItem option;
 
     void paintEvent(QPaintEvent *event) override {
         Q_UNUSED(event);
@@ -67,7 +68,17 @@ class OverlayWidget : public QWidget {
         update();                    // Trigger repaint
     }
 
-    QStyleOptionGraphicsItem option;
+    void mousePressEvent(QMouseEvent *event) {
+        qDebug() << "Mouse press event in overlay widget";
+        QGraphicsItem *item = graphView->itemAt(event->pos());
+        if (item) {
+            // Handle the click on the item
+            qDebug() << "Item clicked:" << item;
+        } else {
+            // If no item is clicked, forward the event to the base class
+            QWidget::mousePressEvent(event);
+        }
+    }
 };
 
 #endif // OVERLAYWIDGET_HPP
