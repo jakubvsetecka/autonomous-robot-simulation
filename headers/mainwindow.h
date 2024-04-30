@@ -45,6 +45,8 @@ class MainWindow : public QMainWindow {
     void mouseReleaseEvent(QMouseEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void loadSimulation();
+    void saveSimulation();
     bool eventFilter(QObject *object, QEvent *event);
 
     ExpandableButtonWidget *expandableWidget;

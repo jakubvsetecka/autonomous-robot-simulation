@@ -117,12 +117,32 @@ QJsonObject SimulationEngine::toJson() const {
     // controlledRobotObject["rotationSpeed"] = controlledRobot->getRotationSpeed();
     // gameObject["controlledRobot"] = controlledRobotObject;
 
-    QJsonArray objects;
+    QJsonObject objects;
+    QJsonObject robots;
+    QJsonArray obstacles;
+    QJsonArray autoRobots;
+    QJsonArray controlledRobots;
+
     for (QGraphicsItem *item : items()) {
-        if (GameObject *object = dynamic_cast<GameObject *>(item)) {
-            objects.append(object->toJSON());
+        if (item->type() == Obstacle::Type) {
+            Obstacle *obstacle = qgraphicsitem_cast<Obstacle *>(item);
+            obstacles.append(obstacle->toJSON());
+        } else if (item->type() == AutoRobot::Type) {
+            AutoRobot *autoRobot = qgraphicsitem_cast<AutoRobot *>(item);
+            autoRobots.append(autoRobot->toJSON());
+        } else if (item->type() == Robot::Type) {
+            Robot *robot = qgraphicsitem_cast<Robot *>(item);
+            controlledRobots.append(robot->toJSON());
         }
     }
+
+    robots["autoRobots"] = autoRobots;
+    robots["controlledRobots"] = controlledRobots;
+
+    objects["obstacles"] = obstacles;
+    objects["robots"] = robots;
+
     json["objects"] = objects;
+
     return json;
 }

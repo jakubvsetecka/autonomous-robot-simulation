@@ -1,7 +1,7 @@
 #include "autorobot.hpp"
 
-AutoRobot::AutoRobot(QGraphicsItem *parent, qreal size, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed, qreal *timeConstant) : Robot(parent, timeConstant)
-{
+AutoRobot::AutoRobot(QGraphicsItem *parent, qreal size, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed, qreal *timeConstant)
+    : Robot(parent, timeConstant) {
     setFlag(QGraphicsItem::ItemIsFocusable, false);
 
     this->collisionLookAhead = collisionLookAhead;
@@ -21,8 +21,7 @@ AutoRobot::AutoRobot(QGraphicsItem *parent, qreal size, qreal collisionLookAhead
 
 AutoRobot::~AutoRobot() {}
 
-void AutoRobot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+void AutoRobot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     Robot::paint(painter, option, widget);
 
     // Draw the collision look ahead line
@@ -32,38 +31,47 @@ void AutoRobot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawLine(getRadius(), getRadius(), getRadius() * 2 + collisionLookAhead, getRadius());
 }
 
-QRectF AutoRobot::boundingRect() const
-{
+QRectF AutoRobot::boundingRect() const {
     const qreal radius = getRadius();
     return QRectF(0, 0, 2 * radius + collisionLookAhead, 2 * radius);
 }
 
-bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision)
-{
+bool AutoRobot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision) {
     return Robot::willCollide(directionVector, magnitude, allowAnticollision) || (collisionLookAhead > 0 && Robot::willCollide(directionVector, magnitude + collisionLookAhead, false));
 }
 
-void AutoRobot::doRotationStep(RotationDirection direction)
-{
+void AutoRobot::doRotationStep(RotationDirection direction) {
     targetAngle += rotation_speed * direction;
 }
 
-bool AutoRobot::move()
-{
+bool AutoRobot::move() {
     bool reachedTargetAngleClockwise = rotation() >= targetAngle && rotationDirection == Robot::RotationDirection::Right;
     bool reachedTargetAngleCounterClockwise = rotation() <= targetAngle && rotationDirection == Robot::RotationDirection::Left;
 
-    if (!reachedTargetAngleClockwise && !reachedTargetAngleCounterClockwise)
-    {
+    if (!reachedTargetAngleClockwise && !reachedTargetAngleCounterClockwise) {
         setRotation(rotation() + SMOOTH_ROTATION_SPEED * rotationDirection * (*timeConstant));
         return true;
     }
 
     bool hasNotCollided = Robot::move();
-    if (!hasNotCollided)
-    {
+    if (!hasNotCollided) {
         doRotationStep(rotationDirection);
     }
 
     return hasNotCollided;
+}
+
+QJsonObject AutoRobot::toJSON() {
+    QJsonObject json = Robot::toJSON();
+    json["collisionLookAhead"] = collisionLookAhead;
+    json["rotationDirection"] = rotationDirection;
+    json["targetAngle"] = targetAngle;
+    json["x"] = pos().x();
+    json["y"] = pos().y();
+    json["rotation"] = rotation();
+    json["radius"] = getRadius();
+    json["moveSpeed"] = getMoveSpeed();
+    json["rotationSpeed"] = getRotationSpeed();
+    json["isMoving"] = isMoving;
+    return json;
 }

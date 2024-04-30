@@ -5,9 +5,8 @@
 
 #define SMOOTH_ROTATION_SPEED 0.25
 
-class AutoRobot : public Robot
-{
-public:
+class AutoRobot : public Robot {
+  public:
     AutoRobot(QGraphicsItem *parent = nullptr, qreal size = 50, qreal collisionLookAhead = 10, Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right, qreal moveSpeed = 1, qreal rotationSpeed = 1, qreal *timeConstant = nullptr);
     ~AutoRobot();
 
@@ -23,7 +22,9 @@ public:
 
     bool move() override;
 
-protected:
+    QJsonObject toJSON() override;
+
+  protected:
     qreal collisionLookAhead = 0;
     qreal targetAngle = 0;
     Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right;

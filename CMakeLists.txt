@@ -36,9 +36,13 @@ set(PROJECT_SOURCES
     headers/overlaywidget.hpp
 
     headers/checkablebutton.hpp
+
+    popupwindow/popupsavewindow.h
+    popupwindow/popupsavewindow.cpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)
+include_directories(${PROJECT_SOURCE_DIR}/popupwindow)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

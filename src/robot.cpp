@@ -257,10 +257,13 @@ QPointF Robot::getPos() {
 }
 
 QJsonObject Robot::toJSON() {
-    //TODO: Implement this method
     QJsonObject json;
     json["x"] = pos().x();
     json["y"] = pos().y();
     json["rotation"] = rotation();
+    json["radius"] = getRadius();
+    json["moveSpeed"] = getMoveSpeed();
+    json["rotationSpeed"] = getRotationSpeed();
+    json["isMoving"] = isMoving;
     return json;
 }
