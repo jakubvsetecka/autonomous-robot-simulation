@@ -126,13 +126,14 @@ void MainWindow::saveSimulation() {
 
     float speed = simulationEngine->getSimulationSpeed();
     simulationEngine->setSimulationSpeed(0.0);
+    ui->horizontalSlider->setValue(0);
 
     if (popupWindow.exec() == QDialog::Accepted) {
         // User accepted the dialog (e.g., clicked "Save")
         qDebug() << "Saving simulation...";
         simulationEngine->saveSimulation(popupWindow.getEnteredText());
-    } else {
-        // Restore the simulation speed
-        simulationEngine->setSimulationSpeed(speed);
     }
+    // Restore the simulation speed
+    simulationEngine->setSimulationSpeed(speed);
+    ui->horizontalSlider->setValue(speed * 100);
 }
