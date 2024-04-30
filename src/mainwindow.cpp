@@ -151,13 +151,14 @@ void MainWindow::toggleList() {
     if (listWidget->isVisible()) {
         ui->verticalLayout_2->removeWidget(listWidget);
         listWidget->hide();
+        listWidget->clear();
         ui->loadButton->setText("Load");
     } else {
         QDir directory("simulations");
         QStringList files = directory.entryList(QStringList() << "*.json", QDir::Files);
 
         foreach (QString filename, files) {
-            // Remove the .json
+            // Remove .json
             filename.chop(5);
             listWidget->addItem(filename);
         }
@@ -169,6 +170,7 @@ void MainWindow::toggleList() {
 }
 
 void MainWindow::handleItemDoubleClick(QListWidgetItem *item) {
-    qDebug() << "Clicked item: " << item->text();
-    // Do something with the clicked item
+    simulationEngine->setSimulationSpeed(0.0);
+    ui->horizontalSlider->setValue(0);
+    simulationEngine->loadSimulation(item->text());
 }

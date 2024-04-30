@@ -168,12 +168,12 @@ void SimulationEngine::read(const QJsonObject &json) {
     }
 }
 
-bool SimulationEngine::loadSimulation() {
+bool SimulationEngine::loadSimulation(QString filename) {
     // Clear the scene
     clear();
 
     // Open the save file
-    QFile loadFile("simulations/test13.json");
+    QFile loadFile("simulations/" + filename + ".json");
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
         return false;
