@@ -179,9 +179,9 @@ bool Robot::willCollide(QPointF directionVector, qreal magnitude, bool allowAnti
                         qreal distanceY = pos().y() - closestY;
 
                         // Calculate distance from closest point on the item's bounding rectangle to the current center position of the robot
-                        if (QLineF(pos(), QPointF(closestX, closestY)).length() < radius + BODY_COLLISION_MARGIN)
+                        if (QLineF(pos(), QPointF(closestX, closestY)).length() < radius)
                         {
-                            moveBy(distanceX, distanceY); // Move the robot away from the item
+                            moveBy(distanceX / 100, distanceY / 100); // Move the robot away from the item
                         }
                     }
 

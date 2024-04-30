@@ -2,7 +2,8 @@
 #include "obstacle.hpp"
 
 SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpeed)
-    : QGraphicsScene(parent) {
+    : QGraphicsScene(parent)
+{
     // Set the frame rate and simulation speed
     setFPS(fps);
     setSimulationSpeed(simulationSpeed);
@@ -19,11 +20,11 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
     obstacle->setPos(200, 200);
     addItem(obstacle);
 
-    AutoRobot *samorobutek = new AutoRobot(nullptr, 0, Robot::RotationDirection::Right, 1, 1, &timeConstant);
+    AutoRobot *samorobutek = new AutoRobot(nullptr, 50, 0, Robot::RotationDirection::Right, 1, 1, &timeConstant);
     samorobutek->setPos(130, 100);
     addItem(samorobutek);
 
-    AutoRobot *druhy_samorobutek = new AutoRobot(nullptr, 0, Robot::RotationDirection::Right, 1, 1, &timeConstant);
+    AutoRobot *druhy_samorobutek = new AutoRobot(nullptr, 50, 0, Robot::RotationDirection::Right, 1, 1, &timeConstant);
     druhy_samorobutek->setPos(100, 100);
     addItem(druhy_samorobutek);
 
@@ -41,42 +42,51 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
 
 SimulationEngine::~SimulationEngine() {}
 
-int SimulationEngine::getFPS() {
+int SimulationEngine::getFPS()
+{
     return fps;
 }
 
-void SimulationEngine::setFPS(int fps) {
+void SimulationEngine::setFPS(int fps)
+{
     this->fps = fps;
     updateTimeConstant();
 }
 
-int SimulationEngine::getFrameTime() {
+int SimulationEngine::getFrameTime()
+{
     return 1000 / fps;
 }
 
-qreal SimulationEngine::getSimulationSpeed() {
+qreal SimulationEngine::getSimulationSpeed()
+{
     return simulationSpeed;
 }
 
-void SimulationEngine::setSimulationSpeed(qreal speed) {
+void SimulationEngine::setSimulationSpeed(qreal speed)
+{
     simulationSpeed = speed;
     updateTimeConstant();
 }
 
-void SimulationEngine::updateTimeConstant() {
+void SimulationEngine::updateTimeConstant()
+{
     timeConstant = 1000 / getFPS() * simulationSpeed;
 }
 
-Robot *SimulationEngine::getControlledRobot() {
+Robot *SimulationEngine::getControlledRobot()
+{
     return controlledRobot;
 }
 
-void SimulationEngine::setControlledRobot(Robot *robot) {
+void SimulationEngine::setControlledRobot(Robot *robot)
+{
     controlledRobot = robot;
     addItem(controlledRobot);
 }
 
-bool SimulationEngine::isInsideScene(const QPointF &point) const {
+bool SimulationEngine::isInsideScene(const QPointF &point) const
+{
     QRectF sceneRect = this->sceneRect();
     return sceneRect.contains(point);
 }

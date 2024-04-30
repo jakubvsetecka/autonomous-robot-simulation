@@ -1,6 +1,6 @@
 #include "autorobot.hpp"
 
-AutoRobot::AutoRobot(QGraphicsItem *parent, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed, qreal *timeConstant) : Robot(parent, timeConstant)
+AutoRobot::AutoRobot(QGraphicsItem *parent, qreal size, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed, qreal *timeConstant) : Robot(parent, timeConstant)
 {
     setFlag(QGraphicsItem::ItemIsFocusable, false);
 
