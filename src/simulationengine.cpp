@@ -38,7 +38,7 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
     //     }
     // }
 
-    saveSimulation();
+    loadSimulation();
 }
 
 SimulationEngine::~SimulationEngine() {}
@@ -156,4 +156,79 @@ QJsonObject SimulationEngine::toJson() const {
     json["objects"] = objects;
 
     return json;
+}
+
+void SimulationEngine::read(const QJsonObject &json) {
+    qDebug() << "Reading the JSON data from the file";
+    if (const QJsonValue v = json["fps"]; v.isDouble())
+        setFPS(v.toInt());
+
+    if (const QJsonValue v = json["simulationSpeed"]; v.isDouble())
+        setSimulationSpeed(v.toDouble());
+
+    // if (const QJsonValue v = json["controlledRobot"]; v.isObject()) {
+    //     QJsonObject controlledRobotObject = v.toObject();
+    //     controlledRobot->setPos(controlledRobotObject["x"].toDouble(), controlledRobotObject["y"].toDouble());
+    //     controlledRobot->setRotation(controlledRobotObject["rotation"].toDouble());
+    //     controlledRobot->setMoveSpeed(controlledRobotObject["moveSpeed"].toDouble());
+    //     controlledRobot->setRotationSpeed(controlledRobotObject["rotationSpeed"].toDouble());
+    // }
+
+    qDebug() << "Reading the objects";
+    if (const QJsonValue v = json["objects"]; v.isObject()) {
+        QJsonObject objects = v.toObject();
+
+        if (const QJsonValue v = objects["obstacles"]; v.isArray()) {
+            QJsonArray obstacles = v.toArray();
+            for (const QJsonValue &obstacleValue : obstacles) {
+                if (obstacleValue.isObject()) {
+                    addItem(Obstacle::fromJSON(obstacleValue.toObject()));
+                }
+            }
+        }
+        qDebug() << "Reading the robots";
+        if (const QJsonValue v = objects["robots"]; v.isObject()) {
+            QJsonObject robots = v.toObject();
+
+            if (const QJsonValue v = robots["autoRobots"]; v.isArray()) {
+                QJsonArray autoRobots = v.toArray();
+                for (const QJsonValue &autoRobotValue : autoRobots) {
+                    if (autoRobotValue.isObject()) {
+                        addItem(AutoRobot::fromJSON(autoRobotValue.toObject(), &timeConstant));
+                    }
+                }
+            }
+            qDebug() << "Reading the controlled robots";
+            if (const QJsonValue v = robots["controlledRobots"]; v.isArray()) {
+                QJsonArray controlledRobots = v.toArray();
+                for (const QJsonValue &controlledRobotValue : controlledRobots) {
+                    if (controlledRobotValue.isObject()) {
+                        addItem(Robot::fromJSON(controlledRobotValue.toObject(), &timeConstant));
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool SimulationEngine::loadSimulation() {
+    // Clear the scene
+    qDebug() << "Clearing the scene";
+    clear();
+
+    // Open the save file
+    qDebug() << "Opening the save file";
+    QFile loadFile("simulations/test13.json");
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+
+    // Read the JSON data from the file
+    qDebug() << "Reading the JSON data from the file";
+    QByteArray saveData = loadFile.readAll();
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+    read(loadDoc.object());
+
+    return true;
 }

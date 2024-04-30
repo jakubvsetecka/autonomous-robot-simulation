@@ -267,3 +267,32 @@ QJsonObject Robot::toJSON() {
     json["isMoving"] = isMoving;
     return json;
 }
+
+Robot *Robot::fromJSON(const QJsonObject &json, qreal *timeConstant) {
+    Robot *result = new Robot();
+
+    if (const QJsonValue v = json["x"]; v.isDouble())
+        result->setX(v.toDouble());
+
+    if (const QJsonValue v = json["y"]; v.isDouble())
+        result->setY(v.toDouble());
+
+    if (const QJsonValue v = json["rotation"]; v.isDouble())
+        result->setRotation(v.toDouble());
+
+    if (const QJsonValue v = json["radius"]; v.isDouble())
+        result->setRect(0, 0, v.toDouble() * 2, v.toDouble() * 2);
+
+    if (const QJsonValue v = json["moveSpeed"]; v.isDouble())
+        result->setMoveSpeed(v.toDouble());
+
+    if (const QJsonValue v = json["rotationSpeed"]; v.isDouble())
+        result->setRotationSpeed(v.toDouble());
+
+    if (const QJsonValue v = json["isMoving"]; v.isBool())
+        result->isMoving = v.toBool();
+
+    result->timeConstant = timeConstant;
+
+    return result;
+}

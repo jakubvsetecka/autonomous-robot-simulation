@@ -26,7 +26,15 @@ class AutoRobot : public Robot {
 
     int type() const override { return Type; }
 
+    void setCollisionLookAhead(qreal lookAhead) { collisionLookAhead = lookAhead; }
+    qreal getCollisionLookAhead() { return collisionLookAhead; }
+    void setRotationDirection(RotationDirection direction) { rotationDirection = direction; }
+    RotationDirection getRotationDirection() { return rotationDirection; }
+    void setTargetAngle(qreal angle) { targetAngle = angle; }
+    qreal getTargetAngle() { return targetAngle; }
+
     QJsonObject toJSON() override;
+    static AutoRobot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
   protected:
     qreal collisionLookAhead = 0;

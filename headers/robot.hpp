@@ -125,6 +125,7 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
 
     QPointF getPos() override;
     virtual QJsonObject toJSON() override;
+    static Robot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
   protected:
     virtual void focusInEvent(QFocusEvent *event) override;

@@ -75,3 +75,42 @@ QJsonObject AutoRobot::toJSON() {
     json["isMoving"] = isMoving;
     return json;
 }
+
+AutoRobot *AutoRobot::fromJSON(const QJsonObject &object, qreal *timeConstant) {
+    AutoRobot *result = new AutoRobot();
+
+    if (const QJsonValue v = object["collisionLookAhead"]; v.isDouble())
+        result->setCollisionLookAhead(v.toDouble());
+
+    if (const QJsonValue v = object["rotationDirection"]; v.isDouble())
+        result->setRotationDirection(static_cast<RotationDirection>(v.toInt()));
+
+    if (const QJsonValue v = object["targetAngle"]; v.isDouble())
+        result->setTargetAngle(v.toDouble());
+
+    if (const QJsonValue v = object["x"]; v.isDouble())
+        result->setX(v.toDouble());
+
+    if (const QJsonValue v = object["y"]; v.isDouble())
+        result->setY(v.toDouble());
+
+    if (const QJsonValue v = object["rotation"]; v.isDouble())
+        result->setRotation(v.toDouble());
+
+    if (const QJsonValue v = object["radius"]; v.isDouble()) {
+        result->setRect(0, 0, v.toDouble() * 2, v.toDouble() * 2);
+    }
+
+    if (const QJsonValue v = object["moveSpeed"]; v.isDouble())
+        result->setMoveSpeed(v.toDouble());
+
+    if (const QJsonValue v = object["rotationSpeed"]; v.isDouble())
+        result->setRotationSpeed(v.toDouble());
+
+    if (const QJsonValue v = object["isMoving"]; v.isBool())
+        result->isMoving = v.toBool();
+
+    result->timeConstant = timeConstant;
+
+    return result;
+}

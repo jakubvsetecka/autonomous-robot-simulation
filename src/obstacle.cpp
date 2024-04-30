@@ -31,20 +31,23 @@ QJsonObject Obstacle::toJSON() {
     return json;
 }
 
-Obstacle Obstacle::fromJSON(QJsonObject &json) {
-    Obstacle result;
+Obstacle *Obstacle::fromJSON(const QJsonObject &json) {
+    Obstacle *result = new Obstacle();
+    QPointF pos;
 
     if (const QJsonValue v = json["width"]; v.isDouble())
-        result.setRect(0, 0, v.toDouble(), v.toDouble());
+        result->setRect(0, 0, v.toDouble(), v.toDouble());
 
     if (const QJsonValue v = json["x"]; v.isDouble())
-        result.setPos(v.toDouble(), 0);
+        pos.setX(v.toDouble());
 
     if (const QJsonValue v = json["y"]; v.isDouble())
-        result.setPos(pos().x(), v.toDouble());
+        pos.setY(v.toDouble());
 
     if (const QJsonValue v = json["rotation"]; v.isDouble())
-        result.setRotation(v.toDouble());
+        result->setRotation(v.toDouble());
+
+    result->setPos(pos.x(), pos.y());
 
     return result;
 }

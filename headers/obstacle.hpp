@@ -21,8 +21,8 @@ class Obstacle : public QGraphicsRectItem, public GameObject {
 
     QPointF getPos() override;
 
-    QJsonObject toJSON();
-    Obstacle fromJSON(QJsonObject &json);
+    QJsonObject toJSON() override;
+    static Obstacle *fromJSON(const QJsonObject &json);
 };
 
 #endif // OBSTACLE_HPP
