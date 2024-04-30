@@ -10,6 +10,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QWidget>
+#include <qgesture.h>
 
 class OverlayWidget : public QWidget {
   public:
@@ -26,7 +27,7 @@ class OverlayWidget : public QWidget {
     GameObject *activeObject;
     QPoint lastMousePos;
 
-    void anchorObject() {
+    void anchor() {
         if (activeObject) {
             auto object = dynamic_cast<QGraphicsItem *>(activeObject);
             if (object) {
@@ -41,6 +42,32 @@ class OverlayWidget : public QWidget {
                 }
             }
             activeObject = nullptr;
+        }
+    }
+
+    void trySetSail(QMouseEvent *event) {
+        event->ignore();
+        QPoint localPos = graphView->mapFromParent(event->pos());
+        QPointF scenePos = graphView->mapToScene(localPos);
+        QGraphicsItem *item = graphView->itemAt(scenePos.toPoint());
+        if (item) {
+            // Handle the click on the item
+            qDebug() << "Item clicked:" << item;
+            auto object = dynamic_cast<GameObject *>(item);
+            if (object) {
+                activeObject = object;
+                lastMousePos = event->pos();
+                simEng->removeItem(item);
+            }
+        }
+    }
+
+    void navigateTheSea(QMouseEvent *event) {
+        event->ignore();
+        if (activeObject) {
+            qDebug() << "Mouse Move Event in Overlay at position:" << event->pos();
+            lastMousePos = event->pos();
+            update(); // Trigger repaint
         }
     }
 
@@ -59,24 +86,6 @@ class OverlayWidget : public QWidget {
             activeObject->paint(&painter, &option, this);
             update(); // Trigger repaint
             painter.restore();
-        }
-    }
-
-    void mouseMoveEvent(QMouseEvent *event) override {
-        qDebug() << "Mouse move event in overlay widget";
-        lastMousePos = event->pos(); // Update last mouse position
-        update();                    // Trigger repaint
-    }
-
-    void mousePressEvent(QMouseEvent *event) {
-        qDebug() << "Mouse press event in overlay widget";
-        QGraphicsItem *item = graphView->itemAt(event->pos());
-        if (item) {
-            // Handle the click on the item
-            qDebug() << "Item clicked:" << item;
-        } else {
-            // If no item is clicked, forward the event to the base class
-            QWidget::mousePressEvent(event);
         }
     }
 };

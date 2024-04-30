@@ -63,8 +63,9 @@ class CheckableButton : public QPushButton {
     }
 
     void mouseMoveEvent(QMouseEvent *event) override {
+        event->ignore();
         if (isChecked()) {
-            overlay->lastMousePos = getWidgetPos(event->pos());
+            // overlay->lastMousePos = getWidgetPos(event->pos());
         }
         QPushButton::mouseMoveEvent(event);
     }
@@ -72,7 +73,8 @@ class CheckableButton : public QPushButton {
     void mouseReleaseEvent(QMouseEvent *event) override {
         QPushButton::mouseReleaseEvent(event);
         setChecked(false);
-        overlay->anchorObject();
+        event->ignore();
+        // overlay->anchor();
     }
 };
 

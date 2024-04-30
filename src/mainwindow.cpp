@@ -46,6 +46,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->expWidget->obstacleButton->overlay = overlay;
 
     expandableWidget = ui->expWidget;
+
+    ui->graphicsView->viewport()->installEventFilter(this);
+}
+
+bool MainWindow::eventFilter(QObject *object, QEvent *event) {
+    if (ui->graphicsView->viewport()) {
+        if (event->type() == QEvent::MouseMove) {
+            QMouseEvent *mEvent = (QMouseEvent *)event;
+            mouseMoveEvent(mEvent);
+        } else if (event->type() == QEvent::MouseButtonRelease) {
+            QMouseEvent *mEvent = (QMouseEvent *)event;
+            mouseReleaseEvent(mEvent);
+        }
+    }
+    return false;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -63,22 +78,28 @@ void MainWindow::showEvent(QShowEvent *event) {
 void MainWindow::mousePressEvent(QMouseEvent *event) {
     if (!expandableWidget->geometry().contains(event->pos())) {
         expandableWidget->collapse();
-    } else {
-        QMainWindow::mousePressEvent(event);
     }
+    QMainWindow::mousePressEvent(event);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event) {
     QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
     QPointF scenePos = ui->graphicsView->mapToScene(localPos);
-    // qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
-
+    qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
+    overlay->navigateTheSea(event);
     QMainWindow::mouseMoveEvent(event);
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
-    // qDebug() << "Mouse Release Event";
+    qDebug() << "Mouse Release Event";
+    overlay->anchor();
     QMainWindow::mouseReleaseEvent(event);
+}
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event) {
+    qDebug() << "Mouse Double Click Event";
+    overlay->trySetSail(event);
+    QMainWindow::mouseDoubleClickEvent(event);
 }
 
 void MainWindow::updateAnimation() {

@@ -2,8 +2,7 @@
 #include "obstacle.hpp"
 
 SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpeed)
-    : QGraphicsScene(parent)
-{
+    : QGraphicsScene(parent) {
     // Set the frame rate and simulation speed
     setFPS(fps);
     setSimulationSpeed(simulationSpeed);
@@ -42,51 +41,55 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
 
 SimulationEngine::~SimulationEngine() {}
 
-int SimulationEngine::getFPS()
-{
+int SimulationEngine::getFPS() {
     return fps;
 }
 
-void SimulationEngine::setFPS(int fps)
-{
+void SimulationEngine::setFPS(int fps) {
     this->fps = fps;
     updateTimeConstant();
 }
 
-int SimulationEngine::getFrameTime()
-{
+int SimulationEngine::getFrameTime() {
     return 1000 / fps;
 }
 
-qreal SimulationEngine::getSimulationSpeed()
-{
+qreal SimulationEngine::getSimulationSpeed() {
     return simulationSpeed;
 }
 
-void SimulationEngine::setSimulationSpeed(qreal speed)
-{
+void SimulationEngine::setSimulationSpeed(qreal speed) {
     simulationSpeed = speed;
     updateTimeConstant();
 }
 
-void SimulationEngine::updateTimeConstant()
-{
+void SimulationEngine::updateTimeConstant() {
     timeConstant = 1000 / getFPS() * simulationSpeed;
 }
 
-Robot *SimulationEngine::getControlledRobot()
-{
+Robot *SimulationEngine::getControlledRobot() {
     return controlledRobot;
 }
 
-void SimulationEngine::setControlledRobot(Robot *robot)
-{
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
+
+void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
     addItem(controlledRobot);
 }
 
-bool SimulationEngine::isInsideScene(const QPointF &point) const
-{
+bool SimulationEngine::isInsideScene(const QPointF &point) const {
     QRectF sceneRect = this->sceneRect();
     return sceneRect.contains(point);
+}
+
+void SimulationEngine::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+    qDebug() << "Mouse Move Event in simulation engine at position:" << event->scenePos();
+    // event->ignore();
+}
+
+void SimulationEngine::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    qDebug() << "Mouse Double Click Event in simulation engine at position:" << event->scenePos();
+    event->ignore();
 }
