@@ -9,7 +9,7 @@ AutoRobot::AutoRobot(QGraphicsItem *parent, qreal size, qreal collisionLookAhead
     setMoveSpeed(moveSpeed);
     setRotationSpeed(rotationSpeed);
 
-    setRect(0, 0, 50, 50);
+    setRect(0, 0, size, size);
     setTransformOriginPoint(getRadius(), getRadius());
 
     // Set the color of the ellipse to red
