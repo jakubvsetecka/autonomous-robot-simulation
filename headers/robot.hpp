@@ -15,14 +15,12 @@
 /**
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
  */
-class Robot : public QGraphicsEllipseItem, public GameObject
-{
-public:
+class Robot : public QGraphicsEllipseItem, public GameObject {
+  public:
     /**
      * @brief Enum to represent the direction of rotation of the robot.
      */
-    enum RotationDirection
-    {
+    enum RotationDirection {
         Left = -1, // Counter-clockwise
         None = 0,  // No rotation
         Right = 1  // Clockwise
@@ -122,8 +120,9 @@ public:
     virtual bool move();
 
     QPointF getPos() override;
+    QJsonObject toJSON() override;
 
-protected:
+  protected:
     virtual void focusInEvent(QFocusEvent *event) override;
     virtual void focusOutEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;

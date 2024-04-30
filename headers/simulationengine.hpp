@@ -2,8 +2,11 @@
 #define SIMULATIONENGINE_H
 
 #include "autorobot.hpp"
+#include "gameobject.hpp"
 #include "robot.hpp"
 #include <QGraphicsScene>
+#include <QJsonArray>
+#include <QJsonDocument>
 
 class SimulationEngine : public QGraphicsScene {
   public:
@@ -58,6 +61,12 @@ class SimulationEngine : public QGraphicsScene {
 
     Robot *getControlledRobot();
     void setControlledRobot(Robot *robot);
+
+    bool saveSimulation();
+    bool loadSimulation();
+
+    void read(const QJsonObject &json);
+    QJsonObject toJson() const;
 
   private:
     /** The frames per second of the simulation engine. */

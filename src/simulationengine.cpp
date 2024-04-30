@@ -37,6 +37,8 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
     //         addItem(samorobutek);
     //     }
     // }
+
+    saveSimulation();
 }
 
 SimulationEngine::~SimulationEngine() {}
@@ -86,4 +88,41 @@ void SimulationEngine::setControlledRobot(Robot *robot) {
 bool SimulationEngine::isInsideScene(const QPointF &point) const {
     QRectF sceneRect = this->sceneRect();
     return sceneRect.contains(point);
+}
+
+bool SimulationEngine::saveSimulation() {
+    QFile saveFile("save.json");
+
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+
+    QJsonObject gameObject = toJson();
+    saveFile.write(QJsonDocument(gameObject).toJson());
+
+    return true;
+}
+
+QJsonObject SimulationEngine::toJson() const {
+    QJsonObject json;
+    json["fps"] = fps;
+    json["simulationSpeed"] = simulationSpeed;
+
+    // QJsonObject controlledRobotObject;
+    // controlledRobotObject["x"] = controlledRobot->pos().x();
+    // controlledRobotObject["y"] = controlledRobot->pos().y();
+    // controlledRobotObject["rotation"] = controlledRobot->rotation();
+    // controlledRobotObject["moveSpeed"] = controlledRobot->getMoveSpeed();
+    // controlledRobotObject["rotationSpeed"] = controlledRobot->getRotationSpeed();
+    // gameObject["controlledRobot"] = controlledRobotObject;
+
+    QJsonArray objects;
+    for (QGraphicsItem *item : items()) {
+        if (GameObject *object = dynamic_cast<GameObject *>(item)) {
+            objects.append(object->toJSON());
+        }
+    }
+    json["objects"] = objects;
+    return json;
 }
