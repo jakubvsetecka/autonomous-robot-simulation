@@ -9,36 +9,6 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
 
     // Set the background color
     setBackgroundBrush(QBrush(Qt::white));
-
-    // Create a robot and set it as the controlled robot
-    Robot *robutek = new Robot(nullptr, &timeConstant);
-    robutek->setPos(12.5, 12.5);
-    setControlledRobot(robutek);
-
-    Obstacle *obstacle = new Obstacle();
-    obstacle->setPos(200, 200);
-    addItem(obstacle);
-
-    AutoRobot *samorobutek = new AutoRobot(nullptr, 50, 0, Robot::RotationDirection::Right, 1, 1, &timeConstant);
-    samorobutek->setPos(130, 100);
-    addItem(samorobutek);
-
-    AutoRobot *druhy_samorobutek = new AutoRobot(nullptr, 50, 0, Robot::RotationDirection::Right, 1, 1, &timeConstant);
-    druhy_samorobutek->setPos(100, 100);
-    addItem(druhy_samorobutek);
-
-    // // Add an autonomous robot
-    // for (int i = 0; i < 3; i++)
-    // {
-    //     for (int j = 0; j < 3; j++)
-    //     {
-    //         AutoRobot *samorobutek = new AutoRobot(nullptr, 20, Robot::RotationDirection::Right, 1, 5, &timeConstant);
-    //         samorobutek->setPos(150 + i * 20, 150 + j * 20);
-    //         addItem(samorobutek);
-    //     }
-    // }
-
-    loadSimulation();
 }
 
 SimulationEngine::~SimulationEngine() {}
@@ -77,7 +47,6 @@ Robot *SimulationEngine::getControlledRobot() {
     return controlledRobot;
 }
 
-#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <qdir.h>
 
@@ -159,22 +128,12 @@ QJsonObject SimulationEngine::toJson() const {
 }
 
 void SimulationEngine::read(const QJsonObject &json) {
-    qDebug() << "Reading the JSON data from the file";
     if (const QJsonValue v = json["fps"]; v.isDouble())
         setFPS(v.toInt());
 
     if (const QJsonValue v = json["simulationSpeed"]; v.isDouble())
         setSimulationSpeed(v.toDouble());
 
-    // if (const QJsonValue v = json["controlledRobot"]; v.isObject()) {
-    //     QJsonObject controlledRobotObject = v.toObject();
-    //     controlledRobot->setPos(controlledRobotObject["x"].toDouble(), controlledRobotObject["y"].toDouble());
-    //     controlledRobot->setRotation(controlledRobotObject["rotation"].toDouble());
-    //     controlledRobot->setMoveSpeed(controlledRobotObject["moveSpeed"].toDouble());
-    //     controlledRobot->setRotationSpeed(controlledRobotObject["rotationSpeed"].toDouble());
-    // }
-
-    qDebug() << "Reading the objects";
     if (const QJsonValue v = json["objects"]; v.isObject()) {
         QJsonObject objects = v.toObject();
 
@@ -186,7 +145,6 @@ void SimulationEngine::read(const QJsonObject &json) {
                 }
             }
         }
-        qDebug() << "Reading the robots";
         if (const QJsonValue v = objects["robots"]; v.isObject()) {
             QJsonObject robots = v.toObject();
 
@@ -198,7 +156,6 @@ void SimulationEngine::read(const QJsonObject &json) {
                     }
                 }
             }
-            qDebug() << "Reading the controlled robots";
             if (const QJsonValue v = robots["controlledRobots"]; v.isArray()) {
                 QJsonArray controlledRobots = v.toArray();
                 for (const QJsonValue &controlledRobotValue : controlledRobots) {
@@ -213,11 +170,9 @@ void SimulationEngine::read(const QJsonObject &json) {
 
 bool SimulationEngine::loadSimulation() {
     // Clear the scene
-    qDebug() << "Clearing the scene";
     clear();
 
     // Open the save file
-    qDebug() << "Opening the save file";
     QFile loadFile("simulations/test13.json");
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
@@ -225,7 +180,6 @@ bool SimulationEngine::loadSimulation() {
     }
 
     // Read the JSON data from the file
-    qDebug() << "Reading the JSON data from the file";
     QByteArray saveData = loadFile.readAll();
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
     read(loadDoc.object());

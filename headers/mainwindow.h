@@ -6,14 +6,15 @@
 #include "expbuttonwidget.hpp"
 #include "gameobject.hpp"
 #include "obstacle.hpp"
-#include "popupsavewindow.h"
 #include "overlaywidget.hpp"
+#include "popupsavewindow.h"
 #include "robot.hpp"
 #include "simulationengine.hpp"
 #include <QDebug>
 #include <QGraphicsRectItem>
 
 #include <QKeyEvent>
+#include <QListWidget>
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QTimer>
@@ -35,6 +36,7 @@ class MainWindow : public QMainWindow {
   private:
     Ui::MainWindow *ui;
     SimulationEngine *simulationEngine;
+    QListWidget *listWidget;
 
     void initScene();
     void updateAnimation(); // Method to update the animation
@@ -55,5 +57,7 @@ class MainWindow : public QMainWindow {
 
   private slots:
     void on_horizontalSlider_valueChanged(int value);
+    void toggleList();
+    void handleItemDoubleClick(QListWidgetItem *item);
 };
 #endif // MAINWINDOW_H

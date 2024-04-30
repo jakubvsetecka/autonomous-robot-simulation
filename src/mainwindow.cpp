@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "obstacle.hpp"
 #include "ui_mainwindow.h"
+#include <qdir.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -50,6 +51,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->viewport()->installEventFilter(this);
 
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveSimulation);
+
+    listWidget = new QListWidget(this);
+    listWidget->setFixedWidth(ui->horizontalSlider->width());
+    listWidget->hide();
+    connect(ui->loadButton, &QPushButton::clicked, this, &MainWindow::toggleList);
+    connect(listWidget, &QListWidget::itemDoubleClicked, this, &MainWindow::handleItemDoubleClick);
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event) {
@@ -69,12 +76,14 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event); // Call the base class implementation
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
     overlay->setGeometry(0, 0, width(), height());
+    listWidget->setFixedWidth(ui->horizontalSlider->width());
 }
 
 void MainWindow::showEvent(QShowEvent *event) {
     QMainWindow::showEvent(event);
     // Update the scene rect to match the viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+    listWidget->setFixedWidth(ui->verticalLayout_2->geometry().width());
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
@@ -136,4 +145,30 @@ void MainWindow::saveSimulation() {
     // Restore the simulation speed
     simulationEngine->setSimulationSpeed(speed);
     ui->horizontalSlider->setValue(speed * 100);
+}
+
+void MainWindow::toggleList() {
+    if (listWidget->isVisible()) {
+        ui->verticalLayout_2->removeWidget(listWidget);
+        listWidget->hide();
+        ui->loadButton->setText("Load");
+    } else {
+        QDir directory("simulations");
+        QStringList files = directory.entryList(QStringList() << "*.json", QDir::Files);
+
+        foreach (QString filename, files) {
+            // Remove the .json
+            filename.chop(5);
+            listWidget->addItem(filename);
+        }
+
+        ui->verticalLayout_2->addWidget(listWidget);
+        listWidget->show();
+        ui->loadButton->setText("Hide List");
+    }
+}
+
+void MainWindow::handleItemDoubleClick(QListWidgetItem *item) {
+    qDebug() << "Clicked item: " << item->text();
+    // Do something with the clicked item
 }
