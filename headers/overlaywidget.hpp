@@ -4,7 +4,6 @@
 #include "gameobject.hpp"
 #include "obstacle.hpp"
 #include "simulationengine.hpp"
-#include <QDebug>
 #include <QGraphicsView>
 #include <QMouseEvent>
 #include <QPainter>
@@ -26,6 +25,7 @@ class OverlayWidget : public QWidget {
 
     GameObject *activeObject;
     QPoint lastMousePos;
+    SimulationEngine *simEng;
 
     void anchor() {
         if (activeObject) {
@@ -52,7 +52,6 @@ class OverlayWidget : public QWidget {
         QGraphicsItem *item = graphView->itemAt(scenePos.toPoint());
         if (item) {
             // Handle the click on the item
-            qDebug() << "Item clicked:" << item;
             auto object = dynamic_cast<GameObject *>(item);
             if (object) {
                 activeObject = object;
@@ -65,14 +64,12 @@ class OverlayWidget : public QWidget {
     void navigateTheSea(QMouseEvent *event) {
         event->ignore();
         if (activeObject) {
-            qDebug() << "Mouse Move Event in Overlay at position:" << event->pos();
             lastMousePos = event->pos();
             update(); // Trigger repaint
         }
     }
 
   protected:
-    SimulationEngine *simEng;
     QGraphicsView *graphView;
     QStyleOptionGraphicsItem option;
 

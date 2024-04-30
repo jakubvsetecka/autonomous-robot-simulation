@@ -68,9 +68,6 @@ class SimulationEngine : public QGraphicsScene {
     qreal timeConstant = 1;
 
     Robot *controlledRobot = nullptr;
-
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // SIMULATIONENGINE_H

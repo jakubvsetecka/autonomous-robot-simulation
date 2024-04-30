@@ -83,21 +83,16 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event) {
-    QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
-    QPointF scenePos = ui->graphicsView->mapToScene(localPos);
-    qDebug() << "Mouse Move Event in Scene at position:" << scenePos;
     overlay->navigateTheSea(event);
     QMainWindow::mouseMoveEvent(event);
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
-    qDebug() << "Mouse Release Event";
     overlay->anchor();
     QMainWindow::mouseReleaseEvent(event);
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event) {
-    qDebug() << "Mouse Double Click Event";
     overlay->trySetSail(event);
     QMainWindow::mouseDoubleClickEvent(event);
 }

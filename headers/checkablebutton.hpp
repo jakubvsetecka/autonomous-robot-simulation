@@ -40,7 +40,7 @@ class CheckableButton : public QPushButton {
 
             switch (objType) {
             case AUTO: {
-                auto autorobutek = new AutoRobot();
+                auto autorobutek = new AutoRobot(nullptr, 50, 10, Robot::RotationDirection::Right, 1, 1, overlay->simEng->getTimeConstant());
                 overlay->activeObject = autorobutek;
             } break;
             case CONT: {

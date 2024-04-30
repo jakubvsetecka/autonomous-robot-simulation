@@ -63,6 +63,10 @@ void SimulationEngine::setSimulationSpeed(qreal speed) {
     updateTimeConstant();
 }
 
+qreal *SimulationEngine::getTimeConstant() {
+    return &timeConstant;
+}
+
 void SimulationEngine::updateTimeConstant() {
     timeConstant = 1000 / getFPS() * simulationSpeed;
 }
@@ -82,14 +86,4 @@ void SimulationEngine::setControlledRobot(Robot *robot) {
 bool SimulationEngine::isInsideScene(const QPointF &point) const {
     QRectF sceneRect = this->sceneRect();
     return sceneRect.contains(point);
-}
-
-void SimulationEngine::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-    qDebug() << "Mouse Move Event in simulation engine at position:" << event->scenePos();
-    // event->ignore();
-}
-
-void SimulationEngine::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
-    qDebug() << "Mouse Double Click Event in simulation engine at position:" << event->scenePos();
-    event->ignore();
 }
