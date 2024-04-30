@@ -59,8 +59,6 @@ bool AutoRobot::move()
         return true;
     }
 
-    // stopRotating();
-
     bool hasNotCollided = Robot::move();
     if (!hasNotCollided)
     {

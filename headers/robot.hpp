@@ -10,6 +10,8 @@
 #include <QPointF>
 #include <QtMath>
 
+#define BODY_COLLISION_MARGIN 1
+
 /**
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
  */
