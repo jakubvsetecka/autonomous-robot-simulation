@@ -59,5 +59,6 @@ class MainWindow : public QMainWindow {
     void on_horizontalSlider_valueChanged(int value);
     void toggleList();
     void handleItemDoubleClick(QListWidgetItem *item);
+    void on_pushButton_clicked();
 };
 #endif // MAINWINDOW_H

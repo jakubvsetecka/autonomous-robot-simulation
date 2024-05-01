@@ -8,75 +8,82 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
-class SimulationEngine : public QGraphicsScene {
-  public:
-    SimulationEngine(QObject *parent = nullptr, int fps = 60, qreal simulationSpeed = 1.0 / 16.0);
+class SimulationEngine : public QGraphicsScene
+{
+public:
+  SimulationEngine(QObject *parent = nullptr, int fps = 60, qreal simulationSpeed = 1.0 / 16.0);
 
-    ~SimulationEngine();
+  ~SimulationEngine();
 
-    /**
-     * @brief Simulation Frames-Per-Second getter.
-     *
-     */
-    int getFPS();
+  /**
+   * @brief Simulation Frames-Per-Second getter.
+   *
+   */
+  int getFPS();
 
-    /**
-     * @brief Get the time it takes to render a single frame.
-     */
-    int getFrameTime();
+  /**
+   * @brief Get the time it takes to render a single frame.
+   */
+  int getFrameTime();
 
-    /**
-     * @brief Set the simulation Frames-Per-Second.
-     *
-     * @param fps
-     */
-    void setFPS(int fps);
+  /**
+   * @brief Set the simulation Frames-Per-Second.
+   *
+   * @param fps
+   */
+  void setFPS(int fps);
 
-    /**
-     *
-     * @brief Get the simulation speed.
-     */
-    qreal getSimulationSpeed();
+  /**
+   *
+   * @brief Get the simulation speed.
+   */
+  qreal getSimulationSpeed();
 
-    /**
-     * @brief Set the simulation speed.
-     *
-     * @param speed
-     */
-    void setSimulationSpeed(qreal speed);
+  /**
+   * @brief Set the simulation speed.
+   *
+   * @param speed
+   */
+  void setSimulationSpeed(qreal speed);
 
-    /**
-     * @brief Update the time constant.
-     */
-    void updateTimeConstant();
+  /**
+   * @brief Update the time constant.
+   */
+  void updateTimeConstant();
 
-    /**
-     * @brief Get the time constant pointer.
-     *
-     * @return qreal*
-     */
-    qreal *getTimeConstant();
+  /**
+   * @brief Get the time constant pointer.
+   *
+   * @return qreal*
+   */
+  qreal *getTimeConstant();
 
-    bool isInsideScene(const QPointF &point) const;
+  bool isInsideScene(const QPointF &point) const;
 
-    Robot *getControlledRobot();
-    void setControlledRobot(Robot *robot);
+  Robot *getControlledRobot();
+  void setControlledRobot(Robot *robot);
 
-    bool saveSimulation(const QString &filename = "simulation");
-    bool loadSimulation(QString filename = "simulation");
+  bool saveSimulation(const QString &filename = "simulation");
+  bool loadSimulation(QString filename = "simulation");
 
-    void read(const QJsonObject &json);
-    QJsonObject toJson() const;
+  void read(const QJsonObject &json);
+  QJsonObject toJson() const;
 
-  private:
-    /** The frames per second of the simulation engine. */
-    int fps = 60;
-    /** The speed of the simulation engine. */
-    qreal simulationSpeed = 1;
+  /**
+   * @brief Clear the scene.
+   *
+   */
+  void clearScene();
 
-    qreal timeConstant = 1;
+private:
+  /** The frames per second of the simulation engine. */
+  int fps = 60;
+  /** The speed of the simulation engine. */
+  qreal simulationSpeed = 1;
 
-    Robot *controlledRobot = nullptr;
+  qreal timeConstant = 1;
+
+  Robot *controlledRobot = nullptr;
 };
 
 #endif // SIMULATIONENGINE_H

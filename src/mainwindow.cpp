@@ -6,7 +6,8 @@
 #include <qdir.h>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    : QMainWindow(parent), ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus); // Set the focus policy to accept key events
     setFocus();                      // Set the focus to the main window
@@ -59,12 +60,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(listWidget, &QListWidget::itemDoubleClicked, this, &MainWindow::handleItemDoubleClick);
 }
 
-bool MainWindow::eventFilter(QObject *object, QEvent *event) {
-    if (ui->graphicsView->viewport()) {
-        if (event->type() == QEvent::MouseMove) {
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
+    if (ui->graphicsView->viewport())
+    {
+        if (event->type() == QEvent::MouseMove)
+        {
             QMouseEvent *mEvent = (QMouseEvent *)event;
             mouseMoveEvent(mEvent);
-        } else if (event->type() == QEvent::MouseButtonRelease) {
+        }
+        else if (event->type() == QEvent::MouseButtonRelease)
+        {
             QMouseEvent *mEvent = (QMouseEvent *)event;
             mouseReleaseEvent(mEvent);
         }
@@ -72,72 +78,87 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
     return false;
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event) {
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
     QMainWindow::resizeEvent(event); // Call the base class implementation
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
     overlay->setGeometry(0, 0, width(), height());
     listWidget->setFixedWidth(ui->horizontalSlider->width());
 }
 
-void MainWindow::showEvent(QShowEvent *event) {
+void MainWindow::showEvent(QShowEvent *event)
+{
     QMainWindow::showEvent(event);
     // Update the scene rect to match the viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
     listWidget->setFixedWidth(ui->verticalLayout_2->geometry().width());
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event) {
-    if (!expandableWidget->geometry().contains(event->pos())) {
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (!expandableWidget->geometry().contains(event->pos()))
+    {
         expandableWidget->collapse();
     }
     QMainWindow::mousePressEvent(event);
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
     overlay->navigateTheSea(event);
     QMainWindow::mouseMoveEvent(event);
 }
 
-void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
     overlay->anchor();
     QMainWindow::mouseReleaseEvent(event);
 }
 
-void MainWindow::mouseDoubleClickEvent(QMouseEvent *event) {
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
+{
     overlay->trySetSail(event);
     QMainWindow::mouseDoubleClickEvent(event);
 }
 
-void MainWindow::updateAnimation() {
-    for (QGraphicsItem *item : simulationEngine->items()) {
+void MainWindow::updateAnimation()
+{
+    for (QGraphicsItem *item : simulationEngine->items())
+    {
         Robot *robutek = dynamic_cast<Robot *>(item);
-        if (robutek != nullptr) {
+        if (robutek != nullptr)
+        {
             robutek->move();
         }
     }
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
     delete ui;
 }
 
-void MainWindow::on_horizontalSlider_valueChanged(int value) {
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
     qDebug() << "Simulation speed: " << value;
     simulationEngine->setSimulationSpeed(value / 100.0);
 }
 
-void MainWindow::loadSimulation() {
+void MainWindow::loadSimulation()
+{
     // simulationEngine->loadSimulation();
 }
 
-void MainWindow::saveSimulation() {
+void MainWindow::saveSimulation()
+{
     PopupSaveWindow popupWindow(this);
 
     float speed = simulationEngine->getSimulationSpeed();
     simulationEngine->setSimulationSpeed(0.0);
     ui->horizontalSlider->setValue(0);
 
-    if (popupWindow.exec() == QDialog::Accepted) {
+    if (popupWindow.exec() == QDialog::Accepted)
+    {
         // User accepted the dialog (e.g., clicked "Save")
         qDebug() << "Saving simulation...";
         simulationEngine->saveSimulation(popupWindow.getEnteredText());
@@ -147,17 +168,22 @@ void MainWindow::saveSimulation() {
     ui->horizontalSlider->setValue(speed * 100);
 }
 
-void MainWindow::toggleList() {
-    if (listWidget->isVisible()) {
+void MainWindow::toggleList()
+{
+    if (listWidget->isVisible())
+    {
         ui->verticalLayout_2->removeWidget(listWidget);
         listWidget->hide();
         listWidget->clear();
         ui->loadButton->setText("Load");
-    } else {
+    }
+    else
+    {
         QDir directory("simulations");
         QStringList files = directory.entryList(QStringList() << "*.json", QDir::Files);
 
-        foreach (QString filename, files) {
+        foreach (QString filename, files)
+        {
             // Remove .json
             filename.chop(5);
             listWidget->addItem(filename);
@@ -169,8 +195,13 @@ void MainWindow::toggleList() {
     }
 }
 
-void MainWindow::handleItemDoubleClick(QListWidgetItem *item) {
+void MainWindow::handleItemDoubleClick(QListWidgetItem *item)
+{
     simulationEngine->setSimulationSpeed(0.0);
     ui->horizontalSlider->setValue(0);
     simulationEngine->loadSimulation(item->text());
+}
+void MainWindow::on_pushButton_clicked()
+{
+    simulationEngine->clearScene();
 }
