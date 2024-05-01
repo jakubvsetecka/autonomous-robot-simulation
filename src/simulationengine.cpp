@@ -2,8 +2,7 @@
 #include "obstacle.hpp"
 
 SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpeed)
-    : QGraphicsScene(parent)
-{
+    : QGraphicsScene(parent) {
     // Set the frame rate and simulation speed
     setFPS(fps);
     setSimulationSpeed(simulationSpeed);
@@ -14,83 +13,74 @@ SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpe
 
 SimulationEngine::~SimulationEngine() {}
 
-int SimulationEngine::getFPS()
-{
+int SimulationEngine::getFPS() {
     return fps;
 }
 
-void SimulationEngine::setFPS(int fps)
-{
+void SimulationEngine::setFPS(int fps) {
     this->fps = fps;
     updateTimeConstant();
 }
 
-int SimulationEngine::getFrameTime()
-{
+int SimulationEngine::getFrameTime() {
     return 1000 / fps;
 }
 
-qreal SimulationEngine::getSimulationSpeed()
-{
+qreal SimulationEngine::getSimulationSpeed() {
     return simulationSpeed;
 }
 
-void SimulationEngine::setSimulationSpeed(qreal speed)
-{
+void SimulationEngine::setSimulationSpeed(qreal speed) {
     simulationSpeed = speed;
     updateTimeConstant();
 }
 
-qreal *SimulationEngine::getTimeConstant()
-{
+qreal *SimulationEngine::getTimeConstant() {
     return &timeConstant;
 }
 
-void SimulationEngine::updateTimeConstant()
-{
+void SimulationEngine::updateTimeConstant() {
     timeConstant = 1000 / getFPS() * simulationSpeed;
 }
 
-Robot *SimulationEngine::getControlledRobot()
-{
+Robot *SimulationEngine::getControlledRobot() {
     return controlledRobot;
 }
 
 #include <QGraphicsSceneMouseEvent>
 #include <qdir.h>
 
-void SimulationEngine::setControlledRobot(Robot *robot)
-{
+void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
     addItem(controlledRobot);
 }
 
-bool SimulationEngine::isInsideScene(const QPointF &point) const
-{
+bool SimulationEngine::isInsideScene(const QPointF &point) const {
     QRectF sceneRect = this->sceneRect();
     return sceneRect.contains(point);
 }
 
-bool SimulationEngine::saveSimulation(const QString &filename)
-{
+bool SimulationEngine::saveSimulation(const QString &filename) {
     // Create the "simulations" folder if it doesn't exist
     QDir simulationsDir("simulations");
-    if (!simulationsDir.exists())
-    {
-        if (!simulationsDir.mkpath("."))
-        {
+    if (!simulationsDir.exists()) {
+        if (!simulationsDir.mkpath(".")) {
             qWarning("Failed to create simulations folder.");
             return false;
         }
     }
 
+    QString mutableFilename = filename; // Create a mutable copy of the filename
+    mutableFilename.replace("/", "\\");
+
     // Open or create the save file inside the "simulations" folder
-    QFile saveFile(simulationsDir.filePath(filename + ".json"));
-    if (!saveFile.open(QIODevice::WriteOnly))
-    {
+    QFile saveFile(simulationsDir.filePath(mutableFilename + ".json"));
+    if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
         return false;
     }
+
+    // Replace '/' with escape character
 
     // Write the JSON data to the file
     QJsonObject gameObject = toJson();
@@ -99,19 +89,10 @@ bool SimulationEngine::saveSimulation(const QString &filename)
     return true;
 }
 
-QJsonObject SimulationEngine::toJson() const
-{
+QJsonObject SimulationEngine::toJson() const {
     QJsonObject json;
     json["fps"] = fps;
     json["simulationSpeed"] = simulationSpeed;
-
-    // QJsonObject controlledRobotObject;
-    // controlledRobotObject["x"] = controlledRobot->pos().x();
-    // controlledRobotObject["y"] = controlledRobot->pos().y();
-    // controlledRobotObject["rotation"] = controlledRobot->rotation();
-    // controlledRobotObject["moveSpeed"] = controlledRobot->getMoveSpeed();
-    // controlledRobotObject["rotationSpeed"] = controlledRobot->getRotationSpeed();
-    // gameObject["controlledRobot"] = controlledRobotObject;
 
     QJsonObject objects;
     QJsonObject robots;
@@ -119,20 +100,14 @@ QJsonObject SimulationEngine::toJson() const
     QJsonArray autoRobots;
     QJsonArray controlledRobots;
 
-    for (QGraphicsItem *item : items())
-    {
-        if (item->type() == Obstacle::Type)
-        {
+    for (QGraphicsItem *item : items()) {
+        if (item->type() == Obstacle::Type) {
             Obstacle *obstacle = qgraphicsitem_cast<Obstacle *>(item);
             obstacles.append(obstacle->toJSON());
-        }
-        else if (item->type() == AutoRobot::Type)
-        {
+        } else if (item->type() == AutoRobot::Type) {
             AutoRobot *autoRobot = qgraphicsitem_cast<AutoRobot *>(item);
             autoRobots.append(autoRobot->toJSON());
-        }
-        else if (item->type() == Robot::Type)
-        {
+        } else if (item->type() == Robot::Type) {
             Robot *robot = qgraphicsitem_cast<Robot *>(item);
             controlledRobots.append(robot->toJSON());
         }
@@ -149,51 +124,39 @@ QJsonObject SimulationEngine::toJson() const
     return json;
 }
 
-void SimulationEngine::read(const QJsonObject &json)
-{
+void SimulationEngine::read(const QJsonObject &json) {
     if (const QJsonValue v = json["fps"]; v.isDouble())
         setFPS(v.toInt());
 
     if (const QJsonValue v = json["simulationSpeed"]; v.isDouble())
         setSimulationSpeed(v.toDouble());
 
-    if (const QJsonValue v = json["objects"]; v.isObject())
-    {
+    if (const QJsonValue v = json["objects"]; v.isObject()) {
         QJsonObject objects = v.toObject();
 
-        if (const QJsonValue v = objects["obstacles"]; v.isArray())
-        {
+        if (const QJsonValue v = objects["obstacles"]; v.isArray()) {
             QJsonArray obstacles = v.toArray();
-            for (const QJsonValue &obstacleValue : obstacles)
-            {
-                if (obstacleValue.isObject())
-                {
+            for (const QJsonValue &obstacleValue : obstacles) {
+                if (obstacleValue.isObject()) {
                     addItem(Obstacle::fromJSON(obstacleValue.toObject()));
                 }
             }
         }
-        if (const QJsonValue v = objects["robots"]; v.isObject())
-        {
+        if (const QJsonValue v = objects["robots"]; v.isObject()) {
             QJsonObject robots = v.toObject();
 
-            if (const QJsonValue v = robots["autoRobots"]; v.isArray())
-            {
+            if (const QJsonValue v = robots["autoRobots"]; v.isArray()) {
                 QJsonArray autoRobots = v.toArray();
-                for (const QJsonValue &autoRobotValue : autoRobots)
-                {
-                    if (autoRobotValue.isObject())
-                    {
+                for (const QJsonValue &autoRobotValue : autoRobots) {
+                    if (autoRobotValue.isObject()) {
                         addItem(AutoRobot::fromJSON(autoRobotValue.toObject(), &timeConstant));
                     }
                 }
             }
-            if (const QJsonValue v = robots["controlledRobots"]; v.isArray())
-            {
+            if (const QJsonValue v = robots["controlledRobots"]; v.isArray()) {
                 QJsonArray controlledRobots = v.toArray();
-                for (const QJsonValue &controlledRobotValue : controlledRobots)
-                {
-                    if (controlledRobotValue.isObject())
-                    {
+                for (const QJsonValue &controlledRobotValue : controlledRobots) {
+                    if (controlledRobotValue.isObject()) {
                         addItem(Robot::fromJSON(controlledRobotValue.toObject(), &timeConstant));
                     }
                 }
@@ -202,15 +165,13 @@ void SimulationEngine::read(const QJsonObject &json)
     }
 }
 
-bool SimulationEngine::loadSimulation(QString filename)
-{
+bool SimulationEngine::loadSimulation(QString filename) {
     // Clear the scene
     clear();
 
     // Open the save file
     QFile loadFile("simulations/" + filename + ".json");
-    if (!loadFile.open(QIODevice::ReadOnly))
-    {
+    if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
         return false;
     }
@@ -223,7 +184,6 @@ bool SimulationEngine::loadSimulation(QString filename)
     return true;
 }
 
-void SimulationEngine::clearScene()
-{
+void SimulationEngine::clearScene() {
     clear();
 }
