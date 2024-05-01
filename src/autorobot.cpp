@@ -78,6 +78,7 @@ QJsonObject AutoRobot::toJSON() {
 
 AutoRobot *AutoRobot::fromJSON(const QJsonObject &object, qreal *timeConstant) {
     AutoRobot *result = new AutoRobot();
+    QPointF pos;
 
     if (const QJsonValue v = object["collisionLookAhead"]; v.isDouble())
         result->setCollisionLookAhead(v.toDouble());
@@ -89,10 +90,10 @@ AutoRobot *AutoRobot::fromJSON(const QJsonObject &object, qreal *timeConstant) {
         result->setTargetAngle(v.toDouble());
 
     if (const QJsonValue v = object["x"]; v.isDouble())
-        result->setX(v.toDouble());
+        pos.setX(v.toDouble());
 
     if (const QJsonValue v = object["y"]; v.isDouble())
-        result->setY(v.toDouble());
+        pos.setY(v.toDouble());
 
     if (const QJsonValue v = object["rotation"]; v.isDouble())
         result->setRotation(v.toDouble());
@@ -111,6 +112,7 @@ AutoRobot *AutoRobot::fromJSON(const QJsonObject &object, qreal *timeConstant) {
         result->isMoving = v.toBool();
 
     result->timeConstant = timeConstant;
+    result->setPos(pos); // Must be set using setPos() to use the center of the robot as the position
 
     return result;
 }
