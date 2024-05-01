@@ -20,47 +20,50 @@
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
-namespace Ui
-{
-  class MainWindow;
+namespace Ui {
+class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-  Q_OBJECT
+class MainWindow : public QMainWindow {
+    Q_OBJECT
 
-public:
-  MainWindow(QWidget *parent = nullptr);
-  ~MainWindow();
-  void setupAnimation();
+  public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+    void setupAnimation();
 
-private:
-  Ui::MainWindow *ui;
-  SimulationEngine *simulationEngine;
-  QListWidget *listWidget;
+  private:
+    Ui::MainWindow *ui;
+    SimulationEngine *simulationEngine;
+    QListWidget *listWidget;
 
-  void initScene();
-  void updateAnimation(); // Method to update the animation
+    void initScene();
+    void updateAnimation(); // Method to update the animation
 
-protected:
-  void showEvent(QShowEvent *event) override;
-  void mousePressEvent(QMouseEvent *event) override;
-  void mouseMoveEvent(QMouseEvent *event) override;
-  void mouseReleaseEvent(QMouseEvent *event) override;
-  void resizeEvent(QResizeEvent *event) override;
-  void mouseDoubleClickEvent(QMouseEvent *event) override;
-  void loadSimulation();
-  void saveSimulation();
-  bool eventFilter(QObject *object, QEvent *event) override;
+  protected:
+    void showEvent(QShowEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void loadSimulation();
+    void saveSimulation();
+    bool eventFilter(QObject *object, QEvent *event) override;
 
-  ExpandableButtonWidget *expandableWidget;
-  OverlayWidget *overlay;
+    ExpandableButtonWidget *expandableWidget;
+    OverlayWidget *overlay;
 
-private slots:
-  void on_horizontalSlider_valueChanged(int value);
-  void toggleList();
-  void handleItemDoubleClick(QListWidgetItem *item);
-  void on_pushButton_clicked();
+  private slots:
+    void on_horizontalSlider_valueChanged(int value);
+    void toggleList();
+    void handleItemDoubleClick(QListWidgetItem *item);
+    void on_pushButton_clicked();
+    void goLeft();
+    void stopRotating();
+    void goRight();
+    void goStraight();
+    void stopMoving();
 };
 #endif // MAINWINDOW_H

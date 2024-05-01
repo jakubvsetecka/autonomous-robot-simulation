@@ -127,12 +127,14 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
     virtual QJsonObject toJSON() override;
     static Robot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
-  protected:
-    virtual void focusInEvent(QFocusEvent *event) override;
-    virtual void focusOutEvent(QFocusEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
+    inline void toggleActive() {
+        active = !active;
+        active ? setBrush(QBrush(Qt::lightGray)) : setBrush(QBrush(Qt::transparent));
+    }
 
+    inline bool isActive() { return active; }
+
+  protected:
     /** @brief The speed of the robot */
     qreal move_speed = 1;
     /** @brief The speed of the rotation of the robot */
@@ -144,6 +146,12 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
     RotationDirection isRotating = RotationDirection::None;
 
     qreal *timeConstant = nullptr;
+
+    void keyReleaseEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+
+  private:
+    bool active = false;
 };
 
 #endif // ROBOT_HPP

@@ -195,28 +195,10 @@ bool Robot::move() {
     return true;
 }
 
-void Robot::focusInEvent(QFocusEvent *event) {
-    QGraphicsEllipseItem::focusInEvent(event); // Call the base class method
-
-    // Set the brush color to green when the robot is being controlled
-    setBrush(QBrush(Qt::lightGray));
-
-    // Update the robot's appearance or state when it gains focus
-    update(); // Request a redraw to show it's focused
-}
-
-// Override the focusOutEvent in the Robot class
-void Robot::focusOutEvent(QFocusEvent *event) {
-    QGraphicsEllipseItem::focusOutEvent(event); // Call the base class method
-
-    // Update the robot's appearance or state when it loses focus
-    update(); // Request a redraw to show it's no longer focused
-
-    // Set the brush color to default when the robot is not being controlled
-    setBrush(QBrush(Qt::transparent));
-}
-
 void Robot::keyPressEvent(QKeyEvent *event) {
+    if (!active)
+        return;
+
     switch (event->key()) {
     case Qt::Key_Up:
         // Move forward
@@ -236,6 +218,9 @@ void Robot::keyPressEvent(QKeyEvent *event) {
 }
 
 void Robot::keyReleaseEvent(QKeyEvent *event) {
+    if (!active)
+        return;
+
     switch (event->key()) {
     case Qt::Key_Up:
         // Stop moving

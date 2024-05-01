@@ -52,7 +52,6 @@ Robot *SimulationEngine::getControlledRobot() {
 
 void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
-    addItem(controlledRobot);
 }
 
 bool SimulationEngine::isInsideScene(const QPointF &point) const {
