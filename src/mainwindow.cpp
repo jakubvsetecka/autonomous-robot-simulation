@@ -91,7 +91,7 @@ void MainWindow::showEvent(QShowEvent *event)
     QMainWindow::showEvent(event);
     // Update the scene rect to match the viewport size
     simulationEngine->setSceneRect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-    listWidget->setFixedWidth(ui->verticalLayout_2->geometry().width());
+    listWidget->setFixedWidth(ui->sideBar->geometry().width());
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
@@ -140,7 +140,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
-    qDebug() << "Simulation speed: " << value;
     simulationEngine->setSimulationSpeed(value / 100.0);
 }
 
@@ -172,7 +171,7 @@ void MainWindow::toggleList()
 {
     if (listWidget->isVisible())
     {
-        ui->verticalLayout_2->removeWidget(listWidget);
+        ui->sideBar->removeWidget(listWidget);
         listWidget->hide();
         listWidget->clear();
         ui->loadButton->setText("Load");
@@ -189,9 +188,11 @@ void MainWindow::toggleList()
             listWidget->addItem(filename);
         }
 
-        ui->verticalLayout_2->addWidget(listWidget);
+        listWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        listWidget->setFixedWidth(ui->horizontalLayout->geometry().width());
+        ui->sideBar->addWidget(listWidget);
         listWidget->show();
-        ui->loadButton->setText("Hide List");
+        ui->loadButton->setText("Load");
     }
 }
 
