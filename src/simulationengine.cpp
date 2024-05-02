@@ -1,3 +1,11 @@
+/**
+ * @file simulationengine.cpp
+ * @brief This file contains the implementation of the SimulationEngine class.
+ * @details It is a subclass of the QGraphicsScene class and represents the simulation engine for the game.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "simulationengine.hpp"
 #include "obstacle.hpp"
 

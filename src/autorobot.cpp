@@ -1,3 +1,11 @@
+/**
+ * @file autorobot.cpp
+ * @brief This file contains the implementation of the AutoRobot class.
+ * @details It is a subclass of the Robot class and represents an autonomous robot.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "autorobot.hpp"
 
 AutoRobot::AutoRobot(QGraphicsItem *parent, qreal size, qreal collisionLookAhead, Robot::RotationDirection rotationDirection, qreal moveSpeed, qreal rotationSpeed, qreal *timeConstant)

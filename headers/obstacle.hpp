@@ -1,3 +1,11 @@
+/**
+ * @file obstacle.hpp
+ * @brief This file contains the declaration of the Obstacle class.
+ * @details It is a subclass of the QGraphicsRectItem class and represents an obstacle in the game.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef OBSTACLE_HPP
 #define OBSTACLE_HPP
 

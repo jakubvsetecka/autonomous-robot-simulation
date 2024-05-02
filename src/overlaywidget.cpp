@@ -1,3 +1,11 @@
+/**
+ * @file overlaywidget.cpp
+ * @brief This file contains the implementation of the OverlayWidget class.
+ * @details It is a subclass of the QWidget class and represents an overlay widget for the QGraphicsView.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "overlaywidget.hpp"
 
 OverlayWidget::OverlayWidget(QWidget *parent, SimulationEngine *simEng, QGraphicsView *graphView)

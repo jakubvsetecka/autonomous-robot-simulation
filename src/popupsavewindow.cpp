@@ -1,3 +1,11 @@
+/**
+ * @file popupsavewindow.cpp
+ * @brief This file contains the implementation of the PopupSaveWindow class.
+ * @details It is a subclass of the QDialog class and represents a popup save window.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "popupsavewindow.h"
 
 PopupSaveWindow::PopupSaveWindow(QWidget *parent)

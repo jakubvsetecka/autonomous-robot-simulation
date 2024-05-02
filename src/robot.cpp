@@ -1,3 +1,11 @@
+/**
+ * @file robot.cpp
+ * @brief This file contains the implementation of the Robot class.
+ * @details It is a subclass of the QGraphicsEllipseItem class and represents a robot in the simulation.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "robot.hpp"
 
 Robot::Robot(QGraphicsItem *parent, qreal *timeConstant)

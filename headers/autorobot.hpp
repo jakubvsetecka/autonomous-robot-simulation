@@ -1,3 +1,11 @@
+/**
+ * @file autorobot.hpp
+ * @brief This file contains the declaration of the AutoRobot class.
+ * @details It is a subclass of the Robot class and represents an autonomous robot.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef AUTOROBOT_HPP
 #define AUTOROBOT_HPP
 

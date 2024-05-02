@@ -1,3 +1,11 @@
+/**
+ * @file robot.hpp
+ * @brief This file contains the declaration of the Robot class.
+ * @details It is a subclass of the QGraphicsEllipseItem class and represents a robot in the simulation.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef ROBOT_HPP
 #define ROBOT_HPP
 

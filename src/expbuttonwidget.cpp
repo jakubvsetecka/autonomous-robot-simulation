@@ -1,3 +1,11 @@
+/**
+ * @file expbuttonwidget.cpp
+ * @brief This file contains the implementation of the ExpandableButtonWidget class.
+ * @details It is a subclass of the QWidget class and represents a widget with expandable buttons.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "expbuttonwidget.hpp"
 
 ExpandableButtonWidget::ExpandableButtonWidget(QWidget *parent)

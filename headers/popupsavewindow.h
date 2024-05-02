@@ -1,3 +1,11 @@
+/**
+ * @file popupsavewindow.h
+ * @brief This file contains the declaration of the PopupSaveWindow class.
+ * @details It is a subclass of the QDialog class and represents a popup save window.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef POPUPSAVEWINDOW_H
 #define POPUPSAVEWINDOW_H
 

@@ -1,3 +1,11 @@
+/**
+ * @file expbuttonwidget.hpp
+ * @brief This file contains the declaration of the ExpandableButtonWidget class.
+ * @details It is a subclass of the QWidget class and represents an expandable button widget.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef EXPANDABLEBUTTONWIDGET_HPP
 #define EXPANDABLEBUTTONWIDGET_HPP
 

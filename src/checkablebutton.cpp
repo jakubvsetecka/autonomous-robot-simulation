@@ -1,3 +1,11 @@
+/**
+ * @file checkablebutton.cpp
+ * @brief This file contains the implementation of the CheckableButton class.
+ * @details It is a subclass of the QPushButton class and represents a checkable button.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "checkablebutton.hpp"
 
 CheckableButton::CheckableButton(const QString &text, QWidget *parent, ObjectType type)

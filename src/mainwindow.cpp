@@ -1,4 +1,10 @@
-// mainwindow.cpp
+/**
+ * @file mainwindow.cpp
+ * @brief This file contains the implementation of the MainWindow class.
+ * @details It is a subclass of the QMainWindow class and represents the main window of the application.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
 
 #include "mainwindow.h"
 #include "obstacle.hpp"

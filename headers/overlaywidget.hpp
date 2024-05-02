@@ -1,3 +1,10 @@
+/**
+ * @file overlaywidget.hpp
+ * @brief This file contains the declaration of the OverlayWidget class.
+ * @details It is a subclass of the QWidget class and represents an overlay widget.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ */
+
 #ifndef OVERLAYWIDGET_HPP
 #define OVERLAYWIDGET_HPP
 

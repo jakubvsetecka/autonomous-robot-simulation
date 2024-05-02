@@ -1,4 +1,10 @@
-
+/**
+ * @file gameobject.hpp
+ * @brief This file contains the declaration of the GameObject class.
+ * @details It is an abstract class that represents a game object in the simulation.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
 
 #ifndef GAMEOBJECT_HPP
 #define GAMEOBJECT_HPP

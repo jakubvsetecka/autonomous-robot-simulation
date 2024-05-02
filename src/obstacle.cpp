@@ -1,3 +1,11 @@
+/**
+ * @file obstacle.cpp
+ * @brief This file contains the implementation of the Obstacle class.
+ * @details It is a subclass of the QGraphicsRectItem class and represents an obstacle in the game.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #include "obstacle.hpp"
 
 Obstacle::Obstacle(QGraphicsItem *parent)

@@ -1,3 +1,11 @@
+/**
+ * @file expbutton.hpp
+ * @brief This file contains the declaration of the ExpButton class.
+ * @details It is a subclass of the QPushButton class and represents an expandable button.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef EXPBUTTON_HPP
 #define EXPBUTTON_HPP
 

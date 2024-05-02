@@ -1,3 +1,11 @@
+/**
+ * @file mainwindow.h
+ * @brief This file contains the declaration of the MainWindow class.
+ * @details It is a subclass of the QMainWindow class and represents the main window of the application.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

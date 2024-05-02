@@ -1,3 +1,11 @@
+/**
+ * @file checkablebutton.hpp
+ * @brief This file contains the declaration of the CheckableButton class.
+ * @details It is a subclass of the QPushButton class and represents a checkable button.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 02.05.2024
+ */
+
 #ifndef CHECKABLEBUTTON_HPP
 #define CHECKABLEBUTTON_HPP
 
