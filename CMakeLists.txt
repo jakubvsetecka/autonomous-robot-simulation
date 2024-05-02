@@ -37,8 +37,8 @@ set(PROJECT_SOURCES
 
     headers/checkablebutton.hpp
 
-    popupwindow/popupsavewindow.h
-    popupwindow/popupsavewindow.cpp
+    headers/popupsavewindow.h
+    src/popupsavewindow.cpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)
