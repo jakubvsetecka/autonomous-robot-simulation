@@ -32,10 +32,13 @@ set(PROJECT_SOURCES
     src/obstacle.cpp
 
     headers/expbuttonwidget.hpp
+    src/expbuttonwidget.cpp
 
     headers/overlaywidget.hpp
+    src/overlaywidget.cpp
 
     headers/checkablebutton.hpp
+    src/checkablebutton.cpp
 
     headers/popupsavewindow.h
     src/popupsavewindow.cpp
