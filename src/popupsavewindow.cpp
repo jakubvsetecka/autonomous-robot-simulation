@@ -27,7 +27,6 @@ PopupSaveWindow::~PopupSaveWindow() {}
 void PopupSaveWindow::onOkClicked() {
     // Set the dialog as accepted
     enteredText = lineEdit->text();
-    qDebug() << "Entered text: " << enteredText;
 
     accept();
 }

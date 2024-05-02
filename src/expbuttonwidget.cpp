@@ -4,7 +4,7 @@ ExpandableButtonWidget::ExpandableButtonWidget(QWidget *parent)
     : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
     obstacleButton = new CheckableButton("Add Obstacle", this, CheckableButton::ObjectType::OBST);
-    mainButton = new QPushButton("Add Robot", this);
+    mainButton = new ExpButton("Add Robot", this);
     autoButton = new CheckableButton("Auto", this, CheckableButton::ObjectType::AUTO);
     controlButton = new CheckableButton("Controlled", this, CheckableButton::ObjectType::CONT);
 
@@ -16,15 +16,17 @@ ExpandableButtonWidget::ExpandableButtonWidget(QWidget *parent)
     layout->addWidget(autoButton);
     layout->addWidget(controlButton);
 
-    connect(mainButton, &QPushButton::clicked, [this]() {
-        bool isVisible = autoButton->isVisible();
-        autoButton->setVisible(!isVisible);
-        controlButton->setVisible(!isVisible);
-        mainButton->setVisible(isVisible);
-    });
+    connect(mainButton, &ExpButton::pressed, this, &ExpandableButtonWidget::expand);
 
     // Install an event filter to listen for clicks outside the widget
     qApp->installEventFilter(this);
+}
+
+void ExpandableButtonWidget::expand() {
+    bool isVisible = autoButton->isVisible();
+    autoButton->setVisible(!isVisible);
+    controlButton->setVisible(!isVisible);
+    mainButton->setVisible(isVisible);
 }
 
 void ExpandableButtonWidget::collapse() {

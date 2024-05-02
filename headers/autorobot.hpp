@@ -5,10 +5,26 @@
 
 #define SMOOTH_ROTATION_SPEED 0.25
 
+/**
+ * @class AutoRobot
+ * @brief A class to represent an autonomous robot.
+ * @details This class inherits from Robot and provides functionalities for an autonomous robot.
+ * @see Robot
+ */
 class AutoRobot : public Robot {
   public:
     enum { Type = QGraphicsItem::UserType + 2 };
 
+    /**
+     * @brief Constructor for AutoRobot.
+     * @param parent The parent QGraphicsItem.
+     * @param size The size of the robot.
+     * @param collisionLookAhead The distance the robot looks ahead for collisions.
+     * @param rotationDirection The initial rotation direction of the robot.
+     * @param moveSpeed The movement speed of the robot.
+     * @param rotationSpeed The rotation speed of the robot.
+     * @param timeConstant A pointer to the time constant.
+     */
     AutoRobot(QGraphicsItem *parent = nullptr, qreal size = 50, qreal collisionLookAhead = 10, Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right, qreal moveSpeed = 1, qreal rotationSpeed = 1, qreal *timeConstant = nullptr);
     ~AutoRobot();
 
@@ -24,16 +40,63 @@ class AutoRobot : public Robot {
 
     bool move() override;
 
+    /**
+     * @brief Get the type of the object
+     * @return int The type of the object
+     */
     int type() const override { return Type; }
 
+    /**
+     * @brief Set the look ahead distance for collision detection
+     * @param lookAhead The look ahead distance
+     * @return void
+     */
     void setCollisionLookAhead(qreal lookAhead) { collisionLookAhead = lookAhead; }
+
+    /**
+     * @brief Get the look ahead distance for collision detection
+     * @return qreal The look ahead distance
+     */
     qreal getCollisionLookAhead() { return collisionLookAhead; }
+
+    /**
+     * @brief Set the rotation direction of the robot
+     * @param direction The rotation direction
+     * @return void
+     */
     void setRotationDirection(RotationDirection direction) { rotationDirection = direction; }
+
+    /**
+     * @brief Get the rotation direction of the robot
+     * @return RotationDirection The rotation direction
+     */
     RotationDirection getRotationDirection() { return rotationDirection; }
+
+    /**
+     * @brief Set the target angle of the robot
+     * @param angle The target angle
+     * @return void
+     */
     void setTargetAngle(qreal angle) { targetAngle = angle; }
+
+    /**
+     * @brief Get the target angle of the robot
+     * @return qreal The target angle
+     */
     qreal getTargetAngle() { return targetAngle; }
 
+    /**
+     * @brief Get the JSON representation of the object
+     * @return QJsonObject The JSON representation of the object
+     */
     QJsonObject toJSON() override;
+
+    /**
+     * @brief Create an AutoRobot object from a JSON object
+     * @param object The JSON object to create the AutoRobot object from
+     * @param timeConstant The time constant of the robot
+     * @return AutoRobot* The AutoRobot object created from the JSON object
+     */
     static AutoRobot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
   protected:

@@ -92,7 +92,6 @@ void MainWindow::showEvent(QShowEvent *event) {
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
-    qDebug() << "Mouse press event";
     expandableWidget->collapse();
 
     // get Robot at position
@@ -105,7 +104,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
         r->toggleActive();
     }
     if (item && item->type() == Robot::Type) {
-        qDebug() << "Robot clicked";
         Robot *robot = dynamic_cast<Robot *>(item);
         if (robot->isActive()) {
             simulationEngine->setControlledRobot(nullptr);
@@ -148,10 +146,6 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_horizontalSlider_valueChanged(int value) {
     simulationEngine->setSimulationSpeed(value / 100.0);
-}
-
-void MainWindow::loadSimulation() {
-    // simulationEngine->loadSimulation();
 }
 
 void MainWindow::saveSimulation() {

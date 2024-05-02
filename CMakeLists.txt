@@ -42,6 +42,9 @@ set(PROJECT_SOURCES
 
     headers/popupsavewindow.h
     src/popupsavewindow.cpp
+
+    headers/expbutton.hpp
+    src/expbutton.cpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

@@ -19,7 +19,7 @@ void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 }
 
 QPointF Obstacle::getPos() {
-    QGraphicsRectItem::pos();
+    return QGraphicsRectItem::pos();
 }
 
 QJsonObject Obstacle::toJSON() {
