@@ -93,9 +93,7 @@ void MainWindow::showEvent(QShowEvent *event) {
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
     qDebug() << "Mouse press event";
-    if (!expandableWidget->geometry().contains(event->pos())) {
-        expandableWidget->collapse();
-    }
+    expandableWidget->collapse();
 
     // get Robot at position
     // map pos to scene pos
