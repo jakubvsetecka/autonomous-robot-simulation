@@ -1,5 +1,3 @@
-
-
 #ifndef CHECKABLEBUTTON_HPP
 #define CHECKABLEBUTTON_HPP
 
@@ -17,10 +15,12 @@ class CheckableButton : public QPushButton {
         OBST
     };
 
-    OverlayWidget *overlay;
     explicit CheckableButton(const QString &text, QWidget *parent = nullptr, ObjectType type = ObjectType::OBST);
+    OverlayWidget *getOverlay() const { return overlay; }
+    void setOverlay(OverlayWidget *overlay) { this->overlay = overlay; }
 
   protected:
+    OverlayWidget *overlay;
     bool isPressed = false;
     ObjectType objType;
 

@@ -17,33 +17,30 @@ void CheckableButton::mousePressEvent(QMouseEvent *event) {
 
         switch (objType) {
         case AUTO: {
-            auto autorobutek = new AutoRobot(nullptr, 50, 10, Robot::RotationDirection::Right, 1, 1, overlay->simEng->getTimeConstant());
-            overlay->activeObject = autorobutek;
+            auto autorobutek = new AutoRobot(nullptr, 50, 10, Robot::RotationDirection::Right, 1, 1, overlay->getTimeConstant());
+            overlay->setActiveObject(autorobutek);
         } break;
         case CONT: {
-            auto robutek = new Robot(nullptr, overlay->simEng->getTimeConstant());
-            overlay->activeObject = robutek;
+            auto robutek = new Robot(nullptr, overlay->getTimeConstant());
+            overlay->setActiveObject(robutek);
             break;
         }
         case OBST: {
             auto obstacle = new Obstacle();
-            overlay->activeObject = obstacle;
+            overlay->setActiveObject(obstacle);
             break;
         }
         default:
             throw "Unknow object";
             break;
         }
-        overlay->lastMousePos = getWidgetPos(event->pos());
+        overlay->setLastMousePos(getWidgetPos(event->pos()));
     }
     QPushButton::mousePressEvent(event);
 }
 
 void CheckableButton::mouseMoveEvent(QMouseEvent *event) {
     event->ignore();
-    if (isChecked()) {
-        // overlay->lastMousePos = getWidgetPos(event->pos());
-    }
     QPushButton::mouseMoveEvent(event);
 }
 
@@ -51,5 +48,4 @@ void CheckableButton::mouseReleaseEvent(QMouseEvent *event) {
     QPushButton::mouseReleaseEvent(event);
     setChecked(false);
     event->ignore();
-    // overlay->anchor();
 }

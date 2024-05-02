@@ -15,15 +15,18 @@ class OverlayWidget : public QWidget {
   public:
     explicit OverlayWidget(QWidget *parent = nullptr, SimulationEngine *simEng = nullptr, QGraphicsView *graphView = nullptr);
 
+    void trySetSail(QMouseEvent *event);
+    void navigateTheSea(QMouseEvent *event);
+    void anchor();
+
+    qreal *getTimeConstant() { simEng->getTimeConstant(); }
+    void setActiveObject(GameObject *obj) { activeObject = obj; }
+    void setLastMousePos(QPoint pos) { lastMousePos = pos; }
+
+  protected:
     GameObject *activeObject;
     QPoint lastMousePos;
     SimulationEngine *simEng;
-
-    void anchor();
-    void trySetSail(QMouseEvent *event);
-    void navigateTheSea(QMouseEvent *event);
-
-  protected:
     QGraphicsView *graphView;
     QStyleOptionGraphicsItem option;
 

@@ -16,13 +16,15 @@ class ExpandableButtonWidget : public QWidget {
     Q_OBJECT
 
   public:
+    explicit ExpandableButtonWidget(QWidget *parent = nullptr);
+    void collapse();
+    void setOverlay(OverlayWidget *overlay);
+
+  protected:
     CheckableButton *obstacleButton;
     QPushButton *mainButton;
     CheckableButton *autoButton;
     CheckableButton *controlButton;
-
-    explicit ExpandableButtonWidget(QWidget *parent = nullptr);
-    void collapse();
 };
 
 #endif // EXPANDABLEBUTTONWIDGET_HPP

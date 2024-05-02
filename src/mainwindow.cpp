@@ -42,9 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Create the overlay widget
     overlay = new OverlayWidget(this, simulationEngine, ui->graphicsView);
     overlay->setGeometry(rect());
-    ui->expWidget->autoButton->overlay = overlay;
-    ui->expWidget->controlButton->overlay = overlay;
-    ui->expWidget->obstacleButton->overlay = overlay;
+    ui->expWidget->setOverlay(overlay);
 
     expandableWidget = ui->expWidget;
 

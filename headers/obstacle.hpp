@@ -9,7 +9,6 @@
 class Obstacle : public QGraphicsRectItem, public GameObject {
   public:
     Obstacle(QGraphicsItem *parent = nullptr);
-
     Obstacle(const Obstacle &)
         : QGraphicsRectItem() {}
 

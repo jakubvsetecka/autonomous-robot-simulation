@@ -37,3 +37,9 @@ void ExpandableButtonWidget::collapse() {
         }
     }
 }
+
+void ExpandableButtonWidget::setOverlay(OverlayWidget *overlay) {
+    obstacleButton->setOverlay(overlay);
+    autoButton->setOverlay(overlay);
+    controlButton->setOverlay(overlay);
+}
