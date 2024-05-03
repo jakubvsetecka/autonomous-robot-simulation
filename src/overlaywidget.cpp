@@ -47,7 +47,6 @@ void OverlayWidget::trySetSail(QMouseEvent *event) {
         auto object = dynamic_cast<GameObject *>(item);
         if (object) {
             activeObject = object;
-            qDebug() << "Rotation: " << object->rotation() << " degrees";
             activeObject->setRotation(object->rotation());
             lastMousePos = event->pos();
             offset = (item->mapFromScene(scenePos)).toPoint();
