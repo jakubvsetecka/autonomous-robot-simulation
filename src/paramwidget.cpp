@@ -1,3 +1,11 @@
+/**
+ * @file paramwidget.cpp
+ * @brief This file contains the implementation of the ParamWidget class.
+ * @details It is a subclass of the QWidget class and represents a widget for editing parameters of game objects.
+ * @authors Tomáš Hobza, Jakub Všetečka
+ * @date 03.05.2024
+ */
+
 #include "paramwidget.hpp"
 
 ParamWidget::ParamWidget(QWidget *parent)
