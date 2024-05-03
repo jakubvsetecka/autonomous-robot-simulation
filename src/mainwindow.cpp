@@ -140,6 +140,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
         ui->paramWidget->stopStalking();
     }
 
+    overlay->trySetSail(event);
+
     QMainWindow::mousePressEvent(event);
 }
 
@@ -154,7 +156,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event) {
-    overlay->trySetSail(event);
+    // overlay->trySetSail(event);
     QMainWindow::mouseDoubleClickEvent(event);
 }
 

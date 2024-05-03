@@ -110,12 +110,15 @@ class AutoRobot : public Robot {
      */
     static AutoRobot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
-    // signals:
-    //   void paramsUpdated();
-
   protected:
+
+    /** @brief The look ahead distance for collision detection */
     qreal collisionLookAhead = 0;
+
+    /** @brief The target angle of the robot */
     qreal targetAngle = 0;
+
+    /** @brief The rotation direction of the robot */
     Robot::RotationDirection rotationDirection = Robot::RotationDirection::Right;
 };
 

@@ -20,10 +20,16 @@ ParamWidget::ParamWidget(QWidget *parent)
     setUpEditLine(angleToRotate, labelAngleToRotate);
     connect(angleToRotate, &ParamEditLine::returnPressed, this, &ParamWidget::setAngleToRotate);
 
-    labelDirection = new QLabel("Direction:", this);
-    direction = new ParamEditLine(this);
-    setUpEditLine(direction, labelDirection);
-    connect(direction, &ParamEditLine::returnPressed, this, &ParamWidget::setDirection);
+    labelDirection = new QLabel("Rotation direction:", this);
+    direction = new QCheckBox("anticlockwise", this);
+    direction->setCheckState(Qt::Unchecked);
+    direction->setTristate(false);
+    direction->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    direction->setCursor(Qt::PointingHandCursor);
+    direction->setFocusPolicy(Qt::StrongFocus);
+    layout->addWidget(labelDirection);
+    layout->addWidget(direction);
+    connect(direction, &QCheckBox::stateChanged, this, &ParamWidget::setDirection);
 
     labelSpeed = new QLabel("Speed:", this);
     speed = new ParamEditLine(this);
@@ -156,7 +162,7 @@ void ParamWidget::updateAutoRobot() {
     if (keepUpdating && robot) {
         detectionDistance->setText(QString::number(robot->getCollisionLookAhead()));
         angleToRotate->setText(QString::number(robot->getRotationSpeed()));
-        direction->setText(QString::number(robot->getRotationDirection()));
+        direction->setText(robot->getRotationDirection() == Robot::RotationDirection::Left ? "anti-clockwise" : "clockwise");
         speed->setText(QString::number(robot->getMoveSpeed()));
         radius->setText(QString::number(robot->getRadius()));
         angle->setText(QString::number(static_cast<int>(robot->getAngle()) % 360));
@@ -217,7 +223,7 @@ void ParamWidget::setAngleToRotate() {
 
 void ParamWidget::setDirection() {
     if (stalkedObject)
-        dynamic_cast<AutoRobot *>(stalkedObject)->setRotationDirection(static_cast<Robot::RotationDirection>(direction->text().toInt()));
+        dynamic_cast<AutoRobot *>(stalkedObject)->setRotationDirection(dynamic_cast<AutoRobot *>(stalkedObject)->getRotationDirection() == Robot::RotationDirection::Left ? Robot::RotationDirection::Right : Robot::RotationDirection::Left);
 }
 
 void ParamWidget::setSpeed() {

@@ -8,6 +8,7 @@
 #include "obstacle.hpp"
 #include "parameditline.hpp"
 #include "robot.hpp"
+#include <QCheckBox>
 #include <QDoubleValidator>
 #include <QLabel>
 #include <QObject>
@@ -36,7 +37,7 @@ class ParamWidget : public QWidget {
     QLabel *labelAngleToRotate;
     ParamEditLine *angleToRotate;
     QLabel *labelDirection;
-    ParamEditLine *direction;
+    QCheckBox *direction;
     QLabel *labelSpeed;
     ParamEditLine *speed;
     QLabel *labelRadius;
