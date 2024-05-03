@@ -136,6 +136,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
             ui->paramWidget->stopStalking();
             break;
         }
+    } else {
+        ui->paramWidget->stopStalking();
     }
 
     QMainWindow::mousePressEvent(event);

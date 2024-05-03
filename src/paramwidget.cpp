@@ -5,6 +5,11 @@ ParamWidget::ParamWidget(QWidget *parent)
     layout = new QVBoxLayout(this);
     setLayout(layout);
 
+    numberValidator = new QDoubleValidator();
+    numberValidator->setNotation(QDoubleValidator::StandardNotation);
+    numberValidator->setBottom(0);
+    numberValidator->setDecimals(3);
+
     labelDetectionDistance = new QLabel("Detection distance:", this);
     detectionDistance = new ParamEditLine(this);
     setUpEditLine(detectionDistance, labelDetectionDistance);
@@ -51,14 +56,15 @@ void ParamWidget::setUpEditLine(ParamEditLine *lineEdit, QLabel *label) {
     layout->addWidget(lineEdit);
     lineEdit->setCursorMoveStyle(Qt::VisualMoveStyle);
     lineEdit->setFocusPolicy(Qt::StrongFocus);
+    lineEdit->setValidator(numberValidator);
     connect(lineEdit, &ParamEditLine::focusIn, this, &ParamWidget::focusIn);
     connect(lineEdit, &ParamEditLine::focusOut, this, &ParamWidget::focusOut);
 }
 
 void ParamWidget::stalk(AutoRobot *robot) {
     hide();
-    if (!stalkedObject)
-        disconnect(dynamic_cast<AutoRobot *>(stalkedObject), &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
+    if (stalkedObject)
+        disconnectStalkedObject();
     stalkedObject = robot;
     connect(robot, &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
     show(robot);
@@ -67,8 +73,8 @@ void ParamWidget::stalk(AutoRobot *robot) {
 
 void ParamWidget::stalk(Obstacle *obstacle) {
     hide();
-    if (!stalkedObject)
-        disconnect(dynamic_cast<Obstacle *>(stalkedObject), &Obstacle::paramsUpdated, this, &ParamWidget::updateObstacle);
+    if (stalkedObject)
+        disconnectStalkedObject();
     stalkedObject = obstacle;
     connect(obstacle, &Obstacle::paramsUpdated, this, &ParamWidget::updateObstacle);
     show(obstacle);
@@ -77,8 +83,8 @@ void ParamWidget::stalk(Obstacle *obstacle) {
 
 void ParamWidget::stalk(Robot *robot) {
     hide();
-    if (!stalkedObject)
-        disconnect(dynamic_cast<Robot *>(stalkedObject), &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
+    if (stalkedObject)
+        disconnectStalkedObject();
     stalkedObject = robot;
     connect(robot, &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
     show(robot);
@@ -88,6 +94,17 @@ void ParamWidget::stalk(Robot *robot) {
 void ParamWidget::stopStalking() {
     stalkedObject = nullptr;
     hide();
+}
+
+void ParamWidget::disconnectStalkedObject() {
+    if (stalkedObject) {
+        if (dynamic_cast<AutoRobot *>(stalkedObject))
+            disconnect(dynamic_cast<AutoRobot *>(stalkedObject), &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
+        else if (dynamic_cast<Obstacle *>(stalkedObject))
+            disconnect(dynamic_cast<Obstacle *>(stalkedObject), &Obstacle::paramsUpdated, this, &ParamWidget::updateObstacle);
+        else if (dynamic_cast<Robot *>(stalkedObject))
+            disconnect(dynamic_cast<Robot *>(stalkedObject), &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
+    }
 }
 
 void ParamWidget::show(Robot *robot) {
@@ -210,12 +227,12 @@ void ParamWidget::setSpeed() {
 
 void ParamWidget::setRadius() {
     if (stalkedObject)
-        dynamic_cast<Robot *>(stalkedObject)->setRect(0, 0, radius->text().toDouble(), radius->text().toDouble());
+        dynamic_cast<Robot *>(stalkedObject)->setRadius(radius->text().toDouble());
 }
 
 void ParamWidget::setAngle() {
     if (stalkedObject)
-        dynamic_cast<Robot *>(stalkedObject)->setRotation(angle->text().toDouble());
+        stalkedObject->setRotation(angle->text().toDouble());
 }
 
 void ParamWidget::setSize() {

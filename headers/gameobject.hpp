@@ -51,6 +51,8 @@ class GameObject {
      * @return QJsonObject
      */
     virtual QJsonObject toJSON() = 0;
+
+    virtual void setRotation(qreal angle) = 0;
 };
 
 #endif // GAMEOBJECT_HPP

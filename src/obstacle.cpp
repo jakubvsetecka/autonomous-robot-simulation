@@ -25,6 +25,7 @@ void Obstacle::setPos(qreal x, qreal y) {
 
 void Obstacle::setRotation(qreal angle) {
     QGraphicsRectItem::setRotation(angle);
+    setTransformOriginPoint(rect().center());
     emit paramsUpdated();
 }
 

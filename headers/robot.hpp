@@ -14,10 +14,10 @@
 #include <QFocusEvent>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsScene>
+#include <QObject>
 #include <QPainter>
 #include <QPointF>
 #include <QtMath>
-#include <QObject>
 
 #define BODY_COLLISION_MARGIN 1
 
@@ -25,7 +25,7 @@
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
  */
 class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
-  Q_OBJECT
+    Q_OBJECT
 
   public:
     /**
@@ -149,7 +149,11 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
 
     void setRadius(qreal radius);
 
-    signals:
+    void setRotation(qreal angle) override {
+        QGraphicsEllipseItem::setRotation(angle);
+    }
+
+  signals:
     void paramsUpdated();
 
   protected:

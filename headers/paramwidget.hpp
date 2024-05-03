@@ -8,6 +8,7 @@
 #include "obstacle.hpp"
 #include "parameditline.hpp"
 #include "robot.hpp"
+#include <QDoubleValidator>
 #include <QLabel>
 #include <QObject>
 #include <QVBoxLayout>
@@ -28,6 +29,7 @@ class ParamWidget : public QWidget {
     QVBoxLayout *layout;
     GameObject *stalkedObject = nullptr;
     bool keepUpdating = true;
+    QDoubleValidator *numberValidator;
 
     QLabel *labelDetectionDistance;
     ParamEditLine *detectionDistance;
@@ -49,6 +51,7 @@ class ParamWidget : public QWidget {
     void show(AutoRobot *robot);
     void show(Obstacle *obstacle);
     void hide();
+    void disconnectStalkedObject();
 
   private slots:
     void setDetectionDistance();

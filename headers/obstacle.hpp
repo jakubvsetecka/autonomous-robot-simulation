@@ -49,7 +49,7 @@ class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
      */
     void setPos(qreal x, qreal y) override;
 
-    void setRotation(qreal angle);
+    void setRotation(qreal angle) override;
 
     /**
      * @brief Paint the obstacle.
