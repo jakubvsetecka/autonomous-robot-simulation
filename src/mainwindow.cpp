@@ -9,16 +9,17 @@
 #include "mainwindow.h"
 #include "obstacle.hpp"
 #include "ui_mainwindow.h"
+#include <QKeyEvent> // Include the necessary header file
 #include <qdir.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
+
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus); // Set the focus policy to accept key events
     setFocus();                      // Set the focus to the main window
 
     // int fps = 60, qreal simulationSpeed = 1.0 / 16.0
-
     const int FPS = 60;
     const qreal SIMULATION_SPEED = 4.0 / 16.0;
 
@@ -98,14 +99,14 @@ void MainWindow::showEvent(QShowEvent *event) {
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
+    // Collapse the expandable widget
     expandableWidget->collapse();
 
-    // get Robot at position
-    // map pos to scene pos
     QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
     QPointF scenePos = ui->graphicsView->mapToScene(localPos);
     QGraphicsItem *item = ui->graphicsView->itemAt(scenePos.toPoint());
 
+    // Handle controlled robot
     if (Robot *r = simulationEngine->getControlledRobot()) {
         simulationEngine->setControlledRobot(nullptr);
         r->toggleActive();

@@ -50,6 +50,8 @@ class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
     void setPos(qreal x, qreal y) override;
 
     void setRotation(qreal angle) override;
+    qreal rotation() override { return QGraphicsRectItem::rotation(); }
+    QPointF getCenter() override { return boundingRect().center(); }
 
     /**
      * @brief Paint the obstacle.

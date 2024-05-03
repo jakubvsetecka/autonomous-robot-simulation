@@ -149,6 +149,12 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
 
     void setRadius(qreal radius);
 
+    QPointF getCenter() override { return boundingRect().center(); }
+
+    qreal rotation() override {
+        return QGraphicsEllipseItem::rotation();
+    }
+
     void setRotation(qreal angle) override {
         QGraphicsEllipseItem::setRotation(angle);
     }

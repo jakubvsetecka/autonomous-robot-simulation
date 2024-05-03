@@ -53,6 +53,8 @@ class GameObject {
     virtual QJsonObject toJSON() = 0;
 
     virtual void setRotation(qreal angle) = 0;
+    virtual qreal rotation() = 0;
+    virtual QPointF getCenter() = 0;
 };
 
 #endif // GAMEOBJECT_HPP

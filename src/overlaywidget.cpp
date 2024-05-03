@@ -25,9 +25,10 @@ void OverlayWidget::anchor() {
             QPoint localPos = graphView->mapFromParent(lastMousePos);
             QPointF scenePos = graphView->mapToScene(localPos);
 
-            if (simEng->isInsideScene(scenePos)) {
-                object->setPos(scenePos);
+            if (simEng->isInsideScene(scenePos - offset)) {
+                object->setPos(scenePos - offset);
                 simEng->addItem(object);
+                object->setFocus();
             } else {
                 delete object;
             }
@@ -46,7 +47,10 @@ void OverlayWidget::trySetSail(QMouseEvent *event) {
         auto object = dynamic_cast<GameObject *>(item);
         if (object) {
             activeObject = object;
+            qDebug() << "Rotation: " << object->rotation() << " degrees";
+            activeObject->setRotation(object->rotation());
             lastMousePos = event->pos();
+            offset = (item->mapFromScene(scenePos)).toPoint();
             simEng->removeItem(item);
         }
     }
@@ -63,10 +67,15 @@ void OverlayWidget::navigateTheSea(QMouseEvent *event) {
 void OverlayWidget::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
+    QPoint localPos = graphView->mapFromParent(lastMousePos);
+    QPointF scenePos = graphView->mapToScene(localPos);
+
     if (activeObject) {
-        // Use lastMousePos here
         painter.save();
-        painter.translate(lastMousePos);
+        painter.translate(lastMousePos - offset);
+        painter.translate(activeObject->getCenter()); // Move origin to object center
+        painter.rotate(activeObject->rotation());     // Rotate around object center
+        painter.translate(-activeObject->getCenter());
         activeObject->paint(&painter, &option, this);
         update(); // Trigger repaint
         painter.restore();

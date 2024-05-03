@@ -80,6 +80,8 @@ class OverlayWidget : public QWidget {
     /** @brief The last mouse position. */
     QPoint lastMousePos;
 
+    QPoint offset;
+
     /** @brief The simulation engine. */
     SimulationEngine *simEng;
 
