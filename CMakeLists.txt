@@ -45,6 +45,9 @@ set(PROJECT_SOURCES
 
     headers/expbutton.hpp
     src/expbutton.cpp
+
+    headers/paramwidget.hpp
+    src/paramwidget.cpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

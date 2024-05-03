@@ -15,6 +15,7 @@
 #include "gameobject.hpp"
 #include "obstacle.hpp"
 #include "overlaywidget.hpp"
+#include "paramwidget.hpp"
 #include "popupsavewindow.h"
 #include "robot.hpp"
 #include "simulationengine.hpp"
@@ -56,7 +57,13 @@ class MainWindow : public QMainWindow {
     void updateAnimation(); // Method to update the animation
 
   protected:
+    /** @brief The param widget.*/
+    ParamWidget *paramWidget;
+
+    /** @brief The expandable button widget.*/
     ExpandableButtonWidget *expandableWidget;
+
+    /** @brief The overlay widget.*/
     OverlayWidget *overlay;
 
   private slots:

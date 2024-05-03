@@ -117,6 +117,9 @@
        </layout>
       </item>
       <item>
+       <widget class="ParamWidget" name="paramWidget" native="true"/>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -175,6 +178,12 @@
    <class>ExpandableButtonWidget</class>
    <extends>QWidget</extends>
    <header>expbuttonwidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ParamWidget</class>
+   <extends>QWidget</extends>
+   <header>paramwidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

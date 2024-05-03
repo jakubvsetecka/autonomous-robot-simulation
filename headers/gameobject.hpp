@@ -18,6 +18,7 @@
  * @details This class provides an interface for creating and managing game objects.
  */
 class GameObject {
+
   public:
     GameObject() = default;
     ~GameObject() = default;

@@ -53,6 +53,7 @@ void AutoRobot::doRotationStep(RotationDirection direction) {
 }
 
 bool AutoRobot::move() {
+
     bool reachedTargetAngleClockwise = rotation() >= targetAngle && rotationDirection == Robot::RotationDirection::Right;
     bool reachedTargetAngleCounterClockwise = rotation() <= targetAngle && rotationDirection == Robot::RotationDirection::Left;
 
@@ -64,6 +65,7 @@ bool AutoRobot::move() {
     bool hasNotCollided = Robot::move();
     if (!hasNotCollided) {
         doRotationStep(rotationDirection);
+        emit paramsUpdated();
     }
 
     return hasNotCollided;

@@ -105,6 +105,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
     QPoint localPos = ui->graphicsView->mapFromParent(event->pos());
     QPointF scenePos = ui->graphicsView->mapToScene(localPos);
     QGraphicsItem *item = ui->graphicsView->itemAt(scenePos.toPoint());
+
     if (Robot *r = simulationEngine->getControlledRobot()) {
         simulationEngine->setControlledRobot(nullptr);
         r->toggleActive();
@@ -117,6 +118,13 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
             simulationEngine->setControlledRobot(robot);
         }
         robot->toggleActive();
+    }
+
+    if (item && item->type() == AutoRobot::Type) {
+        AutoRobot *autoRobot = dynamic_cast<AutoRobot *>(item);
+        ui->paramWidget->stalk(autoRobot);
+    } else {
+        ui->paramWidget->hide();
     }
 
     QMainWindow::mousePressEvent(event);

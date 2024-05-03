@@ -142,6 +142,8 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
 
     inline bool isActive() { return active; }
 
+    qreal getAngle() { return rotation(); }
+
   protected:
     /** @brief The speed of the robot */
     qreal move_speed = 1;
