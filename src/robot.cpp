@@ -293,3 +293,8 @@ Robot *Robot::fromJSON(const QJsonObject &json, qreal *timeConstant) {
 
     return result;
 }
+
+void Robot::setRadius(qreal radius) {
+    setRect(0, 0, radius * 2, radius * 2);
+    setTransformOriginPoint(getRadius(), getRadius());
+}

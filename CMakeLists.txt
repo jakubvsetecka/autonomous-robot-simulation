@@ -48,6 +48,8 @@ set(PROJECT_SOURCES
 
     headers/paramwidget.hpp
     src/paramwidget.cpp
+
+    headers/parameditline.hpp
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)

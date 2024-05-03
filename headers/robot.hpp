@@ -144,6 +144,8 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
 
     qreal getAngle() { return rotation(); }
 
+    void setRadius(qreal radius);
+
   protected:
     /** @brief The speed of the robot */
     qreal move_speed = 1;
