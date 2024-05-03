@@ -17,13 +17,16 @@
 #include <QPainter>
 #include <QPointF>
 #include <QtMath>
+#include <QObject>
 
 #define BODY_COLLISION_MARGIN 1
 
 /**
  * @brief A class to represent a robot in the simulation. By default, the robot is a circle with a line drawn to represent its direction.
  */
-class Robot : public QGraphicsEllipseItem, public GameObject {
+class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
+  Q_OBJECT
+
   public:
     /**
      * @brief Enum to represent the direction of rotation of the robot.
@@ -145,6 +148,9 @@ class Robot : public QGraphicsEllipseItem, public GameObject {
     qreal getAngle() { return rotation(); }
 
     void setRadius(qreal radius);
+
+    signals:
+    void paramsUpdated();
 
   protected:
     /** @brief The speed of the robot */

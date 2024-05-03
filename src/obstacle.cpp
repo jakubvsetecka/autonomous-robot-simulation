@@ -20,6 +20,12 @@ Obstacle::~Obstacle() {}
 
 void Obstacle::setPos(qreal x, qreal y) {
     QGraphicsRectItem::setPos(x, y);
+    emit paramsUpdated();
+}
+
+void Obstacle::setRotation(qreal angle) {
+    QGraphicsRectItem::setRotation(angle);
+    emit paramsUpdated();
 }
 
 void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

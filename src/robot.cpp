@@ -184,6 +184,7 @@ bool Robot::move() {
 
         setRotation(rotation() + rotation_speed * time * isRotating); // Rotate the robot
 
+        emit paramsUpdated();
         return true; // Don't move if rotating
     }
 
@@ -200,6 +201,7 @@ bool Robot::move() {
         moveBy(moveVector.x(), moveVector.y());
     }
 
+    emit paramsUpdated();
     return true;
 }
 

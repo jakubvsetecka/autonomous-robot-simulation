@@ -20,8 +20,8 @@
  * @details This class inherits from Robot and provides functionalities for an autonomous robot.
  * @see Robot
  */
-class AutoRobot : public QObject, public Robot {
-    Q_OBJECT
+class AutoRobot : public Robot {
+    // Q_OBJECT
 
   public:
     enum { Type = QGraphicsItem::UserType + 2 };
@@ -110,8 +110,8 @@ class AutoRobot : public QObject, public Robot {
      */
     static AutoRobot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
-  signals:
-    void paramsUpdated();
+    // signals:
+    //   void paramsUpdated();
 
   protected:
     qreal collisionLookAhead = 0;

@@ -120,11 +120,22 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
         robot->toggleActive();
     }
 
-    if (item && item->type() == AutoRobot::Type) {
-        AutoRobot *autoRobot = dynamic_cast<AutoRobot *>(item);
-        ui->paramWidget->stalk(autoRobot);
-    } else {
-        ui->paramWidget->hide();
+    // Handle param widget
+    if (item) {
+        switch (item->type()) {
+        case Obstacle::Type:
+            ui->paramWidget->stalk(dynamic_cast<Obstacle *>(item));
+            break;
+        case Robot::Type:
+            ui->paramWidget->stalk(dynamic_cast<Robot *>(item));
+            break;
+        case AutoRobot::Type:
+            ui->paramWidget->stalk(dynamic_cast<AutoRobot *>(item));
+            break;
+        default:
+            ui->paramWidget->stopStalking();
+            break;
+        }
     }
 
     QMainWindow::mousePressEvent(event);

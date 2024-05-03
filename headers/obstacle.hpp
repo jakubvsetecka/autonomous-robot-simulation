@@ -13,13 +13,16 @@
 #include <QBrush>
 #include <QGraphicsRectItem>
 #include <QJsonObject>
+#include <QObject>
 
 /**
  * @class Obstacle
  * @brief A class to represent an obstacle.
  * @details This class inherits from QGraphicsRectItem and GameObject. It represents an obstacle in a game.
  */
-class Obstacle : public QGraphicsRectItem, public GameObject {
+class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
+    Q_OBJECT
+
   public:
     /**
      * @brief Default constructor.
@@ -45,6 +48,8 @@ class Obstacle : public QGraphicsRectItem, public GameObject {
      * @param y The y-coordinate of the position.
      */
     void setPos(qreal x, qreal y) override;
+
+    void setRotation(qreal angle);
 
     /**
      * @brief Paint the obstacle.
@@ -72,6 +77,9 @@ class Obstacle : public QGraphicsRectItem, public GameObject {
      * @return A pointer to the created Obstacle object.
      */
     static Obstacle *fromJSON(const QJsonObject &json);
+
+  signals:
+    void paramsUpdated();
 };
 
 #endif // OBSTACLE_HPP

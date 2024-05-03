@@ -40,11 +40,6 @@ ParamWidget::ParamWidget(QWidget *parent)
     setUpEditLine(size, labelSize);
     connect(size, &ParamEditLine::returnPressed, this, &ParamWidget::setSize);
 
-    labelOAngle = new QLabel("Angle:", this);
-    oAngle = new ParamEditLine(this);
-    setUpEditLine(oAngle, labelOAngle);
-    connect(oAngle, &ParamEditLine::returnPressed, this, &ParamWidget::setOAngle);
-
     layout->addStretch();
 
     hide();
@@ -61,42 +56,118 @@ void ParamWidget::setUpEditLine(ParamEditLine *lineEdit, QLabel *label) {
 }
 
 void ParamWidget::stalk(AutoRobot *robot) {
+    hide();
+    if (!stalkedObject)
+        disconnect(dynamic_cast<AutoRobot *>(stalkedObject), &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
     stalkedObject = robot;
-    connect(robot, &AutoRobot::paramsUpdated, this, &ParamWidget::show);
-    show();
+    connect(robot, &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
+    show(robot);
+    updateAutoRobot();
 }
 
-void ParamWidget::show() {
+void ParamWidget::stalk(Obstacle *obstacle) {
+    hide();
+    if (!stalkedObject)
+        disconnect(dynamic_cast<Obstacle *>(stalkedObject), &Obstacle::paramsUpdated, this, &ParamWidget::updateObstacle);
+    stalkedObject = obstacle;
+    connect(obstacle, &Obstacle::paramsUpdated, this, &ParamWidget::updateObstacle);
+    show(obstacle);
+    updateObstacle();
+}
+
+void ParamWidget::stalk(Robot *robot) {
+    hide();
+    if (!stalkedObject)
+        disconnect(dynamic_cast<Robot *>(stalkedObject), &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
+    stalkedObject = robot;
+    connect(robot, &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
+    show(robot);
+    updateRobot();
+}
+
+void ParamWidget::stopStalking() {
+    stalkedObject = nullptr;
+    hide();
+}
+
+void ParamWidget::show(Robot *robot) {
+    if (stalkedObject == nullptr)
+        return;
+
+    labelSpeed->show();
+    speed->show();
+    labelRadius->show();
+    radius->show();
+    labelAngle->show();
+    angle->show();
+}
+
+void ParamWidget::show(AutoRobot *robot) {
+    if (stalkedObject == nullptr)
+        return;
+
+    labelDetectionDistance->show();
+    detectionDistance->show();
+    labelAngleToRotate->show();
+    angleToRotate->show();
+    labelDirection->show();
+    direction->show();
+    labelSpeed->show();
+    speed->show();
+    labelRadius->show();
+    radius->show();
+    labelAngle->show();
+    angle->show();
+}
+
+void ParamWidget::show(Obstacle *obstacle) {
+    if (stalkedObject == nullptr)
+        return;
+
+    labelSize->show();
+    size->show();
+    labelAngle->show();
+    angle->show();
+}
+
+void ParamWidget::updateAutoRobot() {
     if (stalkedObject == nullptr)
         return;
 
     AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        labelDetectionDistance->show();
-        detectionDistance->show();
-        labelAngleToRotate->show();
-        angleToRotate->show();
-        labelDirection->show();
-        direction->show();
-        labelSpeed->show();
-        speed->show();
-        labelRadius->show();
-        radius->show();
-        labelAngle->show();
-        angle->show();
-        labelSize->hide();
-        size->hide();
-        labelOAngle->hide();
-        oAngle->hide();
 
-        if (keepUpdating) {
-            detectionDistance->setText(QString::number(robot->getCollisionLookAhead()));
-            angleToRotate->setText(QString::number(robot->getRotationSpeed()));
-            direction->setText(QString::number(robot->getRotationDirection()));
-            speed->setText(QString::number(robot->getMoveSpeed()));
-            radius->setText(QString::number(robot->getRadius()));
-            angle->setText(QString::number(static_cast<int>(robot->getAngle()) % 360));
-        }
+    if (keepUpdating && robot) {
+        detectionDistance->setText(QString::number(robot->getCollisionLookAhead()));
+        angleToRotate->setText(QString::number(robot->getRotationSpeed()));
+        direction->setText(QString::number(robot->getRotationDirection()));
+        speed->setText(QString::number(robot->getMoveSpeed()));
+        radius->setText(QString::number(robot->getRadius()));
+        angle->setText(QString::number(static_cast<int>(robot->getAngle()) % 360));
+    }
+}
+
+void ParamWidget::updateObstacle() {
+    if (stalkedObject == nullptr)
+        return;
+
+    Obstacle *obstacle = dynamic_cast<Obstacle *>(stalkedObject);
+
+    if (keepUpdating && obstacle) {
+        size->setText(QString::number(obstacle->rect().width()));
+        angle->setText(QString::number(static_cast<int>(obstacle->rotation()) % 360));
+    }
+}
+
+void ParamWidget::updateRobot() {
+    if (stalkedObject == nullptr)
+        return;
+
+    Robot *robot = dynamic_cast<Robot *>(stalkedObject);
+
+    if (keepUpdating && robot) {
+        speed->setText(QString::number(robot->getMoveSpeed()));
+        radius->setText(QString::number(robot->getRadius()));
+        angle->setText(QString::number(static_cast<int>(robot->getAngle()) % 360));
     }
 }
 
@@ -115,88 +186,39 @@ void ParamWidget::hide() {
     angle->hide();
     labelSize->hide();
     size->hide();
-    labelOAngle->hide();
-    oAngle->hide();
-
-    stalkedObject = nullptr;
 }
 
 void ParamWidget::setDetectionDistance() {
-    if (stalkedObject == nullptr)
-        return;
-
-    AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        robot->setCollisionLookAhead(detectionDistance->text().toDouble());
-    }
+    if (stalkedObject)
+        dynamic_cast<AutoRobot *>(stalkedObject)->setCollisionLookAhead(detectionDistance->text().toDouble());
 }
 
 void ParamWidget::setAngleToRotate() {
-    if (stalkedObject == nullptr)
-        return;
-
-    AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        robot->setRotationSpeed(angleToRotate->text().toDouble());
-    }
+    if (stalkedObject)
+        dynamic_cast<AutoRobot *>(stalkedObject)->setRotationSpeed(angleToRotate->text().toDouble());
 }
 
 void ParamWidget::setDirection() {
-    if (stalkedObject == nullptr)
-        return;
-
-    AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        robot->setRotationDirection(static_cast<Robot::RotationDirection>(direction->text().toInt()));
-    }
+    if (stalkedObject)
+        dynamic_cast<AutoRobot *>(stalkedObject)->setRotationDirection(static_cast<Robot::RotationDirection>(direction->text().toInt()));
 }
 
 void ParamWidget::setSpeed() {
-    if (stalkedObject == nullptr)
-        return;
-
-    AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        robot->setMoveSpeed(speed->text().toDouble());
-    }
+    if (stalkedObject)
+        dynamic_cast<Robot *>(stalkedObject)->setMoveSpeed(speed->text().toDouble());
 }
 
 void ParamWidget::setRadius() {
-    if (stalkedObject == nullptr)
-        return;
-
-    AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        robot->setRadius(radius->text().toDouble());
-    }
+    if (stalkedObject)
+        dynamic_cast<Robot *>(stalkedObject)->setRect(0, 0, radius->text().toDouble(), radius->text().toDouble());
 }
 
 void ParamWidget::setAngle() {
-    if (stalkedObject == nullptr)
-        return;
-
-    AutoRobot *robot = dynamic_cast<AutoRobot *>(stalkedObject);
-    if (robot) {
-        robot->setRotation(angle->text().toDouble());
-    }
+    if (stalkedObject)
+        dynamic_cast<Robot *>(stalkedObject)->setRotation(angle->text().toDouble());
 }
 
 void ParamWidget::setSize() {
-    if (stalkedObject == nullptr)
-        return;
-
-    Obstacle *obstacle = dynamic_cast<Obstacle *>(stalkedObject);
-    if (obstacle) {
-        obstacle->setRect(0, 0, size->text().toDouble(), size->text().toDouble());
-    }
-}
-
-void ParamWidget::setOAngle() {
-    if (stalkedObject == nullptr)
-        return;
-
-    Obstacle *obstacle = dynamic_cast<Obstacle *>(stalkedObject);
-    if (obstacle) {
-        obstacle->setRotation(oAngle->text().toDouble());
-    }
+    if (stalkedObject)
+        dynamic_cast<Obstacle *>(stalkedObject)->setRect(0, 0, size->text().toDouble(), size->text().toDouble());
 }

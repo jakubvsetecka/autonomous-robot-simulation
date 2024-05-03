@@ -7,6 +7,7 @@
 #include "gameobject.hpp"
 #include "obstacle.hpp"
 #include "parameditline.hpp"
+#include "robot.hpp"
 #include <QLabel>
 #include <QObject>
 #include <QVBoxLayout>
@@ -20,7 +21,8 @@ class ParamWidget : public QWidget {
 
     void stalk(AutoRobot *robot);
     void stalk(Obstacle *obstacle);
-    void hide();
+    void stalk(Robot *robot);
+    void stopStalking();
 
   private:
     QVBoxLayout *layout;
@@ -39,16 +41,16 @@ class ParamWidget : public QWidget {
     ParamEditLine *radius;
     QLabel *labelAngle;
     ParamEditLine *angle;
-
     QLabel *labelSize;
     ParamEditLine *size;
-    QLabel *labelOAngle;
-    ParamEditLine *oAngle;
 
     void setUpEditLine(ParamEditLine *lineEdit, QLabel *label);
+    void show(Robot *robot);
+    void show(AutoRobot *robot);
+    void show(Obstacle *obstacle);
+    void hide();
 
   private slots:
-    void show();
     void setDetectionDistance();
     void setAngleToRotate();
     void setDirection();
@@ -56,10 +58,13 @@ class ParamWidget : public QWidget {
     void setRadius();
     void setAngle();
     void setSize();
-    void setOAngle();
 
     void focusIn() { keepUpdating = false; }
     void focusOut() { keepUpdating = true; }
+
+    void updateAutoRobot();
+    void updateObstacle();
+    void updateRobot();
 };
 
 #endif // PARAMWIDGET_HPP
