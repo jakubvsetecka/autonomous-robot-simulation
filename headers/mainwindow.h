@@ -49,8 +49,13 @@ class MainWindow : public QMainWindow {
     void setupAnimation();
 
   private:
+    /** @brief The UI object.*/
     Ui::MainWindow *ui;
+
+    /** @brief The simulation engine.*/
     SimulationEngine *simulationEngine;
+
+    /** @brief The list widget.*/
     QListWidget *listWidget;
 
     void initScene();

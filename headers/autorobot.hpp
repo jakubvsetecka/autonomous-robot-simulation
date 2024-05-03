@@ -45,10 +45,26 @@ class AutoRobot : public Robot {
     /* Override the boundingRect method to adjust the bounding rectangle */
     QRectF boundingRect() const override;
 
+    /**
+     * @brief Check if the robot will collide with any object in the scene
+     * @param directionVector The direction vector of the robot
+     * @param magnitude The magnitude of the direction vector
+     * @param allowAnticollision Whether to allow anticollision
+     * @return bool Whether the robot will collide with any object in the scene
+     */
     bool willCollide(QPointF directionVector, qreal magnitude, bool allowAnticollision) override;
 
+    /**
+     * @brief Perform a rotation step
+     * @param direction The direction of the rotation
+     * @return void
+     */
     void doRotationStep(RotationDirection direction);
 
+    /**
+     * @brief Perform a movement step
+     * @return bool Whether the movement step was successful
+     */
     bool move() override;
 
     /**
@@ -111,7 +127,6 @@ class AutoRobot : public Robot {
     static AutoRobot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
   protected:
-
     /** @brief The look ahead distance for collision detection */
     qreal collisionLookAhead = 0;
 

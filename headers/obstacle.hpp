@@ -27,12 +27,14 @@ class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
     /**
      * @brief Default constructor.
      * @param parent The parent QGraphicsItem.
+     * @return void
      */
     Obstacle(QGraphicsItem *parent = nullptr);
 
     /**
      * @brief Copy constructor.
      * @param Obstacle The Obstacle object to copy.
+     * @return void
      */
     Obstacle(const Obstacle &)
         : QGraphicsRectItem() {}
@@ -46,11 +48,27 @@ class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
      * @brief Set the position of the obstacle.
      * @param x The x-coordinate of the position.
      * @param y The y-coordinate of the position.
+     * @return void
      */
     void setPos(qreal x, qreal y) override;
 
+    /**
+     * @brief Set the rotation of the obstacle.
+     * @param angle The angle of the rotation.
+     * @return void
+     */
     void setRotation(qreal angle) override;
+
+    /**
+     * @brief Get the rotation of the obstacle.
+     * @return The rotation of the obstacle as a qreal.
+     */
     qreal rotation() override { return QGraphicsRectItem::rotation(); }
+
+    /**
+     * @brief Get the center of the obstacle.
+     * @return The center of the obstacle as a QPointF.
+     */
     QPointF getCenter() override { return boundingRect().center(); }
 
     /**
@@ -81,6 +99,10 @@ class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
     static Obstacle *fromJSON(const QJsonObject &json);
 
   signals:
+    /**
+     * @brief Signal emitted when the parameters of the obstacle are updated.
+     * @return void
+     */
     void paramsUpdated();
 };
 

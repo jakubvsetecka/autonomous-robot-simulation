@@ -132,29 +132,80 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
      */
     virtual bool move();
 
+    /**
+     * @brief Get the type of the robot.
+     * @return int
+     */
     int type() const override { return Type; }
 
+    /**
+     * @brief Get the position of the robot.
+     * @return QPointF
+     */
     QPointF getPos() override;
+
+    /**
+     * @brief Convert the robot to a JSON object.
+     * @return QJsonObject
+     */
     virtual QJsonObject toJSON() override;
+
+    /**
+     * @brief Create a Robot object from a JSON object.
+     * @param object The JSON object.
+     * @param timeConstant The time constant of the simulation.
+     * @return Robot*
+     */
     static Robot *fromJSON(const QJsonObject &object, qreal *timeConstant);
 
+    /**
+     * @brief Toggle the active state of the robot.
+     * @details If the robot is active, it will be drawn with a light gray fill. If it is inactive, it will be drawn with a transparent fill.
+     * @return void
+     */
     inline void toggleActive() {
         active = !active;
         active ? setBrush(QBrush(Qt::lightGray)) : setBrush(QBrush(Qt::transparent));
     }
 
+    /**
+     * @brief Check if the robot is active.
+     * @return bool
+     */
     inline bool isActive() { return active; }
 
+    /**
+     * @brief Get the angle of the robot.
+     * @return qreal
+     */
     qreal getAngle() { return rotation(); }
 
+    /**
+     * @brief Set the angle of the robot.
+     * @param angle The angle to set.
+     * @return void
+     */
     void setRadius(qreal radius);
 
+    /**
+     * @brief Get the center of the robot.
+     * @return QPointF
+     */
     QPointF getCenter() override { return boundingRect().center(); }
 
+    /**
+     * @brief Get the time constant of the simulation.
+     * @return qreal
+     */
     qreal rotation() override {
         return QGraphicsEllipseItem::rotation();
     }
 
+    /**
+     * @brief Set the rotation of the robot.
+     * @param angle The angle to set.
+     * @return void
+     */
     void setRotation(qreal angle) override {
         QGraphicsEllipseItem::setRotation(angle);
     }
@@ -170,15 +221,26 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
 
     /** @brief Flag to indicate if the robot is moving */
     bool isMoving = false;
+
     /** @brief Flag to indicate the direction of rotation */
     RotationDirection isRotating = RotationDirection::None;
 
+    /** @brief The time constant of the simulation */
     qreal *timeConstant = nullptr;
 
+    /** @brief The radius of the robot */
     void keyReleaseEvent(QKeyEvent *event);
+
+    /**
+     * @brief Overridden keyPressEvent method.
+     * @details This method is called when a key is pressed while the robot is focused.
+     * @param event The key event.
+     * @return void
+     */
     void keyPressEvent(QKeyEvent *event);
 
   private:
+    /** @brief Flag to indicate if the robot is active */
     bool active = false;
 };
 

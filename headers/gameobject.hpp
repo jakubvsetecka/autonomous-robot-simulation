@@ -52,8 +52,23 @@ class GameObject {
      */
     virtual QJsonObject toJSON() = 0;
 
+    /**
+     * @brief Set the rotation of the game object.
+     * @param angle
+     * @return void
+     */
     virtual void setRotation(qreal angle) = 0;
+
+    /**
+     * @brief Get the rotation of the game object.
+     * @return qreal
+     */
     virtual qreal rotation() = 0;
+
+    /**
+     * @brief Get the center of the game object.
+     * @return QPointF
+     */
     virtual QPointF getCenter() = 0;
 };
 
