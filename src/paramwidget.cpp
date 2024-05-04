@@ -114,7 +114,6 @@ void ParamWidget::stopStalking() {
 }
 
 void ParamWidget::disconnectStalkedObject() {
-    qDebug() << "Disconnecting from the stalked object";
     if (stalkedObject != nullptr) {
         if (dynamic_cast<AutoRobot *>(stalkedObject))
             disconnect(dynamic_cast<AutoRobot *>(stalkedObject), &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
@@ -123,7 +122,6 @@ void ParamWidget::disconnectStalkedObject() {
         else if (dynamic_cast<Robot *>(stalkedObject))
             disconnect(dynamic_cast<Robot *>(stalkedObject), &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
     }
-    qDebug() << "Disconnected";
 }
 
 void ParamWidget::show(Robot *robot) {

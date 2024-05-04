@@ -97,6 +97,10 @@ class OverlayWidget : public QWidget {
      * @return void
      */
     void paintEvent(QPaintEvent *event) override;
+
+    QPoint convertToRotatedSystem(QPoint point, qreal angle);
+
+    QPoint convertFromRotatedSystem(QPoint point, qreal angle);
 };
 
 #endif // OVERLAYWIDGET_HPP

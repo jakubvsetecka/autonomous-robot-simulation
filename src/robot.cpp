@@ -22,7 +22,6 @@ Robot::Robot(QGraphicsItem *parent, qreal *timeConstant)
 }
 
 Robot::~Robot() {
-    qDebug() << "Robot destroyed";
     emit robotSepuku();
 }
 

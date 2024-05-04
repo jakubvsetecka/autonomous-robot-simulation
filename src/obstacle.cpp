@@ -17,7 +17,6 @@ Obstacle::Obstacle(QGraphicsItem *parent)
 }
 
 Obstacle::~Obstacle() {
-    qDebug() << "Obstacle destroyed";
     emit obstacleSepuku();
 }
 

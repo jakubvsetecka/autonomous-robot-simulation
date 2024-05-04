@@ -25,8 +25,15 @@ void OverlayWidget::anchor() {
             QPoint localPos = graphView->mapFromParent(lastMousePos);
             QPointF scenePos = graphView->mapToScene(localPos);
 
-            if (simEng->isInsideScene(scenePos - offset)) {
-                object->setPos(scenePos - offset);
+            qreal angle = activeObject->rotation();
+
+            QPointF center = activeObject->getCenter();
+            offset = QPoint(center.x() - offset.x(), center.y() - offset.y());
+            offset = convertFromRotatedSystem(offset, angle);
+            QPoint dest = scenePos.toPoint() - center.toPoint() + offset;
+
+            if (simEng->isInsideScene(scenePos)) {
+                object->setPos(dest);
                 simEng->addItem(object);
                 object->setFocus();
             } else {
@@ -64,22 +71,43 @@ void OverlayWidget::navigateTheSea(QMouseEvent *event) {
     }
 }
 
+QPoint OverlayWidget::convertToRotatedSystem(QPoint point, qreal angle) {
+    qreal x = point.x();
+    qreal y = point.y();
+    qreal angleRad = qDegreesToRadians(angle);
+    qreal xNew = x * qCos(angleRad) - y * qSin(angleRad);
+    qreal yNew = x * qSin(angleRad) + y * qCos(angleRad);
+    return QPoint(xNew, yNew);
+}
+
+QPoint OverlayWidget::convertFromRotatedSystem(QPoint point, qreal angle) {
+    qreal x = point.x();
+    qreal y = point.y();
+    qreal angleRad = qDegreesToRadians(angle);
+    qreal xNew = x * qCos(angleRad) - y * qSin(angleRad);
+    qreal yNew = x * qSin(angleRad) + y * qCos(angleRad);
+    return QPoint(xNew, yNew);
+}
+
 void OverlayWidget::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
-    QPainter painter(this);
-    QPoint localPos = graphView->mapFromParent(lastMousePos);
-    QPointF scenePos = graphView->mapToScene(localPos);
 
     if (activeObject) {
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
         painter.save();
-        // qDebug() << "Last mouse pos: " << lastMousePos;
-        // qDebug() << "Offset: " << offset;
-        painter.translate(lastMousePos - offset);
-        // qDebug() << "Active object: " << activeObject->getCenter();
-        painter.translate(activeObject->getCenter()); // Move origin to object center
-        painter.rotate(activeObject->rotation());     // Rotate around object center
-        painter.translate(-activeObject->getCenter());
+
+        qreal angle = activeObject->rotation();
+        QPointF center = activeObject->getCenter(); // Fix: Change QPoint to QPointF
+
+        // Translate and rotate the painter to position the object correctly
+        painter.translate(lastMousePos - convertToRotatedSystem(center.toPoint(), angle));
+        painter.rotate(angle);
+
+        painter.translate(center - offset);
+
         activeObject->paint(&painter, &option, this);
+
         update(); // Trigger repaint
         painter.restore();
     }
