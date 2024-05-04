@@ -104,6 +104,12 @@ class Obstacle : public QObject, public QGraphicsRectItem, public GameObject {
      * @return void
      */
     void paramsUpdated();
+
+    /**
+     * @brief Signal emitted when the obstacle is removed.
+     * @return void
+     */
+    void obstacleSepuku();
 };
 
 #endif // OBSTACLE_HPP

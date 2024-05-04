@@ -91,6 +91,7 @@ void ParamWidget::stalk(Obstacle *obstacle) {
         disconnectStalkedObject();
     stalkedObject = obstacle;
     connect(obstacle, &Obstacle::paramsUpdated, this, &ParamWidget::updateObstacle);
+    connect(obstacle, &Obstacle::obstacleSepuku, this, &ParamWidget::hide);
     show(obstacle);
     updateObstacle();
 }
@@ -112,7 +113,7 @@ void ParamWidget::stopStalking() {
 
 void ParamWidget::disconnectStalkedObject() {
     qDebug() << "Disconnecting from the stalked object";
-    if (stalkedObject) {
+    if (stalkedObject != nullptr) {
         if (dynamic_cast<AutoRobot *>(stalkedObject))
             disconnect(dynamic_cast<AutoRobot *>(stalkedObject), &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
         else if (dynamic_cast<Obstacle *>(stalkedObject))
@@ -219,6 +220,8 @@ void ParamWidget::hide() {
     angle->hide();
     labelSize->hide();
     size->hide();
+
+    stalkedObject = nullptr;
 }
 
 void ParamWidget::setDetectionDistance() {

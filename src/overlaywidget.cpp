@@ -29,6 +29,8 @@ void OverlayWidget::anchor() {
                 object->setPos(scenePos - offset);
                 simEng->addItem(object);
                 object->setFocus();
+            } else {
+                delete object;
             }
         }
         activeObject = nullptr;

@@ -16,7 +16,10 @@ Obstacle::Obstacle(QGraphicsItem *parent)
     setBrush(brush);
 }
 
-Obstacle::~Obstacle() {}
+Obstacle::~Obstacle() {
+    qDebug() << "Obstacle destroyed";
+    emit obstacleSepuku();
+}
 
 void Obstacle::setPos(qreal x, qreal y) {
     QGraphicsRectItem::setPos(x, y);
