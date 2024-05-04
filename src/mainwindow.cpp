@@ -203,7 +203,7 @@ void MainWindow::toggleList() {
         listWidget->clear();
         ui->loadButton->setText("Load");
     } else {
-        QDir directory("simulations");
+        QDir directory("examples");
         QStringList files = directory.entryList(QStringList() << "*.json", QDir::Files);
 
         foreach (QString filename, files) {

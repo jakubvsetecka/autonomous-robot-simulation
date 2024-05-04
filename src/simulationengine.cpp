@@ -8,6 +8,8 @@
 
 #include "simulationengine.hpp"
 #include "obstacle.hpp"
+#include <QGraphicsSceneMouseEvent>
+#include <qdir.h>
 
 SimulationEngine::SimulationEngine(QObject *parent, int fps, qreal simulationSpeed)
     : QGraphicsScene(parent) {
@@ -55,9 +57,6 @@ Robot *SimulationEngine::getControlledRobot() {
     return controlledRobot;
 }
 
-#include <QGraphicsSceneMouseEvent>
-#include <qdir.h>
-
 void SimulationEngine::setControlledRobot(Robot *robot) {
     controlledRobot = robot;
 }
@@ -69,7 +68,7 @@ bool SimulationEngine::isInsideScene(const QPointF &point) const {
 
 bool SimulationEngine::saveSimulation(const QString &filename) {
     // Create the "simulations" folder if it doesn't exist
-    QDir simulationsDir("simulations");
+    QDir simulationsDir("examples");
     if (!simulationsDir.exists()) {
         if (!simulationsDir.mkpath(".")) {
             qWarning("Failed to create simulations folder.");
@@ -80,7 +79,7 @@ bool SimulationEngine::saveSimulation(const QString &filename) {
     QString mutableFilename = filename; // Create a mutable copy of the filename
     mutableFilename.replace("/", "\\");
 
-    // Open or create the save file inside the "simulations" folder
+    // Open or create the save file inside the "examples" folder
     QFile saveFile(simulationsDir.filePath(mutableFilename + ".json"));
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
@@ -177,7 +176,7 @@ bool SimulationEngine::loadSimulation(QString filename) {
     clear();
 
     // Open the save file
-    QFile loadFile("simulations/" + filename + ".json");
+    QFile loadFile("examples/" + filename + ".json");
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
         return false;

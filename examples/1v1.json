@@ -1,0 +1,62 @@
+{
+    "fps": 60,
+    "objects": {
+        "obstacles": [
+            {
+                "rotation": 0,
+                "width": 300,
+                "x": -203,
+                "y": 180
+            },
+            {
+                "rotation": 0,
+                "width": 300,
+                "x": 770,
+                "y": 184
+            },
+            {
+                "rotation": 0,
+                "width": 1000,
+                "x": -66,
+                "y": 429
+            },
+            {
+                "rotation": 0,
+                "width": 1000,
+                "x": -36,
+                "y": -783
+            }
+        ],
+        "robots": {
+            "autoRobots": [
+                {
+                    "collisionLookAhead": 10,
+                    "isMoving": true,
+                    "moveSpeed": 1,
+                    "radius": 25,
+                    "rotation": 180,
+                    "rotationDirection": -1,
+                    "rotationSpeed": 180,
+                    "targetAngle": 360,
+                    "x": 672,
+                    "y": 328
+                },
+                {
+                    "collisionLookAhead": 10,
+                    "isMoving": true,
+                    "moveSpeed": 1,
+                    "radius": 25,
+                    "rotation": 0,
+                    "rotationDirection": 1,
+                    "rotationSpeed": 180,
+                    "targetAngle": 0,
+                    "x": 183,
+                    "y": 327
+                }
+            ],
+            "controlledRobots": [
+            ]
+        }
+    },
+    "simulationSpeed": 0
+}

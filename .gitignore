@@ -83,4 +83,4 @@ build/
 .vscode/
 
 # JSON
-*.json
+#*.json

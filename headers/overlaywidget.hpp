@@ -98,8 +98,20 @@ class OverlayWidget : public QWidget {
      */
     void paintEvent(QPaintEvent *event) override;
 
+    /**
+     * @brief Convert the point to the rotated system.
+     * @param point The point in the scene.
+     * @param angle The angle of the rotation.
+     * @return QPoint The point in the rotated system.
+     */
     QPoint convertToRotatedSystem(QPoint point, qreal angle);
 
+    /**
+     * @brief Convert the point from the rotated system.
+     * @param point The point in the rotated system.
+     * @param angle The angle of the rotation.
+     * @return QPoint The point in the rotated system.
+     */
     QPoint convertFromRotatedSystem(QPoint point, qreal angle);
 };
 
