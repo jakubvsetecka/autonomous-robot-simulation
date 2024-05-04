@@ -45,7 +45,7 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
      * @param timeConstant The time constant of the simulation.
      * @return void
      * @details The time constant is used to calculate the speed of the robot.
-    */
+     */
     Robot(QGraphicsItem *parent = nullptr, qreal *timeConstant = nullptr);
 
     ~Robot();
@@ -224,7 +224,7 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
     /**
      * @brief Signal emitted when the parameters of the robot are updated.
      * @return void
-    */
+     */
     void paramsUpdated();
 
     /**

@@ -124,5 +124,7 @@ AutoRobot *AutoRobot::fromJSON(const QJsonObject &object, qreal *timeConstant) {
     result->timeConstant = timeConstant;
     result->setPos(pos); // Must be set using setPos() to use the center of the robot as the position
 
+    result->setTransformOriginPoint(result->getRadius(), result->getRadius());
+
     return result;
 }

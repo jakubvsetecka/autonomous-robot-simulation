@@ -10,24 +10,24 @@
                     "isMoving": true,
                     "moveSpeed": 1,
                     "radius": 100,
-                    "rotation": 270,
+                    "rotation": 180,
                     "rotationDirection": 1,
                     "rotationSpeed": 1,
-                    "targetAngle": 2287,
-                    "x": 340,
-                    "y": 164
+                    "targetAngle": 2228,
+                    "x": 211,
+                    "y": 286
                 },
                 {
                     "collisionLookAhead": 10,
                     "isMoving": true,
                     "moveSpeed": 1,
                     "radius": 100,
-                    "rotation": 180,
+                    "rotation": 2249.5600000000136,
                     "rotationDirection": 1,
                     "rotationSpeed": 1,
-                    "targetAngle": 2228,
-                    "x": 223,
-                    "y": 288
+                    "targetAngle": 2250,
+                    "x": 357,
+                    "y": 389
                 },
                 {
                     "collisionLookAhead": 10,
@@ -46,12 +46,12 @@
                     "isMoving": true,
                     "moveSpeed": 1,
                     "radius": 100,
-                    "rotation": 2249.5600000000136,
+                    "rotation": 270,
                     "rotationDirection": 1,
                     "rotationSpeed": 1,
-                    "targetAngle": 2250,
-                    "x": 357,
-                    "y": 389
+                    "targetAngle": 2287,
+                    "x": 340,
+                    "y": 164
                 }
             ],
             "controlledRobots": [
@@ -61,206 +61,8 @@
                     "radius": 12.5,
                     "rotation": 0,
                     "rotationSpeed": 1,
-                    "x": 399.5,
-                    "y": 652.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 421.5,
-                    "y": 657.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 443.5,
-                    "y": 650.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 461.5,
-                    "y": 645.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 474.5,
-                    "y": 627.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 454.5,
-                    "y": 615.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 433.5,
-                    "y": 613.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 413.5,
-                    "y": 621.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 397.5,
-                    "y": 637.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 359.5,
-                    "y": 614.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 337.5,
-                    "y": 618.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 319.5,
-                    "y": 610.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 302.5,
-                    "y": 592.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 320.5,
-                    "y": 581.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 342.5,
-                    "y": 582.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 358.5,
-                    "y": 590.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 379.5,
-                    "y": 681.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 381.5,
-                    "y": 665.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 376.5,
-                    "y": 638.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 379.5,
-                    "y": 617.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 382.5,
-                    "y": 597.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 380.5,
-                    "y": 577.5
-                },
-                {
-                    "isMoving": false,
-                    "moveSpeed": 1,
-                    "radius": 12.5,
-                    "rotation": 0,
-                    "rotationSpeed": 1,
-                    "x": 376.5,
-                    "y": 556.5
+                    "x": 375.5,
+                    "y": 512.5
                 },
                 {
                     "isMoving": false,
@@ -277,8 +79,206 @@
                     "radius": 12.5,
                     "rotation": 0,
                     "rotationSpeed": 1,
-                    "x": 375.5,
-                    "y": 512.5
+                    "x": 376.5,
+                    "y": 556.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 380.5,
+                    "y": 577.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 382.5,
+                    "y": 597.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 379.5,
+                    "y": 617.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 376.5,
+                    "y": 638.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 381.5,
+                    "y": 665.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 379.5,
+                    "y": 681.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 358.5,
+                    "y": 590.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 342.5,
+                    "y": 582.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 320.5,
+                    "y": 581.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 302.5,
+                    "y": 592.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 319.5,
+                    "y": 610.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 337.5,
+                    "y": 618.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 359.5,
+                    "y": 614.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 397.5,
+                    "y": 637.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 413.5,
+                    "y": 621.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 433.5,
+                    "y": 613.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 454.5,
+                    "y": 615.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 474.5,
+                    "y": 627.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 461.5,
+                    "y": 645.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 443.5,
+                    "y": 650.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 421.5,
+                    "y": 657.5
+                },
+                {
+                    "isMoving": false,
+                    "moveSpeed": 1,
+                    "radius": 12.5,
+                    "rotation": 0,
+                    "rotationSpeed": 1,
+                    "x": 399.5,
+                    "y": 652.5
                 }
             ]
         }
