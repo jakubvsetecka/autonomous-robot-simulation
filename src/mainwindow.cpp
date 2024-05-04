@@ -117,6 +117,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
             simulationEngine->setControlledRobot(nullptr);
         } else {
             simulationEngine->setControlledRobot(robot);
+            connect(robot, &Robot::destroyed, this, [this]() { simulationEngine->setControlledRobot(nullptr); });
         }
         robot->toggleActive();
     }

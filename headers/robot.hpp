@@ -39,7 +39,16 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
 
     enum { Type = QGraphicsItem::UserType + 1 };
 
+    /**
+     * @brief Default constructor.
+     * @param parent The parent QGraphicsItem.
+     * @param timeConstant The time constant of the simulation.
+     * @return void
+     * @details The time constant is used to calculate the speed of the robot.
+    */
     Robot(QGraphicsItem *parent = nullptr, qreal *timeConstant = nullptr);
+
+    ~Robot();
 
     /** Override the paint method to draw a line showing the direction of the robot */
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -211,7 +220,18 @@ class Robot : public QObject, public QGraphicsEllipseItem, public GameObject {
     }
 
   signals:
+
+    /**
+     * @brief Signal emitted when the parameters of the robot are updated.
+     * @return void
+    */
     void paramsUpdated();
+
+    /**
+     * @brief Signal emitted when the robot is removed.
+     * @return void
+     */
+    void robotSepuku();
 
   protected:
     /** @brief The speed of the robot */

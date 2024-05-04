@@ -81,6 +81,7 @@ void ParamWidget::stalk(AutoRobot *robot) {
         disconnectStalkedObject();
     stalkedObject = robot;
     connect(robot, &AutoRobot::paramsUpdated, this, &ParamWidget::updateAutoRobot);
+    connect(robot, &Robot::robotSepuku, this, &ParamWidget::hide);
     show(robot);
     updateAutoRobot();
 }
@@ -102,6 +103,7 @@ void ParamWidget::stalk(Robot *robot) {
         disconnectStalkedObject();
     stalkedObject = robot;
     connect(robot, &Robot::paramsUpdated, this, &ParamWidget::updateRobot);
+    connect(robot, &Robot::robotSepuku, this, &ParamWidget::hide);
     show(robot);
     updateRobot();
 }

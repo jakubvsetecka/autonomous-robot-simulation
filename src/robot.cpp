@@ -21,6 +21,11 @@ Robot::Robot(QGraphicsItem *parent, qreal *timeConstant)
     setTransformOriginPoint(getRadius(), getRadius());
 }
 
+Robot::~Robot() {
+    qDebug() << "Robot destroyed";
+    emit robotSepuku();
+}
+
 void Robot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     // Call the base class paint to draw the ellipse
     QGraphicsEllipseItem::paint(painter, option, widget);

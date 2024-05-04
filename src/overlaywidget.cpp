@@ -72,10 +72,10 @@ void OverlayWidget::paintEvent(QPaintEvent *event) {
 
     if (activeObject) {
         painter.save();
-        qDebug() << "Last mouse pos: " << lastMousePos;
-        qDebug() << "Offset: " << offset;
+        // qDebug() << "Last mouse pos: " << lastMousePos;
+        // qDebug() << "Offset: " << offset;
         painter.translate(lastMousePos - offset);
-        qDebug() << "Active object: " << activeObject->getCenter();
+        // qDebug() << "Active object: " << activeObject->getCenter();
         painter.translate(activeObject->getCenter()); // Move origin to object center
         painter.rotate(activeObject->rotation());     // Rotate around object center
         painter.translate(-activeObject->getCenter());
