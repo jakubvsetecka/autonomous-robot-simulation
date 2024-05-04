@@ -180,7 +180,7 @@ class ParamWidget : public QWidget {
     /**
      * @brief Signal to update the parameters of the game object.
      * @return void
-    */
+     */
     inline void focusIn() { keepUpdating = false; }
 
     /**
@@ -192,19 +192,19 @@ class ParamWidget : public QWidget {
     /**
      * @brief Update the parameters of the game object.
      * @return void
-    */
+     */
     void updateAutoRobot();
 
     /**
      * @brief Update the parameters of the game object.
      * @return void
-    */
+     */
     void updateObstacle();
 
     /**
      * @brief Update the parameters of the game object.
      * @return void
-    */
+     */
     void updateRobot();
 };
 

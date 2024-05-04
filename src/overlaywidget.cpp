@@ -29,11 +29,10 @@ void OverlayWidget::anchor() {
                 object->setPos(scenePos - offset);
                 simEng->addItem(object);
                 object->setFocus();
-            } else {
-                delete object;
             }
         }
         activeObject = nullptr;
+        offset = QPoint(0, 0);
     }
 }
 
@@ -71,7 +70,10 @@ void OverlayWidget::paintEvent(QPaintEvent *event) {
 
     if (activeObject) {
         painter.save();
+        qDebug() << "Last mouse pos: " << lastMousePos;
+        qDebug() << "Offset: " << offset;
         painter.translate(lastMousePos - offset);
+        qDebug() << "Active object: " << activeObject->getCenter();
         painter.translate(activeObject->getCenter()); // Move origin to object center
         painter.rotate(activeObject->rotation());     // Rotate around object center
         painter.translate(-activeObject->getCenter());
