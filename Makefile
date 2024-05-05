@@ -58,5 +58,8 @@ clean-doc:
 	@rm -rf ./doc/latex
 	@rm -rf ./doc/documentation.pdf
 
+zip:
+	@zip -r icp-projekt.zip 
+
 # Phony targets to handle commands as prerequisites
 .PHONY: configure build run clean
