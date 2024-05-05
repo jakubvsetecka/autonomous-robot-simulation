@@ -1,0 +1,58 @@
+@startuml class-diagram
+
+' Define classes
+class Robot {
+    +void setPos(qreal, qreal)
+    +QPointF getPos()
+    +bool move()
+}
+
+class AutoRobot {
+    +QRectF boundingRect()
+    +bool willCollide(QPointF, qreal, bool)
+    +void doRotationStep(RotationDirection)
+    +bool move()
+    +void setCollisionLookAhead(qreal)
+    +qreal getCollisionLookAhead()
+    +void setRotationDirection(RotationDirection)
+    +RotationDirection getRotationDirection()
+    +void setTargetAngle(qreal)
+    +qreal getTargetAngle()
+}
+
+class GameObject <<abstract>> {
+    +virtual void setPos(qreal, qreal)
+    +virtual QPointF getPos()
+}
+
+class Obstacle {
+    +void setPos(qreal, qreal)
+    +QPointF getPos()
+}
+
+class OverlayWidget {
+}
+
+class ParamWidget {
+    +void stalk(GameObject*)
+    +void stopStalking()
+    +void updateAutoRobot()
+    +void updateObstacle()
+    +void updateRobot()
+}
+
+class SimulationEngine {
+    +bool saveSimulation(QString)
+    +bool loadSimulation(QString)
+    +void clearScene()
+}
+
+' Define relationships
+AutoRobot --|> Robot
+Obstacle --|> GameObject
+Robot --|> GameObject
+OverlayWidget *-- SimulationEngine
+OverlayWidget o-- GameObject
+ParamWidget o-- GameObject
+
+@enduml

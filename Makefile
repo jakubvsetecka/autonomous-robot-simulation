@@ -44,14 +44,19 @@ run: build
 clean:
 	@rm -rf $(BUILD_DIR)
 
-generate-docs: clean-docs
+doxygen: clean-doc
 	@doxygen Doxyfile
-	@cd ./docs/latex && make
-	# @pdflatex -output-directory=./docs ./docs/latex/refman.tex
-	@mv ./docs/latex/refman.pdf ./docs/documentation.pdf
+	@cd ./doc/latex && make
+	# @pdflatex -output-directory=./doc ./doc/latex/refman.tex
+	@mv ./doc/latex/refman.pdf ./doc/documentation.pdf
 
-clean-docs:
-	@rm -rf ./docs/*
+puml:
+	@plantuml -tsvg ./doc/diagrams/*.puml
+	@pandoc ./doc/draft.md -o draft.pdf
+
+clean-doc:
+	@rm -rf ./doc/latex
+	@rm -rf ./doc/documentation.pdf
 
 # Phony targets to handle commands as prerequisites
 .PHONY: configure build run clean

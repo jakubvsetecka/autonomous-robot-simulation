@@ -85,6 +85,8 @@ build/
 # JSON
 #*.json
 
-# Docs
-docs/*
-!docs/documentation.pdf
+# Doc
+doc/*
+!doc/documentation.pdf
+!doc/diagrams
+!doc/draft.md

@@ -1,0 +1,71 @@
+@startuml seq-diagram
+
+actor User
+participant "ui: Ui_MainWindow" as UI
+participant "MainWindow" as Main
+participant "SimulationEngine" as SimEng
+participant "OverlayWidget" as Overlay
+participant "QTimer" as Timer
+participant "QGraphicsView" as GraphicsView
+participant "Robot" as Robot
+participant "QMouseEvent" as MouseEvent
+participant "QListWidget" as ListWidget
+
+User -> Main : start()
+activate Main
+
+Main -> UI : setupUi(this)
+Main -> Main : setFocusPolicy(Qt::StrongFocus)
+Main -> Main : setFocus()
+
+Main -> SimEng : new SimulationEngine(this, FPS, SIMULATION_SPEED)
+Main -> GraphicsView : setScene(SimEng)
+Main -> GraphicsView : setTransformationAnchor(QGraphicsView::NoAnchor)
+Main -> GraphicsView : setAlignment(Qt::AlignLeft | Qt::AlignTop)
+Main -> SimEng : setSceneRect(0, 0, width, height)
+
+Main -> Overlay : new OverlayWidget(this, SimEng, GraphicsView)
+Main -> Overlay : setGeometry(rect())
+
+Main -> Timer : new QTimer(this)
+Main -> Timer : start(SimEng->getFrameTime())
+
+Main -> Main : connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveSimulation)
+Main -> Main : connect(Timer, &QTimer::timeout, this, &MainWindow::updateAnimation)
+
+deactivate Main
+
+... (Normal Operation) ...
+
+User -> Main : mousePressEvent(MouseEvent)
+activate Main
+Main -> GraphicsView : mapFromParent(MouseEvent->pos())
+Main -> GraphicsView : mapToScene(localPos)
+Main -> GraphicsView : itemAt(scenePos.toPoint())
+Main -> SimEng : getControlledRobot()
+Main -> Robot : toggleActive()
+Main -> SimEng : setControlledRobot(null)
+Main -> Robot : toggleActive()
+Main -> Overlay : trySetSail(MouseEvent)
+deactivate Main
+
+... (Timer Update) ...
+
+Timer -> Main : updateAnimation()
+activate Main
+Main -> SimEng : items()
+loop for each Robot in Scene
+    Main -> Robot : move()
+end
+deactivate Main
+
+... (Save Simulation) ...
+
+User -> Main : saveSimulation()
+activate Main
+Main -> SimEng : setSimulationSpeed(0.0)
+Main -> SimEng : saveSimulation("simulation")
+Main -> SimEng : setSimulationSpeed(previousSpeed)
+deactivate Main
+
+@enduml
