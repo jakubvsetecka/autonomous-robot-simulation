@@ -1,71 +1,91 @@
 # Doxyfile 1.9.8
-# Minimum required settings to generate PDF with class diagrams and logo
+# Comprehensive settings for generating PDF with class diagrams, including all classes, attributes, and methods
 
 # Project related configurations
-PROJECT_NAME = "ICP Project 2023/2024"
-PROJECT_NUMBER = "1.0"
-PROJECT_BRIEF = "This project is a simulation and visualization of a autonomous and controlled robot in a discrete linear environment with obstacles and collision detection. The autonomous robots are controlled by a simple algorithm that enables them to navigate through the environment and avoid obstacles and other robots. The project is implemented in C++ and uses the Qt framework for visualization and controls of the controllable robots as well as controls of the environment. The state of the environment can be saved and loaded from a file."
-PROJECT_LOGO = "fit_logo.png"
-OUTPUT_DIRECTORY = "./docs"
-CREATE_SUBDIRS = NO
+PROJECT_NAME        = "ICP Project 2023/2024"
+PROJECT_NUMBER      = "1.0"
+PROJECT_BRIEF       = "This project is a simulation and visualization of an autonomous and controlled robot in a discrete linear environment with obstacles and collision detection."
+PROJECT_LOGO        = "fit_logo.png"
+OUTPUT_DIRECTORY    = "./docs"
+CREATE_SUBDIRS      = NO
 
 # Paths and environment
-DOT_PATH = ""    # Ensure Graphviz 'dot' is in system PATH if left empty
-INPUT = "./src"  # Adjust to point to your source files
-IMAGE_PATH = "." # Where the logo and other images can be found
-RECURSIVE = YES  # Whether or not subdirectories should be searched
+INPUT               = "./headers"
+IMAGE_PATH          = "."
+RECURSIVE           = YES
+EXCLUDE             = 
+
+# Source browsing
+SOURCE_BROWSER      = YES
+INLINE_SOURCES      = YES
+STRIP_CODE_COMMENTS = NO
 
 # Enable PREPROCESSOR
 ENABLE_PREPROCESSING = YES
-MACRO_EXPANSION = NO
-EXPAND_ONLY_PREDEF = NO
-INCLUDE_GRAPH = YES
-INCLUDED_BY_GRAPH = YES
-HAVE_DOT = YES # Enable DOT for diagrams
+MACRO_EXPANSION     = YES
+EXPAND_ONLY_PREDEF  = NO
+EXPAND_AS_DEFINED   = 
+SKIP_FUNCTION_MACROS= YES
 
 # Enable class diagrams with UML look
-CLASS_DIAGRAMS = YES
-UML_LOOK = YES
-CLASS_GRAPH = YES
+CLASS_DIAGRAMS      = YES
+UML_LOOK            = YES
+CLASS_GRAPH         = YES
 COLLABORATION_GRAPH = YES
-UML_LIMIT_NUM_FIELDS = 10 # Adjust as needed
-DOT_IMAGE_FORMAT = png    # Use png for diagrams
-INTERACTIVE_SVG = NO
+UML_LIMIT_NUM_FIELDS= 10
+DOT_IMAGE_FORMAT    = png
+INTERACTIVE_SVG     = NO
 
 # Output formats
-GENERATE_HTML = NO
-GENERATE_LATEX = YES
-GENERATE_RTF = NO
-GENERATE_MAN = NO
-GENERATE_XML = NO
-GENERATE_DOCBOOK = NO
-USE_PDFLATEX = YES
-PDF_HYPERLINKS = YES
-USE_MATHJAX = NO       # Disable MathJax if not needed
-GENERATE_TREEVIEW = NO # Disable HTML treeview
+GENERATE_HTML       = NO
+GENERATE_LATEX      = YES
+GENERATE_RTF        = NO
+GENERATE_MAN        = NO
+GENERATE_XML        = NO
+GENERATE_DOCBOOK    = NO
+USE_PDFLATEX        = YES
+PDF_HYPERLINKS      = YES
+USE_MATHJAX         = NO
+GENERATE_TREEVIEW   = NO
 
 # LaTeX configurations
-LATEX_OUTPUT = "latex"
-LATEX_CMD_NAME = "pdflatex"
-LATEX_BATCHMODE = YES
+LATEX_OUTPUT        = "latex"
+LATEX_CMD_NAME      = "pdflatex"
+LATEX_BATCHMODE     = YES
 LATEX_EXTRA_STYLESHEET = ""
-MAKEINDEX_CMD_NAME = "makeindex"
+MAKEINDEX_CMD_NAME  = "makeindex"
 
-# Configure dot
-CLASS_GRAPH = YES
-COLLABORATION_GRAPH = YES
-GRAPHICAL_HIERARCHY = YES
+# Configure DOT
+HAVE_DOT            = YES
+DOT_NUM_THREADS     = 0
+DOT_FONTNAME        = "Helvetica"
+DOT_FONTSIZE        = 10
 DOT_GRAPH_MAX_NODES = 100
 MAX_DOT_GRAPH_DEPTH = 5
 
-# Run configurations
-QUIET = NO
-WARNINGS = YES
-WARN_IF_UNDOCUMENTED = YES
-FULL_PATH_NAMES = NO # Only necessary parts of file paths
+# Detailed settings
+EXTRACT_ALL         = YES
+EXTRACT_PRIVATE     = YES
+EXTRACT_PACKAGE     = YES
+EXTRACT_STATIC      = YES
+EXTRACT_LOCAL_CLASSES= YES
+SHOW_INCLUDE_FILES  = YES
+SHOW_USED_FILES     = YES
+SHOW_FILES          = YES
+SHOW_NAMESPACES     = YES
 
-# This tag specifies whether to generate a PDF directly using pdflatex
-GENERATE_PDF = YES # Custom tag, make sure it aligns with your setup
+# Diagrams
+CLASS_DIAGRAMS      = YES
+HIDE_UNDOC_RELATIONS= NO
+HAVE_DOT            = YES
+CLASS_GRAPH         = YES
+COLLABORATION_GRAPH = YES
+GRAPHICAL_HIERARCHY = YES
+UML_LOOK            = YES
 
-# Run Doxygen
-# Execute `doxygen` in the terminal within the directory of this Doxyfile
+# Other configurations
+QUIET               = NO
+WARNINGS            = YES
+WARN_IF_UNDOCUMENTED= YES
+WARN_NO_PARAMDOC    = YES
+FULL_PATH_NAMES     = NO
