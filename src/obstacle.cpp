@@ -65,6 +65,7 @@ Obstacle *Obstacle::fromJSON(const QJsonObject &json) {
         result->setRotation(v.toDouble());
 
     result->setPos(pos.x(), pos.y());
+    result->setTransformOriginPoint(result->rect().center());
 
     return result;
 }
