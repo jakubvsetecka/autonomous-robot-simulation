@@ -59,7 +59,8 @@ clean-doc:
 	@rm -rf ./doc/documentation.pdf
 
 zip:
-	@zip -r xhobza03-xvsete00.zip ./src/* ./examples/* ./doc/* ./CMakeLists.txt ./Doxyfile ./Makefile ./README.md ./README.txt ./conceptual_draft.pdf
+	@rm -f xhobza03-xvsete00.zip
+	@zip -r xhobza03-xvsete00.zip ./src/* ./headers/* ./examples/* ./doc/* ./CMakeLists.txt ./Doxyfile ./Makefile ./README.md ./README.txt ./conceptual_draft.pdf -x *.mp4
 
 # Phony targets to handle commands as prerequisites
 .PHONY: configure build run clean

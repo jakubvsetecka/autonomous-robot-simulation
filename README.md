@@ -5,6 +5,8 @@
 
 This project is a simulation and visualisation of an autonomous and controlled robot in a discrete linear environment with obstacles and collision detection. The autonomous robots are controlled by a simple algorithm that enables them to navigate through the environment and avoid obstacles and other robots. The project is implemented in C++ and uses the Qt framework for visualisation and controls of the controllable robots as well as controls of the environment. The state of the environment can be saved and loaded from a file.
 
+> Tato dokumentace obsahuje videa. Kvůli restrikcím na odevzdání projektu je nelze zobrazit v odevzdaném archivu, ovšem jsou přístupné na školním Gitea [zde](https://git.fit.vutbr.cz/xhobza03/icp-projekt).
+
 ## Project Structure
 
 The project is structured as follows:
