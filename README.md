@@ -33,7 +33,7 @@ The project contains a Makefile that can be used to build the project. The Makef
 
 The project can be split into two main parts: the simulation and the visualisation. The simulation part is responsible for the simulation of the environment, the robots, and the collision detection. The visualisation part is responsible for the visualisation of the environment, the robots, and the controls of the robots and the environment.
 
-<video src="/doc/video/stress_testing.mp4" alt="doc/video/stress_testing.mp4"></video>
+<video src="icp-projekt/src/branch/main/doc/video/stress_testing.mp4" alt="doc/video/stress_testing.mp4"></video>
 
 *Caption: Video example showcasing stress-testing our solution with over 900 active objects in the scene.*
 
@@ -81,7 +81,7 @@ The collision detection system runs on the same refresh rate as the movement inc
 
 Another constant was added along the time constant. Simulation speed is a constant that all movement vectors get multiplied with and allows the user to set the „simulation time speed“ independent of the real-world time.
 
-<video src="/doc/video/fps_independency.mp4" alt="doc/video/fps_independency.mp4"></video>
+<video src="icp-projekt/src/branch/main/doc/video/fps_independency.mp4" alt="doc/video/fps_independency.mp4"></video>
 
 *Caption: Showcase of time independecy in the visualization.*
 
@@ -89,7 +89,7 @@ Another constant was added along the time constant. Simulation speed is a consta
 
 When a robot is in a collision currently - so that it‘s current position is colliding, an anticollision system is in place to fix this problem. The robot get‘s moved slightly away from the collision point and will get over time slowly unstuck.
 
-<video src="/doc/video/anticollision.mp4" alt="doc/video/anticollision.mp4"></video>
+<video src="icp-projekt/src/branch/main/doc/video/anticollision.mp4" alt="doc/video/anticollision.mp4"></video>
 
 *Caption: Anticollision in action on two collided robots.*
 
@@ -101,6 +101,6 @@ The simulation is real-time visualized using the Qt framework. We used the Qt cl
 
 To prevent any issues with other Qt versions, we added a flag `MERLIN=1` to all Makefile targets that (when ran on Merlin) will use the Qt version 5.5.1. We regularly checked that our code, that we developed on versions newer than 5.5.1, also work on the legacy version outlined in the assignment details.
 
-<video src="/doc/video/merlin_testing.mp4" alt="doc/video/merlin_testing.mp4"></video>
+<video src="icp-projekt/src/branch/main/doc/video/merlin_testing.mp4" alt="doc/video/merlin_testing.mp4"></video>
 
 *Caption: Testing on Merling with Qt version 5.5.1*
