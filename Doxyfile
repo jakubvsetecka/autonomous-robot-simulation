@@ -12,7 +12,7 @@ PROJECT_NAME        = "ICP Project 2023/2024"
 PROJECT_NUMBER      = "1.0"
 PROJECT_BRIEF       = "Simulation and visualization of autonomous and controlled robots in a discrete environment."
 PROJECT_LOGO        = "fit_logo.png"
-OUTPUT_DIRECTORY    = "./docs"
+OUTPUT_DIRECTORY    = "./doc"
 CREATE_SUBDIRS      = NO
 
 # Paths and environment
