@@ -1,0 +1,155 @@
+# Doxyfile 1.9.8
+# Minimum Doxygen configuration for generating concise PDF documentation
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+DOXYFILE_ENCODING = UTF-8
+PROJECT_NAME = "ICP Project 2023/2024"
+PROJECT_NUMBER = "1.0"
+PROJECT_BRIEF = "This project is a simulation and visualization of a autonomous and controlled robot in a discrete linear environment with obstacles and collision detection. The autonomous robots are controlled by a simple algorithm that enables them to navigate through the environment and avoid obstacles and other robots. The project is implemented in C++ and uses the Qt framework for visualization and controls of the controllable robots as well as controls of the environment. The state of the environment can be saved and loaded from a file."
+OUTPUT_DIRECTORY = ./docs
+CREATE_SUBDIRS = NO
+ALLOW_UNICODE_NAMES = YES
+OUTPUT_LANGUAGE = English
+BRIEF_MEMBER_DESC = YES
+REPEAT_BRIEF = YES
+ABBREVIATE_BRIEF = "The $name class" "The $name widget" "The $name file"
+
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL = YES
+EXTRACT_PRIVATE = YES
+EXTRACT_PRIV_VIRTUAL = YES
+EXTRACT_PACKAGE = YES
+EXTRACT_STATIC = YES
+EXTRACT_LOCAL_CLASSES = YES
+EXTRACT_LOCAL_METHODS = YES
+EXTRACT_ANON_NSPACES = YES
+HIDE_UNDOC_MEMBERS = NO
+HIDE_UNDOC_CLASSES = NO
+HIDE_FRIEND_COMPOUNDS = NO
+HIDE_IN_BODY_DOCS = NO
+INTERNAL_DOCS = YES
+CASE_SENSE_NAMES = NO
+HIDE_SCOPE_NAMES = NO
+SHOW_INCLUDE_FILES = YES
+SHOW_GROUPED_MEMB_INC = YES
+INLINE_INFO = YES
+SORT_MEMBER_DOCS = NO
+SORT_BRIEF_DOCS = NO
+SORT_MEMBERS_CTORS_1ST = NO
+GENERATE_TODOLIST = YES
+GENERATE_TESTLIST = YES
+GENERATE_BUGLIST = YES
+GENERATE_DEPRECATEDLIST= YES
+ALPHABETICAL_INDEX = YES
+COLLABORATION_GRAPH = YES
+GROUP_GRAPHS = YES
+UML_LOOK = YES
+UML_LIMIT_NUM_FIELDS = 10
+TEMPLATE_RELATIONS = YES
+INCLUDE_GRAPH = YES
+INCLUDED_BY_GRAPH = YES
+CALL_GRAPH = NO
+CALLER_GRAPH = NO
+GRAPHICAL_HIERARCHY = YES
+DIRECTORY_GRAPH = YES
+DOT_IMAGE_FORMAT = png
+INTERACTIVE_SVG = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT = ./src
+FILE_PATTERNS = *.cpp *.h
+RECURSIVE = YES
+EXCLUDE =
+EXCLUDE_SYMLINKS = NO
+EXCLUDE_PATTERNS =
+EXCLUDE_SYMBOLS =
+EXAMPLE_PATH =
+EXAMPLE_PATTERNS = *
+EXAMPLE_RECURSIVE = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessing
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING = YES
+MACRO_EXPANSION = YES
+EXPAND_ONLY_PREDEF = NO
+SEARCH_INCLUDES = YES
+INCLUDE_PATH =
+INCLUDE_FILE_PATTERNS =
+PREDEFINED =
+EXPAND_AS_DEFINED =
+SKIP_FUNCTION_MACROS = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to external references
+#---------------------------------------------------------------------------
+TAGFILES =
+GENERATE_TAGFILE =
+ALLEXTERNALS = NO
+EXTERNAL_GROUPS = YES
+EXTERNAL_PAGES = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX = YES
+LATEX_OUTPUT = latex
+LATEX_CMD_NAME = pdflatex
+MAKEINDEX_CMD_NAME = makeindex
+COMPACT_LATEX = YES
+PAPER_TYPE = a4
+EXTRA_PACKAGES =
+LATEX_HEADER =
+LATEX_FOOTER =
+LATEX_EXTRA_STYLESHEET =
+LATEX_EXTRA_FILES =
+PDF_HYPERLINKS = YES
+USE_PDFLATEX = YES
+LATEX_BATCHMODE = YES
+LATEX_HIDE_INDICES = YES
+LATEX_BIB_STYLE = plain
+
+#---------------------------------------------------------------------------
+# Configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the MAN output
+#---------------------------------------------------------------------------
+GENERATE_MAN = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the DOCBOOK output
+#---------------------------------------------------------------------------
+GENERATE_DOCBOOK = NO
+
+#---------------------------------------------------------------------------
+# Configuration options for UML diagrams
+#---------------------------------------------------------------------------
+HAVE_DOT = YES            # Enable DOT for diagram generation
+CLASS_DIAGRAMS = YES      # Enable class diagrams
+UML_LOOK = YES            # Enable UML look for class diagrams
+COLLABORATION_GRAPH = YES # Enable collaboration diagrams
+CLASS_GRAPH = YES         # Enable class graphs
+GRAPHICAL_HIERARCHY = YES # Enable graphical hierarchy
+INCLUDE_GRAPH = YES       # Enable include dependency graphs
+INCLUDED_BY_GRAPH = YES   # Enable included-by dependency graphs
+CALL_GRAPH = YES          # Enable call graphs (can slow down generation)
+CALLER_GRAPH = YES        # Enable caller graphs
