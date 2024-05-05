@@ -89,4 +89,5 @@ build/
 doc/*
 !doc/documentation.pdf
 !doc/diagrams
+!doc/video
 !doc/draft.md
