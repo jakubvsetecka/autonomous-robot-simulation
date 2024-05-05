@@ -1,10 +1,16 @@
 # Doxyfile 1.9.8
-# Comprehensive settings for generating PDF with class diagrams, including all classes, attributes, and methods
+# Streamlined settings for generating a concise PDF with method headers, class diagrams, author names, and the project logo
+
+# Configure DOT
+HAVE_DOT            = YES
+DOT_NUM_THREADS     = 0
+DOT_GRAPH_MAX_NODES = 100
+MAX_DOT_GRAPH_DEPTH = 5
 
 # Project related configurations
 PROJECT_NAME        = "ICP Project 2023/2024"
 PROJECT_NUMBER      = "1.0"
-PROJECT_BRIEF       = "This project is a simulation and visualization of an autonomous and controlled robot in a discrete linear environment with obstacles and collision detection."
+PROJECT_BRIEF       = "Simulation and visualization of autonomous and controlled robots in a discrete environment."
 PROJECT_LOGO        = "fit_logo.png"
 OUTPUT_DIRECTORY    = "./docs"
 CREATE_SUBDIRS      = NO
@@ -13,47 +19,53 @@ CREATE_SUBDIRS      = NO
 INPUT               = "./headers"
 IMAGE_PATH          = "."
 RECURSIVE           = YES
-EXCLUDE             = 
 
 # Source browsing
-SOURCE_BROWSER      = YES
-INLINE_SOURCES      = YES
-STRIP_CODE_COMMENTS = NO
+SOURCE_BROWSER      = NO
+INLINE_SOURCES      = NO
+STRIP_CODE_COMMENTS = YES  # Remove full code blocks, retain comments
 
 # Enable PREPROCESSOR
 ENABLE_PREPROCESSING = YES
 MACRO_EXPANSION     = YES
 EXPAND_ONLY_PREDEF  = NO
-EXPAND_AS_DEFINED   = 
 SKIP_FUNCTION_MACROS= YES
 
-# Enable class diagrams with UML look
-CLASS_DIAGRAMS      = YES
-UML_LOOK            = YES
-CLASS_GRAPH         = YES
-COLLABORATION_GRAPH = YES
-UML_LIMIT_NUM_FIELDS= 10
-DOT_IMAGE_FORMAT    = png
-INTERACTIVE_SVG     = NO
+# Documentation settings
+EXTRACT_ALL         = YES
+EXTRACT_PRIVATE     = YES
+EXTRACT_STATIC      = YES
+EXTRACT_LOCAL_CLASSES= YES
+SHOW_INCLUDE_FILES  = NO
+SHOW_USED_FILES     = NO
+SHOW_FILES          = NO
+SHOW_NAMESPACES     = YES
+HIDE_UNDOC_MEMBERS  = YES
+BRIEF_MEMBER_DESC   = YES
+REPEAT_BRIEF        = YES
+ALWAYS_DETAILED_SEC = NO
+INLINE_INHERITED_MEMB = NO
+FULL_PATH_NAMES     = NO
 
 # Output formats
 GENERATE_HTML       = NO
 GENERATE_LATEX      = YES
-GENERATE_RTF        = NO
-GENERATE_MAN        = NO
-GENERATE_XML        = NO
-GENERATE_DOCBOOK    = NO
 USE_PDFLATEX        = YES
 PDF_HYPERLINKS      = YES
-USE_MATHJAX         = NO
-GENERATE_TREEVIEW   = NO
 
 # LaTeX configurations
 LATEX_OUTPUT        = "latex"
 LATEX_CMD_NAME      = "pdflatex"
 LATEX_BATCHMODE     = YES
-LATEX_EXTRA_STYLESHEET = ""
-MAKEINDEX_CMD_NAME  = "makeindex"
+
+# Diagram settings
+CLASS_DIAGRAMS      = YES
+UML_LOOK            = YES
+CLASS_GRAPH         = YES
+COLLABORATION_GRAPH = YES
+GRAPHICAL_HIERARCHY = YES
+UML_LIMIT_NUM_FIELDS= 10
+DOT_IMAGE_FORMAT    = png
 
 # Configure DOT
 HAVE_DOT            = YES
@@ -63,29 +75,10 @@ DOT_FONTSIZE        = 10
 DOT_GRAPH_MAX_NODES = 100
 MAX_DOT_GRAPH_DEPTH = 5
 
-# Detailed settings
-EXTRACT_ALL         = YES
-EXTRACT_PRIVATE     = YES
+# Detailed and author settings
 EXTRACT_PACKAGE     = YES
-EXTRACT_STATIC      = YES
-EXTRACT_LOCAL_CLASSES= YES
-SHOW_INCLUDE_FILES  = YES
-SHOW_USED_FILES     = YES
-SHOW_FILES          = YES
-SHOW_NAMESPACES     = YES
-
-# Diagrams
-CLASS_DIAGRAMS      = YES
-HIDE_UNDOC_RELATIONS= NO
-HAVE_DOT            = YES
-CLASS_GRAPH         = YES
-COLLABORATION_GRAPH = YES
-GRAPHICAL_HIERARCHY = YES
-UML_LOOK            = YES
-
-# Other configurations
-QUIET               = NO
-WARNINGS            = YES
-WARN_IF_UNDOCUMENTED= YES
-WARN_NO_PARAMDOC    = YES
-FULL_PATH_NAMES     = NO
+SHOW_GROUPED_MEMB_INC = NO
+GROUP_GRAPHS        = NO
+DISTRIBUTE_GROUP_DOC = YES
+GROUP_NESTED_COMPOUNDS = YES
+ALIASES              = "author=\par Author:"
