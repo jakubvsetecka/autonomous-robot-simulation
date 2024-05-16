@@ -83,7 +83,8 @@ The collision detection system runs on the same refresh rate as the movement inc
 
 Another constant was added along the time constant. Simulation speed is a constant that all movement vectors get multiplied with and allows the user to set the „simulation time speed“ independent of the real-world time.
 
-<video src="raw/main/doc/video/fps_independency.webm" alt="raw/main/doc/video/fps_independency.webm" controls></video>
+<!-- <video src="raw/main/doc/video/fps_independency.webm" alt="raw/main/doc/video/fps_independency.webm" controls></video> -->
+[fps_independency.webm](https://github.com/tomashobza/autonomous-robot-simulation/assets/29162522/aa5a9804-fded-468f-b729-03bc862d5a18)
 
 *Caption: Showcase of time independecy in the visualization.*
 
@@ -91,7 +92,7 @@ Another constant was added along the time constant. Simulation speed is a consta
 
 When a robot is in a collision currently - so that it‘s current position is colliding, an anticollision system is in place to fix this problem. The robot get‘s moved slightly away from the collision point and will get over time slowly unstuck.
 
-<video src="raw/main/doc/video/anticollision.webm" alt="raw/main/doc/video/anticollision.webm" controls></video>
+<video src="https://github.com/tomashobza/autonomous-robot-simulation/raw/main/doc/video/anticollision.mp4" alt="anticollision showcase" controls></video>
 
 *Caption: Anticollision in action on two collided robots.*
 
